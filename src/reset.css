@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Твій кастомний reset / базові стилі */
+@layer base {
+  /* Ще раз і явно зафіксувати box-sizing (Tailwind вже робить це, але це безпечно) */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Прибрати відступи браузера, задати базовий фон/колір */
+  body {
+    margin: 0;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    background-color: #0b0b0b; /* або через theme(bg) + клас у body, як захочеш */
+    color: #f9f9f9;
+  }
+
+  /* Зробити медіа адаптивними за замовчуванням */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Форм-елементи наслідують шрифт */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  /* Посилання без underline, але збережемо курсор */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Список без маркерів за замовчуванням (часто у UI не потрібні) */
+  ul,
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Для кнопок прибрати дефолтні бровзерні стилі */
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+  }
+}
