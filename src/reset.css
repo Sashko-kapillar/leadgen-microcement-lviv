@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 /* Твій кастомний reset / базові стилі */
 @layer base {
   /* Ще раз і явно зафіксувати box-sizing (Tailwind вже робить це, але це безпечно) */
@@ -12,11 +10,7 @@
   /* Прибрати відступи браузера, задати базовий фон/колір */
   body {
     margin: 0;
-    min-height: 100vh;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    background-color: #0b0b0b; /* або через theme(bg) + клас у body, як захочеш */
-    color: #f9f9f9;
+    min-height: 100%;
   }
 
   /* Зробити медіа адаптивними за замовчуванням */
