@@ -68,7 +68,7 @@ export default function SmartButton({
   }
 
   const finalClassName = cn(
-    'inline-flex w-fit items-center justify-center rounded-full font-semibold leading-none tracking-[-0.02em]',
+    'inline-flex w-fit items-center justify-center rounded-[0.5rem] font-semibold leading-none tracking-[-0.02em]',
     'transition-colors duration-300',
     'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
     variantClasses[variant],

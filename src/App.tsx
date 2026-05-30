@@ -15,7 +15,6 @@ import Footer from './components/Footer/Footer'
 // import ToastProvider from './components/Toast/ToastProvider';
 
 function App() {
-  // const [activeIndex, setActiveIndex] = useState(0)
   const [showPolicy, setShowPolicy] = useState(false)
 
   const openPolicy = () => {
@@ -30,20 +29,20 @@ function App() {
 
   return (
     <>
-      <Header /*setActiveIndex={setActiveIndex}*/ isPrivacy={showPolicy} onShowHome={closePolicy} />
-
-      {/* {showPolicy ? (
-        <PrivacyPolicy />
-      ) : ( */}
-      <main>
-        <Hero />
-        <Product />
-        <MoreInfo />
-      </main>
-      {/* )} */}
-
-      <Footer onPolicyClick={openPolicy} />
-      {/* <ToastProvider /> */}
+      <div className="bg-page min-h-screen w-full">
+        <Header isPrivacy={showPolicy} onShowHome={closePolicy} />
+        {/* {showPolicy ? (
+          <PrivacyPolicy />
+        ) : ( */}
+        <main>
+          <Hero />
+          <Product />
+          <MoreInfo />
+        </main>
+        {/* )} */}
+        <Footer onPolicyClick={openPolicy} />
+        {/* <ToastProvider /> */}
+      </div>
     </>
   )
 }
