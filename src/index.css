@@ -94,7 +94,7 @@
   --breakpoint-4xl: 2560px;
 
   /* Semantic colors for Microcement LP */
-  --color-page: #f4f0e8;
+  --color-page: #f8f6f4;
   --color-page-soft: #faf8f4;
 
   --color-surface: #ffffff;
@@ -132,13 +132,14 @@
 
 @layer base {
   html {
+    min-height: 100%;
     scrollbar-gutter: stable;
     scroll-behavior: smooth;
   }
 
   body {
-    @apply font-primary bg-page text-text-main;
-    min-height: 100%;
+    @apply font-primary text-text-main bg-black;
+    min-height: 100svh;
     font-size: 16px;
     line-height: 1.55;
     text-rendering: optimizeLegibility;
@@ -178,11 +179,11 @@
 
 @layer components {
   .section {
-    @apply xs:px-6 mx-auto w-full max-w-[1180px] px-4 lg:px-10;
+    @apply xs:px-6 mx-auto w-full max-w-[1180px] px-4 lg:px-6;
   }
 
   .section-wide {
-    @apply xs:px-6 mx-auto w-full max-w-[1440px] px-4 lg:px-10;
+    @apply xs:px-6 mx-auto w-full max-w-[1440px] px-4 lg:px-6;
   }
 
   .section-padding {
@@ -196,30 +197,33 @@
 
 @layer components {
   .text-logo {
-    font-size: clamp(16px, 1.3vw, 20px);
+    font-size: clamp(16px, 2vw, 24px);
     line-height: 1;
     letter-spacing: -0.04em;
-    font-weight: 800;
+    font-weight: 700;
   }
 
   .text-nav {
-    font-size: clamp(14px, 0.9vw, 15px);
+    font-size: clamp(14px, 1.5vw, 18px);
     line-height: 1;
     letter-spacing: -0.02em;
     font-weight: 700;
   }
 
   .text-hero {
-    font-size: clamp(38px, 5vw, 64px);
+    text-align: center;
+    font-size: clamp(24px, 5vw, 52px);
     line-height: 1.08;
     letter-spacing: -0.055em;
-    font-weight: 800;
+    font-weight: 600;
   }
 
   .text-hero-lead {
-    font-size: clamp(17px, 1.4vw, 21px);
-    line-height: 1.6;
-    letter-spacing: -0.025em;
+    text-align: center;
+    width: 100%;
+    font-size: clamp(14px, 1.4vw, 21px);
+    line-height: 1.1;
+    letter-spacing: -0.035em;
     font-weight: 400;
     color: var(--color-text-soft);
   }

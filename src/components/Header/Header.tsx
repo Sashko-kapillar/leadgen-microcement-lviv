@@ -3,10 +3,9 @@
 // import BookModal from '../BookModal/BookModal'
 // import BurgerToggle from '../BurgerToggle/BurgerToggle'
 import SmartButton from '../ui/Button/SmartButton'
-// import HeaderNav from '../HeaderNav/HeaderNav'
+import HeaderNav from '../HeaderNav/HeaderNav'
 
 type HeaderProps = {
-  setActiveIndex?: (index: number) => void
   onShowHome: () => void
   isPrivacy?: boolean
 }
@@ -17,13 +16,12 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
 
   return (
     <>
-      <header className="bg-cod-gray/60 3xl:mt-18 4xl:mt-17 relative z-100 w-full lg:mt-10 lg:bg-transparent">
-        <div className="section 1xl:py-0 1xl:h-14 4xl:h-16 flex h-full max-h-17 items-center justify-between gap-4 py-3.5">
-          <a href="/" className="w-1/3">
-            <span className="sr-only">Повернутись на головну</span>
-            <svg className="1xl:h-13 4xl:w-12 4xl:h-16.5 fill-tangerine h-12.5 w-9.5">
-              <use href="/images/svg/icons.svg#icon-logo" />
-            </svg>
+      <header className="relative top-4 z-100 w-full bg-transparent">
+        <div className="section 1xl:py-0 1xl:h-14 4xl:h-16 flex h-full min-h-17 items-center justify-between gap-4">
+          <a href="/" className="disflex w-1/3 py-4">
+            <span className="text- text-logo sr-only text-black md:not-sr-only">
+              Мікроцемент ✔ Львів
+            </span>
           </a>
 
           {isPrivacy ? (
@@ -37,11 +35,15 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
             />
           ) : (
             <>
-              {/* {setActiveIndex && (
-                <HeaderNav setActiveIndex={setActiveIndex} className="mx-auto w-1/3" />
-              )} */}
+              <HeaderNav className="mx-auto w-1/2" />
 
               <div className="flex items-center justify-between gap-5.5 lg:w-1/3 lg:justify-end-safe">
+                <SmartButton
+                  type="button"
+                  label="Отримати розрахунок"
+                  variant="primary"
+                  className="text-dust-white 1xl:text-[18px]/[1] 1xl:py-4.5 1xl:px-5 bg-cod-black hover:bg-accent hidden md:flex border-none px-8 py-3.5 text-base/[100%] font-semibold backdrop-blur-[5px]"
+                />
                 {/* {!isBurgerMenuOpen && (
                   <SmartButton
                     type="button"
