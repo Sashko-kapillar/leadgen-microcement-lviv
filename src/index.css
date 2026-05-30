@@ -214,14 +214,14 @@
     text-align: center;
     font-size: clamp(24px, 5vw, 52px);
     line-height: 1.08;
-    letter-spacing: -0.055em;
-    font-weight: 600;
+    /* letter-spacing: -0.055em; */
+    font-weight: 500;
   }
 
   .text-hero-lead {
     text-align: center;
     width: 100%;
-    font-size: clamp(14px, 1.4vw, 21px);
+    font-size: clamp(15px, 1.4vw, 21px);
     line-height: 1.1;
     letter-spacing: -0.035em;
     font-weight: 400;
