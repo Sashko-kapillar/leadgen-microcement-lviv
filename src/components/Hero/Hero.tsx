@@ -22,9 +22,9 @@ const heroBadges = [
 const Hero = () => {
   return (
     <section className="bg-page relative overflow-hidden lg:-mt-17">
-      <div className="section relative flex min-h-[calc(100svh-88px)] flex-col items-center pb-8 lg:grid lg:min-h-[calc(100svh-72px)] lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-10 lg:pt-0 lg:pb-16">
+      <div className="section relative flex min-h-[calc(100svh-88px)] flex-col items-center pb-8 lg:grid lg:min-h-[calc(100svh-72px)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:pt-0 lg:pb-16">
         <div className="1xl:min-w-150 relative z-10 flex flex-col items-center lg:min-w-[580px] lg:items-start">
-          <h1 className="text-hero 1xl:max-w-200 max-w-80 tracking-tight md:min-w-[540px] lg:mt-60 lg:max-w-[720px] lg:text-left">
+          <h1 className="text-hero 1xl:max-w-200 max-w-80 tracking-tight md:min-w-[540px] lg:mt-60 lg:max-w-[720px]">
             Мікроцемент у Львові для ванних, підлог і стін
           </h1>
 
