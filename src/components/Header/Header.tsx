@@ -37,12 +37,12 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
             <>
               <HeaderNav className="mx-auto w-1/2" />
 
-              <div className="flex items-center justify-between gap-5.5 lg:w-1/3 lg:justify-end-safe">
+              <div className="hidden items-center justify-between gap-5.5 lg:flex lg:w-1/3 lg:justify-end-safe">
                 <SmartButton
                   type="button"
                   label="Отримати розрахунок"
                   variant="primary"
-                  className="text-dust-white 1xl:text-[18px]/[1] 1xl:py-4.5 1xl:px-5 bg-cod-black hover:bg-accent hidden md:flex border-none px-8 py-3.5 text-base/[100%] font-semibold backdrop-blur-[5px]"
+                  className="text-dust-white 1xl:text-[18px]/[1] 1xl:py-4.5 1xl:px-5 bg-cod-black hover:bg-accent hidden border-none px-8 py-3.5 text-base/[100%] font-semibold backdrop-blur-[5px] md:flex"
                 />
                 {/* {!isBurgerMenuOpen && (
                   <SmartButton
