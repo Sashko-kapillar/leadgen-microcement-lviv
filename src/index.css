@@ -137,7 +137,7 @@
   }
 
   body {
-    @apply font-primary bg-page text-text-main;
+    @apply font-primary text-text-main bg-black;
     min-height: 100svh;
     font-size: 16px;
     line-height: 1.55;
