@@ -1,5 +1,5 @@
 import SmartButton from '../ui/Button/SmartButton'
-import heroImage from '@/assets/images/hero-bath.webp'
+import heroImage from '@/assets/images/hero-bath-mb.webp'
 
 const heroBadges = [
   {
@@ -21,14 +21,14 @@ const heroBadges = [
 
 const Hero = () => {
   return (
-    <section className="bg-page relative overflow-hidden lg:-mt-17">
-      <div className="section relative flex min-h-[calc(100svh-88px)] flex-col items-center pb-8 lg:grid lg:min-h-[calc(100svh-72px)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:pt-0 lg:pb-16">
+    <section className="bg-page relative mt-12 overflow-hidden lg:-mt-17">
+      <div className="section relative z-10 flex flex-col items-center pb-0 lg:grid lg:min-h-[calc(100svh-72px)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:pt-0 lg:pb-16">
         <div className="1xl:min-w-150 relative z-10 flex flex-col items-center lg:min-w-[580px] lg:items-start">
-          <h1 className="text-hero 1xl:max-w-200 max-w-80 tracking-tight md:min-w-[540px] lg:mt-60 lg:max-w-[720px]">
+          <h1 className="text-hero 1xl:max-w-200 max-w-[clamp(320px,calc(223.2px+23.05vw),400px)] tracking-tight md:max-w-[540px] lg:mt-60 lg:max-w-[720px] lg:text-start">
             Мікроцемент у Львові для ванних, підлог і стін
           </h1>
 
-          <p className="text-hero-lead mt-6 max-w-75 md:max-w-100 lg:mt-8 lg:max-w-[520px] lg:min-w-120 lg:text-start">
+          <p className="text-hero-lead mt-6 max-w-110 md:max-w-130 lg:mt-8 lg:min-w-120 lg:text-start">
             Підбір матеріалу, підготовка поверхні та монтаж під ключ. Надішліть фото приміщення —
             отримаєте попередній розрахунок.
           </p>
@@ -60,7 +60,7 @@ const Hero = () => {
             />
           </div>
 
-          <ul className="mt-10 grid gap-6 sm:grid-cols-3 lg:mt-18 lg:max-w-[620px] lg:gap-3">
+          <ul className="mt-10 hidden gap-6 sm:grid-cols-3 md:grid lg:mt-18 lg:max-w-[620px] lg:gap-3">
             {heroBadges.map(badge => (
               <li key={badge.title} className="flex items-start gap-4 lg:gap-3">
                 <span className="border-border-soft bg-surface/60 flex size-11 shrink-0 items-center justify-center rounded-full border lg:size-5">
@@ -77,16 +77,16 @@ const Hero = () => {
             ))}
           </ul>
         </div>
+      </div>
 
-        <div className="1xl:right-[clamp(-240px,calc(45.71px-12.29vw),-120px)] relative left-1/2 mt-10 h-[clamp(360px,70vw,620px)] w-screen -translate-x-1/2 overflow-hidden rounded-none md:left-auto md:translate-x-0 lg:absolute lg:inset-y-0 lg:right-[clamp(-120px,calc(255.38px-22.85vw),-40px)] lg:mt-0 lg:h-full lg:w-[58vw]">
-          <img
-            src={heroImage}
-            alt="Ванна кімната з покриттям мікроцемент"
-            className="h-full w-full object-cover object-center"
-          />
+      <div className="1xl:right-[clamp(-240px,calc(45.71px-12.29vw),-120px)] relative mt-10 h-[clamp(360px,75vw,620px)] w-full overflow-hidden lg:absolute lg:inset-y-0 lg:right-[clamp(-120px,calc(255.38px-22.85vw),-40px)] lg:mt-0 lg:h-full lg:w-[58vw]">
+        <img
+          src={heroImage}
+          alt="Ванна кімната з покриттям мікроцемент"
+          className="h-full w-full object-cover object-center"
+        />
 
-          <div className="from-page/0 via-page/0 to-page/10 lg:from-page lg:via-page/20 pointer-events-none absolute inset-0 bg-linear-to-b lg:bg-linear-to-r lg:to-transparent" />
-        </div>
+        <div className="from-page/0 via-page/0 to-page/10 lg:from-page lg:via-page/20 pointer-events-none absolute inset-0 bg-linear-to-b lg:bg-linear-to-r lg:to-transparent" />
       </div>
     </section>
   )

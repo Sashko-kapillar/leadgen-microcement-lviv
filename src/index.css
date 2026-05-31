@@ -133,18 +133,22 @@
 @layer base {
   html {
     min-height: 100%;
-    scrollbar-gutter: stable;
     scroll-behavior: smooth;
   }
 
   body {
-    @apply font-primary text-text-main bg-black;
+    @apply font-primary bg-page text-text-main;
     min-height: 100svh;
     font-size: 16px;
     line-height: 1.55;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    scrollbar-gutter: stable;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scrollbar-gutter: stable;
+    }
   }
 
   button,
