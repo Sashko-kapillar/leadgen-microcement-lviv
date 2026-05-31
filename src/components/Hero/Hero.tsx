@@ -24,11 +24,11 @@ const Hero = () => {
     <section className="bg-page relative mt-12 overflow-hidden lg:-mt-17">
       <div className="section relative z-10 flex flex-col items-center pb-0 lg:grid lg:min-h-[calc(100svh-72px)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:pt-0 lg:pb-16">
         <div className="1xl:min-w-150 relative z-10 flex flex-col items-center lg:min-w-[580px] lg:items-start">
-          <h1 className="text-hero 1xl:max-w-200 max-w-[clamp(320px,calc(223.2px+23.05vw),400px)] tracking-tight md:max-w-[540px] lg:mt-60 lg:max-w-[720px] lg:text-start">
+          <h1 className="text-hero 1xl:max-w-200 max-w-[clamp(320px,calc(223.2px+23.05vw),400px)] tracking-tight md:max-w-[540px] lg:mt-60 lg:max-w-180 lg:min-w-140 lg:text-start">
             Мікроцемент у Львові для ванних, підлог і стін
           </h1>
 
-          <p className="text-hero-lead mt-6 max-w-110 md:max-w-130 lg:mt-8 lg:min-w-120 lg:text-start">
+          <p className="text-hero-lead mt-6 max-w-110 md:max-w-110 lg:mt-8 lg:min-w-100 lg:text-start">
             Підбір матеріалу, підготовка поверхні та монтаж під ключ. Надішліть фото приміщення —
             отримаєте попередній розрахунок.
           </p>

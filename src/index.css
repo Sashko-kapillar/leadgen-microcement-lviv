@@ -143,6 +143,7 @@
     line-height: 1.55;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    background-color: black;
   }
 
   @media (min-width: 1024px) {
