@@ -8,6 +8,7 @@ import Product from './components/Products/Product'
 import MoreInfo from './components/Form/MoreInfo'
 // import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
 import Footer from './components/Footer/Footer'
+import Benefits from './components/Benefits/Benefits'
 
 // import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -36,6 +37,7 @@ function App() {
         ) : ( */}
         <main>
           <Hero />
+          <Benefits />
           <Product />
           <MoreInfo />
         </main>
