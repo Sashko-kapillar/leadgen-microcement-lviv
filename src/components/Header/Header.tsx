@@ -16,11 +16,11 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
 
   return (
     <>
-      <header className="relative top-4 z-100 w-full bg-transparent">
-        <div className="section 1xl:py-0 1xl:h-14 4xl:h-16 flex h-full min-h-17 items-center justify-between gap-4">
-          <a href="/" className="disflex w-1/3 py-4">
-            <span className="text- text-logo sr-only text-black md:not-sr-only">
-              Мікроцемент ✔ Львів
+      <header className="relative top-2 z-100 w-full bg-transparent lg:top-4">
+        <div className="section 1xl:py-0 flex h-14 items-center justify-between gap-4 md:h-17">
+          <a href="/" className="flex py-2 md:py-4 lg:w-1/3">
+            <span className="text- text-logo text-black md:not-sr-only">
+              Мікроцемент <span className="text-green-600">✔</span> Львів
             </span>
           </a>
 
