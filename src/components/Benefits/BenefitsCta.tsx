@@ -11,7 +11,7 @@ const BenefitsCta = () => {
       </div>
 
       <a
-        href="https://t.me/"
+        href="#contact"
         target="_blank"
         rel="noreferrer"
         className="bg-text-main text-text-light text-bg-main ml-auto inline-flex min-h-12 items-center justify-center rounded-xl px-6 transition-opacity duration-300 hover:opacity-85 md:mt-0"
