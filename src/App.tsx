@@ -3,12 +3,12 @@ import { useState } from 'react'
 
 import Header from './components/Header/Header'
 import Hero from './components/Hero/Hero'
-import Product from './components/Products/Product'
 // import Modules from './components/Modules/Modules'
 import MoreInfo from './components/Form/MoreInfo'
 // import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
 import Footer from './components/Footer/Footer'
 import Benefits from './components/Benefits/Benefits'
+import Applications from './components/Applications/Applications'
 
 // import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -38,7 +38,7 @@ function App() {
         <main>
           <Hero />
           <Benefits />
-          <Product />
+          <Applications />
           <MoreInfo />
         </main>
         {/* )} */}
