@@ -97,33 +97,42 @@
   --color-page: #f8f6f4;
   --color-page-soft: #faf8f4;
 
-  --color-surface: #ffffff;
-  --color-surface-soft: #eee8df;
-  --color-surface-muted: #e7dfd4;
+  /* Backgrounds */
+  /* --color-bg-page: #f8f6f4;
+  --color-bg-page-soft: #faf8f4; */
+  --color-bg-section: #f8f6f4;
+  --color-bg-section-muted: #e7dfd4;
 
+  /* Cards / surfaces */
+  --color-bg-card: #ffffff;
+  --color-bg-card-soft: #faf8f4;
+  --color-bg-card-muted: #eee8df;
+
+  /* Text */
   --color-text-main: #161616;
   --color-text-soft: #3f3a35;
   --color-text-muted: #746c63;
-  --color-text-light: #ffffff;
+  --color-text-inverse: #ffffff;
 
+  /* Borders */
   --color-border-soft: #ddd5ca;
   --color-border-medium: #c9beb1;
+  --color-border-strong: #b8aa9b;
 
+  /* CTA */
   --color-cta: #111111;
   --color-cta-hover: #272727;
+  --color-cta-text: #ffffff;
 
+  /* Accent */
   --color-accent: #b96843;
   --color-accent-hover: #a65433;
+  --color-accent-soft: #ead6ca;
+  --color-accent-muted: #d9b8a6;
 
-  /* Old neutral aliases, можно оставить временно для старых классов */
+  /* Basic */
   --color-black: #000000;
   --color-white: #ffffff;
-  --color-cod-black: #080808;
-  --color-cod-gray: #0d0d0d;
-  --color-dust-white: #f3f3f3;
-  --color-gallery-white: #ececec;
-  --color-mercury-white: #e6e6e6;
-  --color-gray: #7f7f7f;
 }
 
 /* =========================
@@ -183,15 +192,15 @@
 
 @layer components {
   .section {
-    @apply xs:px-6 mx-auto w-full max-w-[1180px] px-4 lg:px-6;
+    @apply w-full py-4 lg:py-16;
   }
 
   .section-wide {
     @apply xs:px-6 mx-auto w-full max-w-[1440px] px-4 lg:px-6;
   }
 
-  .section-padding {
-    @apply py-16 lg:py-24;
+  .container {
+    @apply xs:px-6 mx-auto w-full max-w-[1180px] px-4 lg:px-16;
   }
 }
 

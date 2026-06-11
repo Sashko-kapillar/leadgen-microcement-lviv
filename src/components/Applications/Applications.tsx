@@ -1,13 +1,12 @@
 import SmartButton from '@/components/ui/Button/SmartButton'
-import BenefitCard from './BenefitCard'
-import BenefitsMobileWheel from './BenefitsMobileWheel'
-import { benefitsSectionData } from './data/benefits.data'
+import ApplicationCard from './ApplicationCard'
+import { applicationsSectionData } from './data/applications.data'
 
-const Benefits = () => {
-  const { title, subtitle, items, cta } = benefitsSectionData
+const Applications = () => {
+  const { title, subtitle, items, cta } = applicationsSectionData
 
   return (
-    <section id="benefits" className="bg-bg-section py-16 md:py-24">
+    <section id="applications" className="bg-dust-white section">
       <div className="container">
         <div className="mb-8 max-w-3xl">
           <h2 className="text-text-main text-3xl font-semibold tracking-tight md:text-4xl">
@@ -17,15 +16,13 @@ const Benefits = () => {
           <p className="text-text-muted mt-3 text-base leading-7">{subtitle}</p>
         </div>
 
-        <div className="hidden gap-4 md:flex md:flex-wrap md:justify-center lg:flex-nowrap">
+        <div className="flex flex-col gap-4 md:flex-row md:justify-center lg:flex-nowrap">
           {items.map(item => (
-            <BenefitCard key={item.id} benefit={item} />
+            <ApplicationCard key={item.id} item={item} />
           ))}
         </div>
 
-        <BenefitsMobileWheel items={items} />
-
-        <div className="bg-bg-card mt-8 flex flex-col gap-5 rounded-xl p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+        <div className="bg-bg-light mt-8 flex flex-col gap-5 rounded-xl p-6 shadow-sm md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">
             <h3 className="text-text-main text-lg font-semibold">{cta.title}</h3>
 
@@ -39,4 +36,4 @@ const Benefits = () => {
   )
 }
 
-export default Benefits
+export default Applications

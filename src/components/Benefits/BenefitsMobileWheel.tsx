@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import type { BenefitItem } from './data/benefits.data'
 
 type BenefitsMobileWheelProps = {
@@ -6,16 +7,19 @@ type BenefitsMobileWheelProps = {
 
 const BenefitsMobileWheel = ({ items }: BenefitsMobileWheelProps) => {
   return (
-    <div className="relative md:hidden">
-      <div className="from-bg-main pointer-events-none absolute inset-x-0 top-0 z-10 h-12 bg-linear-to-b to-transparent" />
-      <div className="from-bg-main pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 bg-linear-to-t to-transparent" />
+    <div className="md:hidden">
+      <div className="relative mb-12">
+        {items.map((item, index) => {
+          const cardStyle = {
+            top: `${88 + index * 12}px`,
+            zIndex: index + 1,
+          } satisfies CSSProperties
 
-      <div className="max-h-[300px] snap-y snap-mandatory overflow-y-auto pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="py-8">
-          {items.map(item => (
+          return (
             <article
               key={item.id}
-              className="bg-bg-card mb-4 snap-center rounded-2xl border border-neutral-300 p-5 shadow-lg last:mb-0"
+              style={cardStyle}
+              className="bg-bg-card sticky mb-6 rounded-2xl border border-neutral-300 p-5 shadow-lg"
             >
               <div className="bg-bg-muted mb-6 flex size-12 items-center justify-center rounded-full">
                 <svg className="text-text-main size-5" aria-hidden="true">
@@ -27,8 +31,8 @@ const BenefitsMobileWheel = ({ items }: BenefitsMobileWheelProps) => {
 
               <p className="text-card-text text-text-muted mt-3">{item.text}</p>
             </article>
-          ))}
-        </div>
+          )
+        })}
       </div>
     </div>
   )
