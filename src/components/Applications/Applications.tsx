@@ -7,14 +7,14 @@ const Applications = () => {
 
   return (
     <section id="applications" className="bg-dust-white section">
-      <div className="container">
-        <div className="mb-8 max-w-3xl">
+      <div className="section-container">
+        <header className="section-header">
           <h2 className="text-text-main text-3xl font-semibold tracking-tight md:text-4xl">
             {title}
           </h2>
 
           <p className="text-text-muted mt-3 text-base leading-7">{subtitle}</p>
-        </div>
+        </header>
 
         <div className="flex flex-col gap-4 md:flex-row md:justify-center lg:flex-nowrap">
           {items.map(item => (

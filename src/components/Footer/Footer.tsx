@@ -6,10 +6,10 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="xs:pb-[7px] 1xl:pb-14.5 4xl:pb-17 w-full pb-18.5 lg:pb-5">
+    <footer className="xs:pb-[7px] 4xl:pb-17 w-full pb-18.5 lg:pb-5 xl:pb-14.5">
       <div className="section">
         <div className="xs:pb-17 4xl:pb-6.5 pt-0 pb-0 lg:pb-5">
-          <div className="1xl:justify-none xs:mb-15 4xl:mb-15 mb-10.5 flex flex-row justify-between lg:mb-8">
+          <div className="xl:justify-none xs:mb-15 4xl:mb-15 mb-10.5 flex flex-row justify-between lg:mb-8">
             <div className="xs:gap-x-1.5 4xl:gap-x-3 flex flex-row items-start gap-x-[5px] lg:gap-x-2.5">
               <a href="/" className="flex gap-1.5">
                 <span className="sr-only">Повернутись на головну</span>
@@ -98,7 +98,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
             </div>
 
             <div className="4xl:flex-row flex flex-col lg:w-1/2">
-              <div className="4xl:order-2 xs:mb-9.5 4xl:mb-0 1xl:whitespace-nowrap mb-11 flex flex-row lg:mb-8">
+              <div className="4xl:order-2 xs:mb-9.5 4xl:mb-0 mb-11 flex flex-row lg:mb-8 xl:whitespace-nowrap">
                 <a
                   href="#"
                   className="text-mountain-mist hover:text-tangerine group-focus:tangerine text-lg/[126%] tracking-[-0.03em] underline transition-colors duration-300"
@@ -111,7 +111,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
                 </a>
               </div>
 
-              <div className="1xl:max-w-[280px] 4xl:mr-24 flex flex-col gap-4 lg:max-w-[296px]">
+              <div className="4xl:mr-24 flex flex-col gap-4 lg:max-w-[296px] xl:max-w-[280px]">
                 <p className="text-mountain-mist leading-[120%] font-medium">
                   © 2003–{currentYear} ТОВ «MBK МАШ»
                 </p>
