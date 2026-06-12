@@ -8,11 +8,17 @@ import {
   type MoreInfoFormValues,
 } from './more-info.schema'
 
+const FORM_SUBMIT_TIMEOUT_MS = 10000
+
 const initialFormState: MoreInfoFormValues = {
   roomType: roomTypes[0].id,
   area: areaOptions[1].id,
   name: '',
   contact: '',
+}
+
+function isAbortError(error: unknown) {
+  return error instanceof Error && error.name === 'AbortError'
 }
 
 function getFieldErrors(
@@ -83,6 +89,9 @@ export default function MoreInfoForm() {
       coupon: couponInfo,
     }
 
+    const controller = new AbortController()
+    const timeoutId = window.setTimeout(() => controller.abort(), FORM_SUBMIT_TIMEOUT_MS)
+
     try {
       setIsSubmitting(true)
       setSubmitStatus('idle')
@@ -93,6 +102,7 @@ export default function MoreInfoForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       })
 
       if (!response.ok) {
@@ -102,9 +112,15 @@ export default function MoreInfoForm() {
       setForm(initialFormState)
       setErrors({})
       setSubmitStatus('success')
-    } catch {
+    } catch (error) {
+      if (isAbortError(error)) {
+        setSubmitStatus('error')
+        return
+      }
+
       setSubmitStatus('error')
     } finally {
+      window.clearTimeout(timeoutId)
       setIsSubmitting(false)
     }
   }
