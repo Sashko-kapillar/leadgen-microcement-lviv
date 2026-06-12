@@ -6,7 +6,7 @@ type ApplicationCardProps = {
 
 const ApplicationCard = ({ item }: ApplicationCardProps) => {
   return (
-    <article className="bg-bg-light overflow-hidden rounded-xl shadow-sm">
+    <article className="bg-bg-light flex flex-col overflow-hidden rounded-xl shadow-sm">
       <img
         src={item.image}
         alt={item.imageAlt}
@@ -14,7 +14,7 @@ const ApplicationCard = ({ item }: ApplicationCardProps) => {
         loading="lazy"
       />
 
-      <div className="flex flex-col justify-between p-5">
+      <div className="flex flex-1 flex-col justify-between p-4">
         <div>
           <h3 className="text-text-main text-lg font-semibold">{item.title}</h3>
           <p className="text-text-muted mt-3 text-sm leading-6">{item.text}</p>
