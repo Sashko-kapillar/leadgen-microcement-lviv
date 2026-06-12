@@ -6,7 +6,7 @@ type BenefitCardProps = {
 
 const BenefitCard = ({ benefit }: BenefitCardProps) => {
   return (
-    <article className="border-border-soft bg-bg-card rounded-2xl border p-5 shadow-lg md:max-w-[calc(33%-0.6rem)] lg:flex-1">
+    <article className="border-border-soft bg-bg-card rounded-2xl border p-7 shadow-lg md:max-w-[calc(33%-0.6rem)] lg:flex-1 lg:p-5">
       <div className="bg-accent-soft mb-8 flex size-14 items-center justify-center rounded-full">
         <svg className="text-text-main size-6" aria-hidden="true">
           <use href={`/svg/icons.svg${benefit.icon}`} />

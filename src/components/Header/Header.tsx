@@ -17,7 +17,7 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
   return (
     <>
       <header className="relative top-2 z-100 w-full bg-transparent lg:top-4">
-        <div className="1xl:py-0 container flex h-14 items-center justify-between gap-4 md:h-17">
+        <div className="1xl:py-0 section-container flex h-14 items-center justify-between gap-4 md:h-17">
           <a href="/" className="flex py-2 md:py-4 lg:w-1/3">
             <span className="text- text-logo text-black md:not-sr-only">
               Мікроцемент <span className="text-green-600">✔</span> Львів

@@ -9,6 +9,7 @@ import MoreInfo from './components/Form/MoreInfo'
 import Footer from './components/Footer/Footer'
 import Benefits from './components/Benefits/Benefits'
 import Applications from './components/Applications/Applications'
+import HowItWorks from './components/HowItWorks/HowItWorks'
 
 // import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -39,6 +40,7 @@ function App() {
           <Hero />
           <Benefits />
           <Applications />
+          <HowItWorks />
           <MoreInfo />
         </main>
         {/* )} */}

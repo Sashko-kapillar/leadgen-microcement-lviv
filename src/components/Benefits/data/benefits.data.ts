@@ -36,12 +36,6 @@ export const benefitsSectionData: BenefitsSectionData = {
       text: 'Створює цілісну поверхню без плиткових швів, у яких накопичується бруд.',
     },
     {
-      id: 'durable',
-      icon: '#icon-check',
-      title: 'Міцний і довговічний',
-      text: 'Стійкий до щоденного використання, стирання та побутового навантаження.',
-    },
-    {
       id: 'design',
       icon: '#icon-palette',
       title: 'Будь-який колір і текстура',
