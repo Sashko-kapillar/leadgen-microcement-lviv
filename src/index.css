@@ -203,6 +203,14 @@
   .section-header {
     @apply mb-8 text-center;
   }
+
+  .section-title {
+    @apply text-text-main mb-5 text-3xl font-semibold tracking-tight md:text-4xl;
+  }
+
+  .section-subtitle {
+    @apply text-text-soft mx-auto text-center text-base leading-[1.55] md:text-lg;
+  }
 }
 
 /* =========================

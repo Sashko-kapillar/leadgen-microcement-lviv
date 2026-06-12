@@ -8,11 +8,9 @@ const HowItWorks = () => {
     <section className="bg-bg-page-soft py-16 sm:py-20 lg:py-24" id="how-it-works">
       <div className="section-container">
         <header className="section-header mb-10 w-full sm:mb-12 lg:mb-14">
-          <h2 className="text-text-main text-3xl font-semibold tracking-tight md:text-4xl">
-            {title}
-          </h2>
+          <h2 className="section-title">{title}</h2>
 
-          <p className="text-text-muted text-base leading-relaxed sm:text-lg">{subtitle}</p>
+          <p className="section-subtitle">{subtitle}</p>
         </header>
 
         <ol className="1xl:grid-cols-4 grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-8">

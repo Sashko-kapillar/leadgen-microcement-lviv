@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Header from './components/Header/Header'
 import Hero from './components/Hero/Hero'
 // import Modules from './components/Modules/Modules'
-import MoreInfo from './components/Form/MoreInfo'
+import MoreInfo from './components/MoreInfo/MoreInfo'
 // import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
 import Footer from './components/Footer/Footer'
 import Benefits from './components/Benefits/Benefits'

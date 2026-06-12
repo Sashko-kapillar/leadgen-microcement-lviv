@@ -7,6 +7,8 @@ export type SmartButtonSize = 'sm' | 'md' | 'lg'
 
 export type SmartButtonProps = {
   label: string
+  loadingLabel?: string
+
   type?: 'button' | 'submit' | 'reset'
   href?: string
   target?: '_self' | '_blank'
@@ -27,6 +29,8 @@ export type SmartButtonProps = {
 
 export default function SmartButton({
   label,
+  loadingLabel = 'Loading...',
+
   type = 'button',
   href,
   target = '_self',
@@ -74,28 +78,24 @@ export default function SmartButton({
     variantClasses[variant],
     sizeClasses[size],
     {
-      'gap-2': hasIcon,
+      'gap-2': hasIcon && !loading,
       'opacity-50 cursor-not-allowed pointer-events-none': blocked,
     },
     className
   )
 
-  const content = (
+  const content = loading ? (
+    <span>{loadingLabel}</span>
+  ) : (
     <>
-      {loading ? (
-        <span>Loading...</span>
-      ) : (
-        <>
-          {hasIcon && iconPosition === 'left' && (
-            <span className="inline-flex shrink-0 items-center">{icon}</span>
-          )}
+      {hasIcon && iconPosition === 'left' && (
+        <span className="inline-flex shrink-0 items-center">{icon}</span>
+      )}
 
-          <span className="shrink-0">{label}</span>
+      <span className="shrink-0">{label}</span>
 
-          {hasIcon && iconPosition === 'right' && (
-            <span className="inline-flex shrink-0 items-center">{icon}</span>
-          )}
-        </>
+      {hasIcon && iconPosition === 'right' && (
+        <span className="inline-flex shrink-0 items-center">{icon}</span>
       )}
     </>
   )
@@ -120,6 +120,7 @@ export default function SmartButton({
         className={finalClassName}
         onClick={handleClick}
         aria-disabled={blocked}
+        aria-busy={loading}
       >
         {content}
       </a>

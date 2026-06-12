@@ -7,15 +7,15 @@ type HeaderNavProps = {
 const navItems = [
   {
     label: 'Приклади робіт',
-    href: '#examples',
+    href: '#applications',
   },
   {
-    label: 'Ціни',
-    href: '#prices',
+    label: 'Замовити',
+    href: '#more-info',
   },
   {
     label: 'Як це працює',
-    href: '#process',
+    href: '#how-it-works',
   },
 ]
 
