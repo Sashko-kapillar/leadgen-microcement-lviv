@@ -129,75 +129,9 @@ export default function MoreInfoForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-3xl bg-(--color-bg-card) p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:p-8 lg:p-10"
+      className="bg-bg-card mx-auto max-w-xl rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:p-8 lg:p-10"
     >
       <div className="space-y-7">
-        <fieldset>
-          <legend className="text-text-main mb-4 text-base font-semibold">Тип приміщення</legend>
-
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {roomTypes.map(item => {
-              const isActive = form.roomType === item.id
-
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => updateField('roomType', item.id)}
-                  className={cn(
-                    'flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl border p-3 text-center text-sm font-medium transition-colors duration-300',
-                    'focus-visible:outline-accent focus-visible:outline focus-visible:outline-offset-2',
-                    isActive
-                      ? 'border-accent text-text-main bg-(--color-bg-page-soft)'
-                      : 'border-border-soft text-text-soft hover:border-border-medium bg-white'
-                  )}
-                  aria-pressed={isActive}
-                >
-                  <svg className="text-accent size-7" aria-hidden="true">
-                    <use href={`/svg/icons.svg${item.icon}`} />
-                  </svg>
-
-                  <span>{item.label}</span>
-                </button>
-              )
-            })}
-          </div>
-
-          {errors.roomType && <p className="mt-2 text-sm text-red-600">{errors.roomType}</p>}
-        </fieldset>
-
-        <fieldset>
-          <legend className="text-text-main mb-4 text-base font-semibold">
-            Орієнтовна площа, м²
-          </legend>
-
-          <div className="flex flex-wrap gap-3">
-            {areaOptions.map(item => {
-              const isActive = form.area === item.id
-
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => updateField('area', item.id)}
-                  className={cn(
-                    'min-h-11 rounded-xl border px-5 text-sm font-medium transition-colors duration-300 sm:text-base',
-                    'focus-visible:outline-accent focus-visible:outline focus-visible:outline-offset-2',
-                    isActive
-                      ? 'border-accent text-text-main bg-(--color-bg-page-soft)'
-                      : 'border-border-soft text-text-soft hover:border-border-medium bg-white'
-                  )}
-                  aria-pressed={isActive}
-                >
-                  {item.label}
-                </button>
-              )
-            })}
-          </div>
-
-          {errors.area && <p className="mt-2 text-sm text-red-600">{errors.area}</p>}
-        </fieldset>
-
         <div className="space-y-5">
           <div>
             <label
@@ -234,11 +168,16 @@ export default function MoreInfoForm() {
               />
             </div>
 
-            {errors.name && (
-              <p id="more-info-name-error" role="alert" className="mt-2 text-sm text-red-600">
-                {errors.name}
-              </p>
-            )}
+            <p
+              id="more-info-name-error"
+              role={errors.name ? 'alert' : undefined}
+              data-error={errors.name ?? ''}
+              className={cn(
+                'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+                'before:block before:content-[attr(data-error)]',
+                errors.name ? 'before:opacity-100' : 'before:opacity-0'
+              )}
+            />
           </div>
 
           <div>
@@ -276,11 +215,16 @@ export default function MoreInfoForm() {
               />
             </div>
 
-            {errors.contact && (
-              <p id="more-info-contact-error" role="alert" className="mt-2 text-sm text-red-600">
-                {errors.contact}
-              </p>
-            )}
+            <p
+              id="more-info-contact-error"
+              role={errors.contact ? 'alert' : undefined}
+              data-error={errors.contact ?? ''}
+              className={cn(
+                'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+                'before:block before:content-[attr(data-error)]',
+                errors.contact ? 'before:opacity-100' : 'before:opacity-0'
+              )}
+            />
           </div>
         </div>
 
@@ -300,7 +244,7 @@ export default function MoreInfoForm() {
         <div>
           <SmartButton
             type="submit"
-            label="Отримати консультацію і купон"
+            label="Отримати знижку"
             loadingLabel="Відправляємо..."
             loading={isSubmitting}
             disabled={isSubmitting}

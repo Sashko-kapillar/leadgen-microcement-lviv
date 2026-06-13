@@ -109,7 +109,7 @@
   --color-text-main: #161616;
   --color-text-soft: #3f3a35;
   --color-text-muted: #746c63;
-  --color-text-inverse: #ffffff;
+  --color-text-inverse: #fafafa;
 
   /* Borders */
   --color-border-soft: #ddd5ca;
@@ -201,7 +201,7 @@
   }
 
   .section-header {
-    @apply mb-8 text-center;
+    @apply mb-8 w-full text-center sm:mb-12 lg:mb-14;
   }
 
   .section-title {

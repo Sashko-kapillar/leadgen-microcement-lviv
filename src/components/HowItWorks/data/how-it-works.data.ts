@@ -7,7 +7,7 @@ export type HowStepItem = {
 
 export const howItWorksData = {
   title: 'Як це працює',
-  subtitle: 'Від фото приміщення до попереднього розрахунку та монтажу під ключ.',
+  subtitle: 'Від фото приміщення до вибору матеріалу та монтажу під ключ.',
   steps: [
     {
       id: 1,
@@ -24,8 +24,8 @@ export const howItWorksData = {
     {
       id: 3,
       icon: '#icon-calculator',
-      title: 'Готуємо розрахунок',
-      text: 'Підбираємо матеріал, фактуру колір.',
+      title: 'Відвідуєте салон',
+      text: 'Підбираємо матеріал, фактуру, колір.',
     },
     {
       id: 4,

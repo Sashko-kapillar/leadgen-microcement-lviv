@@ -27,7 +27,7 @@ export const benefitsSectionData: BenefitsSectionData = {
       id: 'water-resistant',
       icon: '#icon-shield',
       title: 'Вологостійкий',
-      text: 'Підходить для ванних кімнат, душових зон та кухонь за умови правильної системи захисту.',
+      text: 'Підходить для: ванна, душ та кухня за умови правильного захисного покриття.',
     },
     {
       id: 'seamless',
@@ -38,7 +38,7 @@ export const benefitsSectionData: BenefitsSectionData = {
     {
       id: 'design',
       icon: '#icon-palette',
-      title: 'Будь-який колір і текстура',
+      title: 'Колір і текстура',
       text: 'Можна підібрати відтінок, фактуру та фініш під конкретний інтер’єр.',
     },
     {
@@ -51,8 +51,8 @@ export const benefitsSectionData: BenefitsSectionData = {
 
   cta: {
     title: 'Хочете зрозуміти, чи підійде мікроцемент для вашого приміщення?',
-    text: 'Надішліть фото або короткий опис — підкажемо оптимальне рішення та зорієнтуємо по вартості.',
-    buttonLabel: 'Надіслати фото для розрахунку',
-    href: '#contacts',
+    text: 'Відвідайте наш салон — підкажемо оптимальне рішення та зорієнтуємо по вартості.',
+    buttonLabel: 'Отримати персональну пропозицію',
+    href: '#more-info',
   },
 }

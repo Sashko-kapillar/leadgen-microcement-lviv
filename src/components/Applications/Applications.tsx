@@ -1,9 +1,20 @@
+import { useState } from 'react'
 import SmartButton from '@/components/ui/Button/SmartButton'
 import ApplicationCard from './ApplicationCard'
-import { applicationsSectionData } from './data/applications.data'
+import ApplicationLightbox from './ApplicationLightbox'
+import { applicationsSectionData, type ApplicationItem } from './data/applications.data'
 
 const Applications = () => {
   const { title, subtitle, items, cta } = applicationsSectionData
+  const [activeItem, setActiveItem] = useState<ApplicationItem | null>(null)
+
+  const handlePreviewOpen = (item: ApplicationItem) => {
+    setActiveItem(item)
+  }
+
+  const handlePreviewClose = () => {
+    setActiveItem(null)
+  }
 
   return (
     <section id="applications" className="bg-dust-white section">
@@ -16,9 +27,9 @@ const Applications = () => {
           <p className="text-text-muted mt-3 text-base leading-7">{subtitle}</p>
         </header>
 
-        <div className="flex flex-col gap-4 md:flex-row md:justify-center lg:flex-nowrap">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {items.map(item => (
-            <ApplicationCard key={item.id} item={item} />
+            <ApplicationCard key={item.id} item={item} onPreviewOpen={handlePreviewOpen} />
           ))}
         </div>
 
@@ -32,6 +43,8 @@ const Applications = () => {
           <SmartButton label={cta.buttonLabel} href={cta.href} />
         </div>
       </div>
+
+      <ApplicationLightbox item={activeItem} onClose={handlePreviewClose} />
     </section>
   )
 }

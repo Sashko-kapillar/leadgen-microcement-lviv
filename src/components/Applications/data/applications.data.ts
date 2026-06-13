@@ -9,8 +9,7 @@ export type ApplicationItem = {
   text: string
   image: string
   imageAlt: string
-  href: string
-  linkLabel: string
+  buttonLabel: string
 }
 
 export type ApplicationsSectionData = {
@@ -27,7 +26,8 @@ export type ApplicationsSectionData = {
 
 export const applicationsSectionData: ApplicationsSectionData = {
   title: 'Приклади застосування мікроцементу',
-  subtitle: 'Рішення для різних типів приміщень — оберіть сценарій, який підходить саме вам.',
+  subtitle:
+    'Подивіться, як мікроцемент виглядає у ванних, на підлозі, стінах і в комерційних просторах.',
 
   items: [
     {
@@ -36,8 +36,7 @@ export const applicationsSectionData: ApplicationsSectionData = {
       text: 'Вологостійке покриття для стін, підлоги та душових зон. Стильно та практично.',
       image: bathroomImage,
       imageAlt: 'Ванна кімната з мікроцементом',
-      href: '#contacts',
-      linkLabel: 'Дивитися приклади',
+      buttonLabel: 'Збільшити фото',
     },
     {
       id: 'floor',
@@ -45,8 +44,7 @@ export const applicationsSectionData: ApplicationsSectionData = {
       text: 'Безшовна підлога без плитки та швів. Міцна, тепла на дотик і зносостійка.',
       image: floorImage,
       imageAlt: 'Підлога з мікроцементу',
-      href: '#contacts',
-      linkLabel: 'Дивитися приклади',
+      buttonLabel: 'Збільшити фото',
     },
     {
       id: 'walls',
@@ -54,8 +52,7 @@ export const applicationsSectionData: ApplicationsSectionData = {
       text: 'Декоративне покриття для стін у житлових та комерційних інтер’єрах.',
       image: wallsImage,
       imageAlt: 'Стіна з мікроцементом',
-      href: '#contacts',
-      linkLabel: 'Дивитися приклади',
+      buttonLabel: 'Збільшити фото',
     },
     {
       id: 'kitchen',
@@ -63,15 +60,14 @@ export const applicationsSectionData: ApplicationsSectionData = {
       text: 'Гігієнічне, зносостійке рішення для кухонь, кафе, магазинів та офісів.',
       image: kitchenImage,
       imageAlt: 'Кухня з мікроцементом',
-      href: '#contacts',
-      linkLabel: 'Дивитися приклади',
+      buttonLabel: 'Збільшити фото',
     },
   ],
 
   cta: {
-    title: 'Не певні, який варіант підійде?',
-    text: 'Надішліть фото приміщення — ми підкажемо оптимальне рішення та порахуємо вартість.',
-    buttonLabel: 'Отримати розрахунок',
-    href: '#contacts',
+    title: 'Хочете побачити фактури наживо?',
+    text: 'Залиште заявку — отримайте знижку на матеріал та перегляньте зразки в салоні',
+    buttonLabel: 'Отримати знижку',
+    href: '#more-info',
   },
 }

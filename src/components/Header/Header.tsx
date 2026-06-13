@@ -40,7 +40,8 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
               <div className="hidden items-center justify-between gap-5.5 lg:flex lg:w-1/3 lg:justify-end-safe">
                 <SmartButton
                   type="button"
-                  label="Отримати розрахунок"
+                  label="Купон на знижку"
+                  href="#more-info"
                   variant="primary"
                   className="text-cta-text bg-cta hover:bg-accent hidden border-none px-8 py-3.5 text-base/[100%] font-semibold backdrop-blur-[5px] md:flex xl:px-5 xl:py-4.5 xl:text-[18px]/[1]"
                 />
