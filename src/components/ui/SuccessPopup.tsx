@@ -11,17 +11,14 @@ const SuccessPopup = ({ onClose }: SuccessPopupProps) => {
         </svg>
       </div>
 
-      <h2
-        id="success-popup-title"
-        className="font-second text-text-main text-[clamp(26px,5vw,34px)] leading-[1.22] font-medium tracking-[-0.055em]"
-      >
+      <h2 id="success-popup-title" className="section-title">
         Дякуємо!
         <br />
         Купон заброньовано
       </h2>
 
-      <p className="text-body text-text-soft mt-6 max-w-[320px]">
-        Менеджер зв’яжеться з вами протягом години у робочий час, щоб підтвердити купон.
+      <p className="text-body text-text-soft mt-6 max-w-[320px] text-center">
+        Менеджер зв’яжеться з вами протягом години у робочий час.
       </p>
 
       <button
