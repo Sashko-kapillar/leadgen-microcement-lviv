@@ -136,7 +136,7 @@ export default function MoreInfoForm() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="bg-bg-card mx-auto max-w-xl rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:p-8 lg:p-10"
+        className="bg-bg-card mx-auto rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] min-[820px]:w-[92%] min-[900px]:w-[82%] sm:p-6 md:p-8 lg:p-10"
       >
         <div className="space-y-7">
           <div className="space-y-5">

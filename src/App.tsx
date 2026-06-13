@@ -5,7 +5,7 @@ import Header from './components/Header/Header'
 import Hero from './components/Hero/Hero'
 // import Modules from './components/Modules/Modules'
 import MoreInfo from './components/MoreInfo/MoreInfo'
-// import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
+import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy'
 import Footer from './components/Footer/Footer'
 import Benefits from './components/Benefits/Benefits'
 import Applications from './components/Applications/Applications'
@@ -33,17 +33,17 @@ function App() {
     <>
       <div className="bg-page min-h-screen w-full">
         <Header isPrivacy={showPolicy} onShowHome={closePolicy} />
-        {/* {showPolicy ? (
+        {showPolicy ? (
           <PrivacyPolicy />
-        ) : ( */}
-        <main>
-          <Hero />
-          <Benefits />
-          <Applications />
-          <HowItWorks />
-          <MoreInfo />
-        </main>
-        {/* )} */}
+        ) : (
+          <main>
+            <Hero />
+            <Benefits />
+            <Applications />
+            <HowItWorks />
+            <MoreInfo />
+          </main>
+        )}
         <Footer onPolicyClick={openPolicy} />
         {/* <ToastProvider /> */}
       </div>

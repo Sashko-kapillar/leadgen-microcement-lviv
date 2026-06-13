@@ -1,126 +1,129 @@
+import {
+  footerBrand,
+  footerContacts,
+  footerCta,
+  footerNavigation,
+  footerServices,
+} from './data/footer.data'
+
 interface FooterProps {
   onPolicyClick?: () => void
 }
 
 const Footer = ({ onPolicyClick }: FooterProps) => {
   const currentYear = new Date().getFullYear()
+  const copyrightYears = `2024–${currentYear}`
 
   return (
-    <footer className="xs:pb-[7px] 4xl:pb-17 w-full pb-18.5 lg:pb-5 xl:pb-14.5">
-      <div className="section">
-        <div className="xs:pb-17 4xl:pb-6.5 pt-0 pb-0 lg:pb-5">
-          <div className="xl:justify-none xs:mb-15 4xl:mb-15 mb-10.5 flex flex-row justify-between lg:mb-8">
-            <div className="xs:gap-x-1.5 4xl:gap-x-3 flex flex-row items-start gap-x-[5px] lg:gap-x-2.5">
-              <a href="/" className="flex gap-1.5">
-                <span className="sr-only">Повернутись на головну</span>
-                <svg className="xs:w-9 xs:h-[50px] 4xl:w-[68px] 4xl:h-24 fill-tangerine group-hover:fill-tangerine h-[42px] w-[30px] transition-colors duration-300 lg:h-[78px] lg:w-14">
-                  <use href="/images/svg/icons.svg#icon-logo" />
-                </svg>
-                <div className="xs:pt-2 4xl:pt-5 flex flex-col pt-1.5 lg:pt-3">
-                  <span className="xs:text-xl 4xl:text-[38px] text-tangerine font-second leading-[120%] font-semibold lg:text-[32px]">
-                    MVK MASH
-                  </span>
-                  <span className="xs:text-sm 4xl:text-[26px] font-second text-[11px] leading-[120%] text-white lg:text-[22px]">
-                    SMART LOCKERS
-                  </span>
-                </div>
-              </a>
-            </div>
-            {/*Cоціальні мережі*/}
-            <div className="xs:gap-x-4 4xl:gap-x-14 flex gap-x-3 lg:w-1/2 lg:gap-x-5 lg:pt-4">
-              <a
-                href="https://t.me/HUB_mvk_mash"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Telegram"
-                className="group"
-              >
-                <svg className="xs:w-12 xs:h-12 4xl:w-20.5 4xl:h-20.5 fill-tangerine hover:fill-chilean-fire focus:fill-chilean-fire h-10.5 w-10.5 transition-colors duration-300 lg:h-14 lg:w-14">
-                  <use href="/images/svg/icons.svg#icon-telegram" />
-                </svg>
-              </a>
-              <a
-                href="https://www.instagram.com/HUB_mvk_mash"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="group"
-              >
-                <svg className="xs:w-12 xs:h-12 4xl:w-20.5 4xl:h-20.5 fill-tangerine hover:fill-chilean-fire focus:fill-chilean-fire h-10.5 w-10.5 transition-colors duration-300 lg:h-14 lg:w-14">
-                  <use href="/images/svg/icons.svg#icon-insta" />
-                </svg>
-              </a>
-              <a
-                href="https://www.tiktok.com/@hub.mvkmash"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Tik-Tok"
-                className="group"
-              >
-                <svg className="xs:w-12 xs:h-12 4xl:w-20.5 4xl:h-20.5 fill-tangerine hover:fill-chilean-fire focus:fill-chilean-fire h-10.5 w-10.5 transition-colors duration-300 lg:h-14 lg:w-14">
-                  <use href="/images/svg/icons.svg#icon-Union" />
-                </svg>
-              </a>
-            </div>
+    <footer id="contacts" className="bg-cta text-text-inverse">
+      <div className="section-container py-10 sm:py-12 lg:py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_1fr_1fr] lg:gap-12">
+          <div>
+            <a
+              href="#hero"
+              className="font-second text-logo text-accent-soft hover:text-accent-muted inline-block max-w-64 text-balance transition-colors duration-300"
+              aria-label="Мікроцемент Львів — перейти на початок сторінки"
+            >
+              {footerBrand.title}
+            </a>
+
+            <p className="text-body text-text-inverse/70 mt-5 max-w-80">{footerBrand.text}</p>
+
+            <a
+              href={footerCta.href}
+              className="text-button bg-accent-soft text-cta hover:bg-accent-muted focus-visible:outline-accent-soft mt-7 inline-flex min-h-12 items-center justify-center rounded-full px-6 transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4"
+            >
+              {footerCta.label}
+            </a>
           </div>
 
-          <div className="flex flex-col lg:flex-row">
-            <div className="flex flex-col lg:order-2 lg:w-1/2 lg:self-end">
-              <h3 className="4xl:text-xl/[120%] font-second xs:mb-4.5 4xl:mb-6 mb-6 self-start leading-[120%] font-medium">
-                Надсилайте свої запитання та пропозиції
-              </h3>
+          <nav aria-label="Навігація у футері">
+            <h2 className="text-card-title text-accent-soft mb-4">Навігація</h2>
 
-              <div className="xs:flex-row xs:mb-13 4xl:mb-0 mb-9 flex flex-col">
-                <div className="xs:gap-y-[5px] xs:mb-0 3xl:flex-none 3xl:mr-34 4xl:mr-50 mb-3 flex flex-1 flex-col items-start gap-y-0.5">
-                  <p className="4xl:text-xl/[120%] text-mountain-mist leading-[120%] font-medium">
-                    Запитання:
-                  </p>
+            <ul className="space-y-3">
+              {footerNavigation.map(item => (
+                <li key={item.label}>
                   <a
-                    href="mailto:hub@smart-hubmvk.com"
-                    className="4xl:text-lg/[111%] leading-[125%] font-semibold hover:underline"
+                    href={item.href}
+                    className="text-body text-text-inverse/70 hover:text-accent-soft inline-flex transition-colors duration-300"
                   >
-                    hub@smart-hubmvk.com
+                    {item.label}
                   </a>
-                </div>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-                <div className="flex flex-1 flex-col items-start gap-y-[5px]">
-                  <p className="4xl:text-xl/[120%] text-mountain-mist leading-[120%] font-medium">
-                    Контакти:
-                  </p>
-                  <p className="4xl:text-lg/[111%] leading-[125%] font-semibold">
-                    м. Київ, вул. Солом’янська 3
-                    <a href="tel:+380502138055" className="block hover:underline">
-                      +38 (050) 213 80 55
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div>
+            <h2 className="text-card-title text-accent-soft mb-4">Послуги</h2>
 
-            <div className="4xl:flex-row flex flex-col lg:w-1/2">
-              <div className="4xl:order-2 xs:mb-9.5 4xl:mb-0 mb-11 flex flex-row lg:mb-8 xl:whitespace-nowrap">
+            <ul className="space-y-3">
+              {footerServices.map(service => (
+                <li key={service} className="text-body text-text-inverse/70">
+                  {service}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <address className="not-italic">
+            <h2 className="text-card-title text-accent-soft mb-4">Контакти</h2>
+
+            <ul className="space-y-4">
+              <li className="flex gap-3">
+                <span
+                  className="bg-accent-soft mt-1.5 size-2 shrink-0 rounded-full"
+                  aria-hidden="true"
+                />
+
                 <a
-                  href="#"
-                  className="text-mountain-mist hover:text-tangerine group-focus:tangerine text-lg/[126%] tracking-[-0.03em] underline transition-colors duration-300"
-                  onClick={e => {
-                    e.preventDefault()
-                    onPolicyClick?.()
-                  }}
+                  href={footerContacts.phone.href}
+                  className="text-body-medium text-text-inverse hover:text-accent-soft transition-colors duration-300"
                 >
-                  Політика конфіденційності
+                  {footerContacts.phone.label}
                 </a>
-              </div>
+              </li>
 
-              <div className="4xl:mr-24 flex flex-col gap-4 lg:max-w-[296px] xl:max-w-[280px]">
-                <p className="text-mountain-mist leading-[120%] font-medium">
-                  © 2003–{currentYear} ТОВ «MBK МАШ»
-                </p>
-                <p className="text-mountain-mist leading-[120%] font-medium lg:text-left">
-                  Всі права захищені. Використання матеріалів сайту можливе тільки з посиланням на
-                  джерело.
-                </p>
-              </div>
-            </div>
+              <li className="flex gap-3">
+                <span
+                  className="bg-accent-soft mt-1.5 size-2 shrink-0 rounded-full"
+                  aria-hidden="true"
+                />
+
+                <span className="text-body text-text-inverse/70">{footerContacts.location}</span>
+              </li>
+
+              <li className="flex gap-3">
+                <span
+                  className="bg-accent-soft mt-1.5 size-2 shrink-0 rounded-full"
+                  aria-hidden="true"
+                />
+
+                <span className="text-body text-text-inverse/70">
+                  {footerContacts.schedule.map(item => (
+                    <span key={item} className="block">
+                      {item}
+                    </span>
+                  ))}
+                </span>
+              </li>
+            </ul>
+          </address>
+        </div>
+
+        <div className="border-border-soft/15 mt-10 border-t pt-6 sm:mt-12 lg:mt-14">
+          <div className="text-caption text-text-inverse/50 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
+            <span>© {copyrightYears} Мікроцемент Львів. Усі права захищені.</span>
+
+            {onPolicyClick && (
+              <button
+                type="button"
+                onClick={onPolicyClick}
+                className="text-accent-soft hover:text-accent-muted focus-visible:outline-accent-soft w-fit text-left underline-offset-4 transition-colors duration-300 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4"
+              >
+                Політика конфіденційності
+              </button>
+            )}
           </div>
         </div>
       </div>
