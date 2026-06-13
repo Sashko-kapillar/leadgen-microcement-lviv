@@ -26,8 +26,7 @@ export type ApplicationsSectionData = {
 
 export const applicationsSectionData: ApplicationsSectionData = {
   title: 'Приклади застосування мікроцементу',
-  subtitle:
-    'Подивіться, як мікроцемент виглядає у ванних, на підлозі, стінах і в комерційних просторах.',
+  subtitle: 'Подивіться, як мікроцемент виглядає у ванних, на підлозі та стінах.',
 
   items: [
     {

@@ -24,7 +24,7 @@ export default function MoreInfo() {
             <header className="section-header">
               <h2 className="section-title">Отримайте знижку на матеріал</h2>
 
-              <p className="section-subtitle max-w-100 sm:max-w-fit">
+              <p className="section-subtitle">
                 Залиште контакт — надішлемо персональний купон на матеріал.
               </p>
             </header>
