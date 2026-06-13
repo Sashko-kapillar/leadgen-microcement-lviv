@@ -56,10 +56,10 @@ export const applicationsSectionData: ApplicationsSectionData = {
     },
     {
       id: 'kitchen',
-      title: 'Кухні та комерційні простори',
+      title: 'Комерція',
       text: 'Гігієнічне, зносостійке рішення для кухонь, кафе, магазинів та офісів.',
       image: kitchenImage,
-      imageAlt: 'Кухня з мікроцементом',
+      imageAlt: 'Рецепшн з мікроцементом',
       buttonLabel: 'Збільшити фото',
     },
   ],

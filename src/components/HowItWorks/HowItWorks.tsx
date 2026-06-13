@@ -13,7 +13,7 @@ const HowItWorks = () => {
           <p className="section-subtitle">{subtitle}</p>
         </header>
 
-        <ol className="1xl:grid-cols-4 grid grid-cols-1 gap-5 lg:grid-cols-4 lg:gap-8">
+        <ol className="1xl:grid-cols-4 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {steps.map((step, index) => (
             <HowStepCard
               key={step.id}

@@ -24,7 +24,7 @@ const Hero = () => {
     <section className="bg-page relative mt-8 overflow-hidden lg:-mt-17">
       <div className="section-container relative z-10 flex flex-col items-center pb-0 lg:grid lg:min-h-[calc(100svh-72px)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:pt-0 lg:pb-16">
         <div className="relative z-10 flex flex-col items-center lg:min-w-[580px] lg:items-start xl:min-w-150">
-          <h1 className="text-hero max-w-[clamp(320px,calc(223.2px+23.05vw),400px)] tracking-tight md:max-w-[540px] lg:mt-60 lg:max-w-[720px] lg:min-w-140 lg:text-start xl:max-w-200">
+          <h1 className="text-hero max-w-[clamp(320px,calc(223.2px+23.05vw),400px)] font-semibold tracking-tight md:max-w-[540px] lg:mt-60 lg:max-w-[720px] lg:min-w-140 lg:text-start xl:max-w-200">
             Мікроцемент у Львові <br /> для ванних, підлог і стін
           </h1>
 
@@ -60,7 +60,7 @@ const Hero = () => {
             />
           </div>
 
-          <ul className="mt-10 hidden gap-6 sm:grid-cols-3 md:grid lg:mt-18 lg:max-w-[620px] lg:gap-3">
+          <ul className="mt-10 hidden sm:grid-cols-3 md:grid lg:mt-18 lg:max-w-[620px] lg:gap-1">
             {heroBadges.map(badge => (
               <li key={badge.title} className="flex items-start gap-2">
                 <span className="border-border-soft bg-surface/60 flex size-11 shrink-0 items-center justify-center rounded-full border lg:size-5">

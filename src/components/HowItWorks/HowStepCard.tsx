@@ -12,7 +12,7 @@ const HowStepCard = ({ step, isLast = false, isSecond = false }: HowStepCardProp
 
   return (
     <li className="relative flex flex-col items-center lg:flex-1">
-      <article className="border-border-soft bg-bg-card shadow-soft flex h-full min-h-[270px] w-full flex-col items-center justify-between rounded-2xl border px-6 py-8 text-center sm:max-w-none sm:gap-6 sm:max-lg:flex-row lg:flex-col lg:px-5 lg:py-9">
+      <article className="border-border-soft bg-bg-card shadow-soft flex h-full w-full flex-col items-center justify-between gap-6 rounded-2xl border px-6 py-8 text-center sm:max-w-none md:min-h-[270px] lg:flex-col lg:px-5 lg:py-9">
         <div className="bg-bg-card-soft flex size-18 items-center justify-center rounded-full">
           <svg className="text-accent size-8" aria-hidden="true">
             <use href={`/svg/icons.svg${step.icon}`} />
