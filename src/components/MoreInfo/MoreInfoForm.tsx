@@ -1,5 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import SmartButton from '../ui/Button/SmartButton'
+import Modal from '../ui/Modal'
+import SuccessPopup from '../ui/SuccessPopup'
 import { cn } from '@/lib/cn'
 import { areaOptions, couponInfo, moreInfoTrustLine, roomTypes } from './data/more-info.data'
 import {
@@ -71,6 +73,10 @@ export default function MoreInfoForm() {
     updateField(name as keyof MoreInfoFormValues, value)
   }
 
+  function handleCloseSuccessPopup() {
+    setSubmitStatus('idle')
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -126,159 +132,158 @@ export default function MoreInfoForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      noValidate
-      className="bg-bg-card mx-auto max-w-xl rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:p-8 lg:p-10"
-    >
-      <div className="space-y-7">
-        <div className="space-y-5">
-          <div>
-            <label
-              htmlFor="more-info-name"
-              className="text-text-main mb-2 block text-base font-semibold"
-            >
-              Ваше ім’я
-            </label>
-
-            <div className="relative">
-              <svg
-                className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
-                aria-hidden="true"
+    <>
+      <form
+        onSubmit={handleSubmit}
+        noValidate
+        className="bg-bg-card mx-auto max-w-xl rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:p-8 lg:p-10"
+      >
+        <div className="space-y-7">
+          <div className="space-y-5">
+            <div>
+              <label
+                htmlFor="more-info-name"
+                className="text-text-main mb-2 block text-base font-semibold"
               >
-                <use href="/svg/icons.svg#icon-user" />
-              </svg>
+                Ваше ім’я
+              </label>
 
-              <input
-                id="more-info-name"
-                name="name"
-                type="text"
-                value={form.name}
-                onChange={handleInputChange}
+              <div className="relative">
+                <svg
+                  className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
+                  aria-hidden="true"
+                >
+                  <use href="/svg/icons.svg#icon-user" />
+                </svg>
+
+                <input
+                  id="more-info-name"
+                  name="name"
+                  type="text"
+                  value={form.name}
+                  onChange={handleInputChange}
+                  className={cn(
+                    'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
+                    'placeholder:text-text-muted',
+                    'focus:border-accent',
+                    errors.name ? 'border-red-500' : 'border-border-soft'
+                  )}
+                  placeholder="Введіть ваше ім’я"
+                  autoComplete="given-name"
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? 'more-info-name-error' : undefined}
+                />
+              </div>
+
+              <p
+                id="more-info-name-error"
+                role={errors.name ? 'alert' : undefined}
+                data-error={errors.name ?? ''}
                 className={cn(
-                  'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
-                  'placeholder:text-text-muted',
-                  'focus:border-accent',
-                  errors.name ? 'border-red-500' : 'border-border-soft'
+                  'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+                  'before:block before:content-[attr(data-error)]',
+                  errors.name ? 'before:opacity-100' : 'before:opacity-0'
                 )}
-                placeholder="Введіть ваше ім’я"
-                autoComplete="given-name"
-                aria-invalid={Boolean(errors.name)}
-                aria-describedby={errors.name ? 'more-info-name-error' : undefined}
               />
             </div>
 
-            <p
-              id="more-info-name-error"
-              role={errors.name ? 'alert' : undefined}
-              data-error={errors.name ?? ''}
-              className={cn(
-                'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
-                'before:block before:content-[attr(data-error)]',
-                errors.name ? 'before:opacity-100' : 'before:opacity-0'
-              )}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="more-info-contact"
-              className="text-text-main mb-2 block text-base font-semibold"
-            >
-              Ваш телефон або Telegram
-            </label>
-
-            <div className="relative">
-              <svg
-                className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
-                aria-hidden="true"
+            <div>
+              <label
+                htmlFor="more-info-contact"
+                className="text-text-main mb-2 block text-base font-semibold"
               >
-                <use href="/svg/icons.svg#icon-phone" />
-              </svg>
+                Ваш телефон або Telegram
+              </label>
 
-              <input
-                id="more-info-contact"
-                name="contact"
-                type="text"
-                value={form.contact}
-                onChange={handleInputChange}
+              <div className="relative">
+                <svg
+                  className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
+                  aria-hidden="true"
+                >
+                  <use href="/svg/icons.svg#icon-phone" />
+                </svg>
+
+                <input
+                  id="more-info-contact"
+                  name="contact"
+                  type="text"
+                  value={form.contact}
+                  onChange={handleInputChange}
+                  className={cn(
+                    'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
+                    'placeholder:text-text-muted',
+                    'focus:border-accent',
+                    errors.contact ? 'border-red-500' : 'border-border-soft'
+                  )}
+                  placeholder="+38 (___) ___ __ __ або @username"
+                  autoComplete="tel"
+                  aria-invalid={Boolean(errors.contact)}
+                  aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}
+                />
+              </div>
+
+              <p
+                id="more-info-contact-error"
+                role={errors.contact ? 'alert' : undefined}
+                data-error={errors.contact ?? ''}
                 className={cn(
-                  'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
-                  'placeholder:text-text-muted',
-                  'focus:border-accent',
-                  errors.contact ? 'border-red-500' : 'border-border-soft'
+                  'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+                  'before:block before:content-[attr(data-error)]',
+                  errors.contact ? 'before:opacity-100' : 'before:opacity-0'
                 )}
-                placeholder="+38 (___) ___ __ __ або @username"
-                autoComplete="tel"
-                aria-invalid={Boolean(errors.contact)}
-                aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}
               />
             </div>
-
-            <p
-              id="more-info-contact-error"
-              role={errors.contact ? 'alert' : undefined}
-              data-error={errors.contact ?? ''}
-              className={cn(
-                'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
-                'before:block before:content-[attr(data-error)]',
-                errors.contact ? 'before:opacity-100' : 'before:opacity-0'
-              )}
-            />
           </div>
-        </div>
 
-        <div className="border-border-soft flex items-start gap-4 rounded-xl border bg-(--color-bg-page-soft) p-4">
-          <div className="text-accent flex size-11 shrink-0 items-center justify-center rounded-full bg-white">
-            <svg className="size-6" aria-hidden="true">
-              <use href="/svg/icons.svg#icon-gift" />
-            </svg>
+          <div className="border-border-soft flex items-start gap-4 rounded-xl border bg-(--color-bg-page-soft) p-4">
+            <div className="text-accent flex size-11 shrink-0 items-center justify-center rounded-full bg-white">
+              <svg className="size-6" aria-hidden="true">
+                <use href="/svg/icons.svg#icon-gift" />
+              </svg>
+            </div>
+
+            <div>
+              <p className="text-accent font-semibold">{couponInfo.title}</p>
+              <p className="text-text-soft mt-1 text-sm leading-[1.4]">{couponInfo.text}</p>
+            </div>
           </div>
 
           <div>
-            <p className="text-accent font-semibold">{couponInfo.title}</p>
-            <p className="text-text-soft mt-1 text-sm leading-[1.4]">{couponInfo.text}</p>
+            <SmartButton
+              type="submit"
+              label="Отримати знижку"
+              loadingLabel="Відправляємо..."
+              loading={isSubmitting}
+              disabled={isSubmitting}
+              size="lg"
+              className="bg-accent hover:bg-accent-hover w-full text-white"
+            />
+
+            <p className="text-text-muted mt-4 flex items-start justify-center gap-2 text-center text-sm leading-[1.4]">
+              <svg className="text-accent mt-0.5 size-4 shrink-0" aria-hidden="true">
+                <use href="/svg/icons.svg#icon-shield" />
+              </svg>
+
+              <span className="max-w-70 text-start md:max-w-none">{moreInfoTrustLine}</span>
+            </p>
+
+            {submitStatus === 'error' && (
+              <p
+                role="alert"
+                className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+              >
+                Не вдалося відправити заявку. Спробуйте ще раз або напишіть нам у Telegram.
+              </p>
+            )}
           </div>
         </div>
+      </form>
 
-        <div>
-          <SmartButton
-            type="submit"
-            label="Отримати знижку"
-            loadingLabel="Відправляємо..."
-            loading={isSubmitting}
-            disabled={isSubmitting}
-            size="lg"
-            className="bg-accent hover:bg-accent-hover w-full text-white"
-          />
-
-          <p className="text-text-muted mt-4 flex items-start justify-center gap-2 text-center text-sm leading-[1.4]">
-            <svg className="text-accent mt-0.5 size-4 shrink-0" aria-hidden="true">
-              <use href="/svg/icons.svg#icon-shield" />
-            </svg>
-
-            <span className="max-w-70 text-start md:max-w-none">{moreInfoTrustLine}</span>
-          </p>
-
-          {submitStatus === 'success' && (
-            <p
-              role="status"
-              className="mt-4 rounded-xl bg-green-50 px-4 py-3 text-sm font-medium text-green-700"
-            >
-              Заявку відправлено. Ми зв’яжемося з вами протягом години та надішлемо купон.
-            </p>
-          )}
-
-          {submitStatus === 'error' && (
-            <p
-              role="alert"
-              className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
-            >
-              Не вдалося відправити заявку. Спробуйте ще раз або напишіть нам у Telegram.
-            </p>
-          )}
-        </div>
-      </div>
-    </form>
+      {submitStatus === 'success' && (
+        <Modal onClose={handleCloseSuccessPopup} labelledBy="success-popup-title">
+          <SuccessPopup onClose={handleCloseSuccessPopup} />
+        </Modal>
+      )}
+    </>
   )
 }

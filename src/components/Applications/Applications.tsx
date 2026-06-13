@@ -20,11 +20,9 @@ const Applications = () => {
     <section id="applications" className="bg-dust-white section">
       <div className="section-container">
         <header className="section-header">
-          <h2 className="text-text-main text-3xl font-semibold tracking-tight md:text-4xl">
-            {title}
-          </h2>
+          <h2 className="section-title">{title}</h2>
 
-          <p className="text-text-muted mt-3 text-base leading-7">{subtitle}</p>
+          <p className="section-subtitle">{subtitle}</p>
         </header>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

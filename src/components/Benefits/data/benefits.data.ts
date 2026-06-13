@@ -19,8 +19,7 @@ export type BenefitsSectionData = {
 
 export const benefitsSectionData: BenefitsSectionData = {
   title: 'Переваги мікроцементу',
-  subtitle:
-    'Практичне декоративне покриття для ванних кімнат, підлоги, стін та комерційних просторів.',
+  subtitle: 'Практичне декоративне покриття для будь-яких типів приміщень.',
 
   items: [
     {
