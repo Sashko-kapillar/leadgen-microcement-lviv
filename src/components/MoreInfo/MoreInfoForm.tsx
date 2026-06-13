@@ -257,7 +257,7 @@ export default function MoreInfoForm() {
               <use href="/svg/icons.svg#icon-shield" />
             </svg>
 
-            <span>{moreInfoTrustLine}</span>
+            <span className="max-w-70 text-start md:max-w-none">{moreInfoTrustLine}</span>
           </p>
 
           {submitStatus === 'success' && (

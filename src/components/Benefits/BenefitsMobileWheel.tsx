@@ -7,7 +7,7 @@ type BenefitsMobileWheelProps = {
 
 const BenefitsMobileWheel = ({ items }: BenefitsMobileWheelProps) => {
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <div className="relative mb-12">
         {items.map((item, index) => {
           const cardStyle = {

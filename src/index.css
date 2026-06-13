@@ -205,7 +205,7 @@
   }
 
   .section-title {
-    @apply text-text-main mb-5 text-3xl font-semibold tracking-tight md:text-4xl;
+    @apply text-text-main mb-5 text-xl tracking-tight sm:text-3xl md:text-4xl;
   }
 
   .section-subtitle {
