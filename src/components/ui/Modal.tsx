@@ -10,6 +10,8 @@ type ModalProps = {
 
 const Modal = ({ children, onClose, labelledBy }: ModalProps) => {
   useEffect(() => {
+    const previousBodyOverflow = document.body.style.overflow
+
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose()
@@ -21,7 +23,7 @@ const Modal = ({ children, onClose, labelledBy }: ModalProps) => {
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = ''
+      document.body.style.overflow = previousBodyOverflow
     }
   }, [onClose])
 
