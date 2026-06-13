@@ -28,7 +28,7 @@ const HowStepCard = ({ step, isLast = false, isSecond = false }: HowStepCardProp
           {stepNumber}
         </span>
 
-        <h3 className="text-text-main lg:text-4 leading-tight font-semibold xl:text-lg">
+        <h3 className="text-text-main leading-tight font-semibold lg:text-base xl:text-lg">
           {step.title}
         </h3>
 

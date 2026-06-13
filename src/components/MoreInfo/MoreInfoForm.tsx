@@ -211,7 +211,7 @@ export default function MoreInfoForm() {
                 placeholder="+38 (___) ___ __ __ або @username"
                 autoComplete="tel"
                 aria-invalid={Boolean(errors.contact)}
-                aria-describedby="more-info-contact-error"
+                aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}
               />
             </div>
 

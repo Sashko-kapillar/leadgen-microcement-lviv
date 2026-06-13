@@ -10,6 +10,8 @@ const ApplicationLightbox = ({ item, onClose }: ApplicationLightboxProps) => {
   useEffect(() => {
     if (!item) return
 
+    const previousBodyOverflow = document.body.style.overflow
+
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose()
@@ -21,7 +23,7 @@ const ApplicationLightbox = ({ item, onClose }: ApplicationLightboxProps) => {
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = ''
+      document.body.style.overflow = previousBodyOverflow
     }
   }, [item, onClose])
 
