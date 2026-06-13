@@ -23,8 +23,8 @@ const Hero = () => {
   return (
     <section className="bg-page relative mt-8 overflow-hidden lg:-mt-17">
       <div className="section-container relative z-10 flex flex-col items-center pb-0 lg:grid lg:min-h-[calc(100svh-72px)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:pt-0 lg:pb-16">
-        <div className="relative z-10 flex flex-col items-center lg:min-w-[580px] lg:items-start xl:min-w-150">
-          <h1 className="text-hero max-w-[clamp(320px,calc(223.2px+23.05vw),400px)] font-semibold tracking-tight md:max-w-[540px] lg:mt-60 lg:max-w-[720px] lg:min-w-140 lg:text-start xl:max-w-200">
+        <div className="relative z-10 flex flex-col items-center min-[680px]:w-[clamp(580px,calc(540.47px+5.81vw),600px)] lg:items-start">
+          <h1 className="text-hero max-w-[clamp(480px,calc(240.2px+23.05vw),720px)] tracking-tight md:max-w-[540px] lg:mt-60 lg:max-w-[720px] lg:min-w-140 lg:text-start xl:max-w-200">
             Мікроцемент у Львові <br /> для ванних, підлог і стін
           </h1>
 
