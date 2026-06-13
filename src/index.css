@@ -250,9 +250,6 @@
     color: var(--color-text-soft);
   }
 
-  .text-section-title {
-  }
-
   .text-section-lead {
     font-size: clamp(15px, 1.1vw, 17px);
     line-height: 1.6;
