@@ -181,7 +181,7 @@ export default function MoreInfoForm() {
                 htmlFor="more-info-contact"
                 className="text-text-main mb-2 block text-base font-semibold"
               >
-                Ваш телефон або Telegram
+                Ваш телефон
               </label>
 
               <div className="relative">
