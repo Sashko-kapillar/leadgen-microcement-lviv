@@ -3,7 +3,7 @@ import SmartButton from '../ui/Button/SmartButton'
 import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
 import { cn } from '@/lib/cn'
-import { areaOptions, couponInfo, moreInfoTrustLine, roomTypes } from './data/more-info.data'
+import { couponInfo, moreInfoTrustLine } from './data/more-info.data'
 import {
   moreInfoSchema,
   type MoreInfoFormErrors,
@@ -13,8 +13,6 @@ import {
 const FORM_SUBMIT_TIMEOUT_MS = 10000
 
 const initialFormState: MoreInfoFormValues = {
-  roomType: roomTypes[0].id,
-  area: areaOptions[1].id,
   name: '',
   contact: '',
 }
@@ -35,13 +33,6 @@ function getFieldErrors(
 
     return acc
   }, {})
-}
-
-function getSelectedLabel<T extends readonly { id: string; label: string }[]>(
-  items: T,
-  selectedId: string
-) {
-  return items.find(item => item.id === selectedId)?.label ?? selectedId
 }
 
 export default function MoreInfoForm() {
@@ -90,8 +81,6 @@ export default function MoreInfoForm() {
 
     const payload = {
       ...result.data,
-      roomTypeLabel: getSelectedLabel(roomTypes, result.data.roomType),
-      areaLabel: getSelectedLabel(areaOptions, result.data.area),
       coupon: couponInfo,
     }
 

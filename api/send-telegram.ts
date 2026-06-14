@@ -1,8 +1,4 @@
 type TelegramPayload = {
-  roomType?: string
-  roomTypeLabel?: string
-  area?: string
-  areaLabel?: string
   name?: string
   contact?: string
   coupon?: {
@@ -50,9 +46,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
   }
 
-  const { roomTypeLabel, areaLabel, name, contact, coupon } = req.body ?? {}
+  const { name, contact, coupon } = req.body ?? {}
 
-  if (!name || !contact || !roomTypeLabel || !areaLabel) {
+  if (!name || !contact) {
     return res.status(400).json({
       success: false,
       message: 'Required fields are missing',
@@ -60,12 +56,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   const message = [
-    '<b>Нова заявка на консультацію і купон</b>',
+    '<b>Нова заявка на купон</b>',
     '',
     `<b>Ім'я:</b> ${escapeHtml(name)}`,
     `<b>Телефон або Telegram:</b> ${escapeHtml(contact)}`,
-    `<b>Тип приміщення:</b> ${escapeHtml(roomTypeLabel)}`,
-    `<b>Орієнтовна площа:</b> ${escapeHtml(areaLabel)}`,
     '',
     `<b>Купон:</b> ${escapeHtml(coupon?.title ?? 'Персональний купон -10% на матеріал')}`,
     `<b>Примітка:</b> клієнт хоче отримати купон для салону-партнера.`,
