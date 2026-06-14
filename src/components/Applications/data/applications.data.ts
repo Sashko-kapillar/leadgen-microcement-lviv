@@ -1,7 +1,7 @@
-import bathroomImage from '@/assets/images/applications/hero-bath.webp'
-import floorImage from '@/assets/images/applications/hero-bath.webp'
-import wallsImage from '@/assets/images/applications/hero-bath.webp'
-import kitchenImage from '@/assets/images/applications/hero-bath.webp'
+import bathroomImage from '@/assets/images/applications/bathroom.webp'
+import floorImage from '@/assets/images/applications/floor.webp'
+import wallsImage from '@/assets/images/applications/Oxi-NY.webp'
+import kitchenImage from '@/assets/images/applications/office.webp'
 
 export type ApplicationItem = {
   id: string
