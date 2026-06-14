@@ -3,7 +3,7 @@ import SmartButton from '../ui/Button/SmartButton'
 import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
 import { cn } from '@/lib/cn'
-import { areaOptions, couponInfo, moreInfoTrustLine, roomTypes } from './data/more-info.data'
+import { couponInfo, moreInfoTrustLine } from './data/more-info.data'
 import {
   moreInfoSchema,
   type MoreInfoFormErrors,
@@ -13,8 +13,6 @@ import {
 const FORM_SUBMIT_TIMEOUT_MS = 10000
 
 const initialFormState: MoreInfoFormValues = {
-  roomType: roomTypes[0].id,
-  area: areaOptions[1].id,
   name: '',
   contact: '',
 }
@@ -35,13 +33,6 @@ function getFieldErrors(
 
     return acc
   }, {})
-}
-
-function getSelectedLabel<T extends readonly { id: string; label: string }[]>(
-  items: T,
-  selectedId: string
-) {
-  return items.find(item => item.id === selectedId)?.label ?? selectedId
 }
 
 export default function MoreInfoForm() {
@@ -90,8 +81,6 @@ export default function MoreInfoForm() {
 
     const payload = {
       ...result.data,
-      roomTypeLabel: getSelectedLabel(roomTypes, result.data.roomType),
-      areaLabel: getSelectedLabel(areaOptions, result.data.area),
       coupon: couponInfo,
     }
 
@@ -192,7 +181,7 @@ export default function MoreInfoForm() {
                 htmlFor="more-info-contact"
                 className="text-text-main mb-2 block text-base font-semibold"
               >
-                Ваш телефон або Telegram
+                Ваш телефон
               </label>
 
               <div className="relative">
@@ -215,7 +204,7 @@ export default function MoreInfoForm() {
                     'focus:border-accent',
                     errors.contact ? 'border-red-500' : 'border-border-soft'
                   )}
-                  placeholder="+38 (___) ___ __ __ або @username"
+                  placeholder="+38 (___) ___ __ __"
                   autoComplete="tel"
                   aria-invalid={Boolean(errors.contact)}
                   aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}

@@ -12,10 +12,10 @@ const SuccessPopup = ({ onClose }: SuccessPopupProps) => {
       </div>
 
       <h2 id="success-popup-title" className="section-title">
-        Дякуємо!
-        <br />
-        Купон заброньовано
+        {' '}
+        Дякуємо!{' '}
       </h2>
+      <h3>Купон заброньовано</h3>
 
       <p className="text-body text-text-soft mt-6 max-w-[320px] text-center">
         Менеджер зв’яжеться з вами протягом години у робочий час.

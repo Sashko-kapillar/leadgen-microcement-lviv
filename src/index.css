@@ -262,7 +262,7 @@
     font-size: clamp(17px, 1.15vw, 19px);
     line-height: 1.25;
     letter-spacing: -0.03em;
-    font-weight: 800;
+    font-weight: 700;
   }
 
   .text-card-body {

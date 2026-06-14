@@ -14,9 +14,6 @@ const isValidPhoneOrTelegram = (value: string) => {
 }
 
 export const moreInfoSchema = z.object({
-  roomType: z.string().min(1, 'Оберіть тип приміщення'),
-  area: z.string().min(1, 'Оберіть орієнтовну площу'),
-
   name: z
     .string()
     .trim()
