@@ -13,14 +13,13 @@ const HowItWorks = () => {
           <p className="section-subtitle">{subtitle}</p>
         </header>
 
-        <ol className="1xl:grid-cols-4 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <p className="text-text-muted mb-4 text-center text-sm lg:hidden">
+          Гортайте, щоб побачити всі етапи
+        </p>
+
+        <ol className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-8 lg:overflow-visible lg:px-0 lg:pb-0">
           {steps.map((step, index) => (
-            <HowStepCard
-              key={step.id}
-              step={step}
-              isLast={index === steps.length - 1}
-              // isSecond={index === 1}
-            />
+            <HowStepCard key={step.id} step={step} isLast={index === steps.length - 1} />
           ))}
         </ol>
       </div>
