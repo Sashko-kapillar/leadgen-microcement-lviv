@@ -23,7 +23,7 @@ export const howItWorksData = {
     },
     {
       id: 3,
-      icon: '#icon-calculator',
+      icon: '#icon-location',
       title: 'Відвідуєте салон',
       text: 'Підбираємо матеріал, фактуру, колір.',
     },
