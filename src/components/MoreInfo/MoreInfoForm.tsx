@@ -215,7 +215,7 @@ export default function MoreInfoForm() {
                     'focus:border-accent',
                     errors.contact ? 'border-red-500' : 'border-border-soft'
                   )}
-                  placeholder="+38 (___) ___ __ __ або @username"
+                  placeholder="+38 (___) ___ __ __"
                   autoComplete="tel"
                   aria-invalid={Boolean(errors.contact)}
                   aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}

@@ -21,7 +21,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
           <div>
             <a
               href="#hero"
-              className="font-second text-logo text-accent-soft hover:text-accent-muted inline-block max-w-64 text-balance transition-colors duration-300"
+              className="text-logo text-accent-soft hover:text-accent-muted inline-block max-w-64 text-balance transition-colors duration-300"
               aria-label="Мікроцемент Львів — перейти на початок сторінки"
             >
               {footerBrand.title}
@@ -38,7 +38,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
           </div>
 
           <nav aria-label="Навігація у футері">
-            <h2 className="text-card-title text-accent-soft mb-4">Навігація</h2>
+            <h3 className="text-card-title text-accent-soft mb-4">Навігація</h3>
 
             <ul className="space-y-3">
               {footerNavigation.map(item => (
@@ -55,7 +55,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
           </nav>
 
           <div>
-            <h2 className="text-card-title text-accent-soft mb-4">Послуги</h2>
+            <h3 className="text-card-title text-accent-soft mb-4">Послуги</h3>
 
             <ul className="space-y-3">
               {footerServices.map(service => (
@@ -67,7 +67,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
           </div>
 
           <address className="not-italic">
-            <h2 className="text-card-title text-accent-soft mb-4">Контакти</h2>
+            <h3 className="text-card-title text-accent-soft mb-4">Контакти</h3>
 
             <ul className="space-y-4">
               <li className="flex gap-3">

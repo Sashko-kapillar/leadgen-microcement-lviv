@@ -32,11 +32,11 @@ export const footerServices = [
 
 export const footerContacts = {
   phone: {
-    label: '+38 (000) 000 00 00',
-    href: 'tel:+380000000000',
+    label: '+38 (099) 129-29-62',
+    href: 'tel:+380991292962',
   },
   location: 'Львів та область',
-  schedule: ['Пн–Пт: 10:00–19:00', 'Сб–Нд: вихідні'],
+  schedule: ['Пн–Пт: 10:00–18:00', 'Сб–Нд: вихідні'],
 }
 
 export const footerCta = {
