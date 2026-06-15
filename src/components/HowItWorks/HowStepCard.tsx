@@ -1,4 +1,5 @@
 import type { HowStepItem } from './data/how-it-works.data'
+import iconsSprite from '../../assets/images/svg/icons.svg'
 
 type HowStepCardProps = {
   step: HowStepItem
@@ -11,9 +12,9 @@ const HowStepCard = ({ step, isLast = false }: HowStepCardProps) => {
   return (
     <li className="relative flex min-w-[82%] snap-center flex-col items-center sm:min-w-[70%] md:min-w-[48%] lg:min-w-0 lg:flex-1 lg:snap-align-none">
       <article className="border-border-soft bg-bg-card shadow-soft flex h-full min-h-[280px] w-full flex-col items-center justify-between gap-6 rounded-2xl border px-6 py-8 text-center lg:min-h-[270px] lg:px-5 lg:py-9">
-        <div className="bg-bg-card-soft flex size-18 items-center justify-center rounded-full">
-          <svg className="text-accent size-8" aria-hidden="true">
-            <use href={`/svg/icons.svg${step.icon}`} />
+        <div>
+          <svg className="text-accent size-16" aria-hidden="true">
+            <use href={`${iconsSprite}${step.icon}`} />
           </svg>
         </div>
 

@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import SmartButton from '../ui/Button/SmartButton'
+import iconsSprite from '../../assets/images/svg/icons.svg'
 import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
 import { cn } from '@/lib/cn'
@@ -189,7 +190,7 @@ export default function MoreInfoForm() {
                   className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
                   aria-hidden="true"
                 >
-                  <use href="/svg/icons.svg#icon-phone" />
+                  <use href={`${iconsSprite}#phone`} />
                 </svg>
 
                 <input
@@ -226,8 +227,8 @@ export default function MoreInfoForm() {
 
           <div className="border-border-soft flex items-start gap-4 rounded-xl border bg-(--color-bg-page-soft) p-4">
             <div className="text-accent flex size-11 shrink-0 items-center justify-center rounded-full bg-white">
-              <svg className="size-6" aria-hidden="true">
-                <use href="/svg/icons.svg#icon-gift" />
+              <svg className="size-16" aria-hidden="true">
+                <use href={`${iconsSprite}#discount`} />
               </svg>
             </div>
 
@@ -250,7 +251,7 @@ export default function MoreInfoForm() {
 
             <p className="text-text-muted mt-4 flex items-start justify-center gap-2 text-center text-sm leading-[1.4]">
               <svg className="text-accent mt-0.5 size-4 shrink-0" aria-hidden="true">
-                <use href="/svg/icons.svg#icon-shield" />
+                <use href={`${iconsSprite}#working-hours`} />
               </svg>
 
               <span className="max-w-70 text-start md:max-w-none">{moreInfoTrustLine}</span>

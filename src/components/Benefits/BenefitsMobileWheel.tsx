@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { BenefitItem } from './data/benefits.data'
+import iconsSprite from '../../assets/images/svg/icons.svg'
 
 type BenefitsMobileWheelProps = {
   items: BenefitItem[]
@@ -21,9 +22,9 @@ const BenefitsMobileWheel = ({ items }: BenefitsMobileWheelProps) => {
               style={cardStyle}
               className="bg-bg-card sticky mb-6 rounded-2xl border border-neutral-300 p-5 shadow-lg"
             >
-              <div className="bg-bg-muted mb-6 flex size-12 items-center justify-center rounded-full">
-                <svg className="text-text-main size-5" aria-hidden="true">
-                  <use href={`/svg/icons.svg${item.icon}`} />
+              <div className="mb-4">
+                <svg className="text-accent-muted size-12" aria-hidden="true">
+                  <use href={`${iconsSprite}${item.icon}`} />
                 </svg>
               </div>
 

@@ -24,25 +24,25 @@ export const benefitsSectionData: BenefitsSectionData = {
   items: [
     {
       id: 'water-resistant',
-      icon: '#icon-shield',
+      icon: '#waterproof',
       title: 'Вологостійкий',
       text: 'Підходить для: ванна, душ та кухня за умови правильного захисного покриття.',
     },
     {
       id: 'seamless',
-      icon: '#icon-layers',
+      icon: '#seamless',
       title: 'Без швів',
       text: 'Створює цілісну поверхню без плиткових швів, у яких накопичується бруд.',
     },
     {
       id: 'design',
-      icon: '#icon-palette',
+      icon: '#color',
       title: 'Колір і текстура',
       text: 'Можна підібрати відтінок, фактуру та фініш під конкретний інтер’єр.',
     },
     {
       id: 'easy-care',
-      icon: '#icon-sparkle',
+      icon: '#easy-care',
       title: 'Легкий догляд',
       text: 'Поверхню легко прибирати без складного обслуговування.',
     },

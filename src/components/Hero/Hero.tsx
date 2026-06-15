@@ -1,19 +1,20 @@
 import SmartButton from '../ui/Button/SmartButton'
 import heroImage from '@/assets/images/hero-bath-mb.webp'
+import iconsSprite from '../../assets/images/svg/icons.svg'
 
 const heroBadges = [
   {
-    icon: '#icon-location',
+    icon: '#lviv',
     title: 'Львів та область',
     text: 'Працюємо локально',
   },
   {
-    icon: '#icon-shield',
+    icon: '#installation',
     title: 'Монтаж під ключ',
     text: 'Від підготовки до захисту',
   },
   {
-    icon: '#icon-clock',
+    icon: '#selection',
     title: 'Консультація в салоні',
     text: 'Швидко та зручно',
   },
@@ -63,9 +64,9 @@ const Hero = () => {
           <ul className="mt-10 hidden w-full sm:grid-cols-3 md:grid lg:mt-18 lg:max-w-[620px] lg:gap-1">
             {heroBadges.map(badge => (
               <li key={badge.title} className="flex items-start gap-2">
-                <span className="border-border-soft bg-surface/60 flex size-11 shrink-0 items-center justify-center rounded-full border lg:size-5">
-                  <svg className="text-text-soft size-6 lg:size-3" aria-hidden="true">
-                    <use href={`/svg/icons.svg${badge.icon}`} />
+                <span className="bg-surface/60">
+                  <svg className="text-text-soft size-6 lg:size-5" aria-hidden="true">
+                    <use href={`${iconsSprite}${badge.icon}`} />
                   </svg>
                 </span>
 
