@@ -11,25 +11,25 @@ export const howItWorksData = {
   steps: [
     {
       id: 1,
-      icon: '#icon-file',
+      icon: '#request',
       title: 'Залишаєте заявку',
       text: 'Через форму, Telegram або телефоном.',
     },
     {
       id: 2,
-      icon: '#icon-message',
+      icon: '#details',
       title: 'Уточнюємо деталі',
       text: 'Площа, стан поверхні та ваші побажання.',
     },
     {
       id: 3,
-      icon: '#icon-location',
+      icon: '#selection',
       title: 'Відвідуєте салон',
       text: 'Підбираємо матеріал, фактуру, колір.',
     },
     {
       id: 4,
-      icon: '#icon-tool',
+      icon: '#installation',
       title: 'Монтаж під ключ',
       text: 'Погоджуємо дату та приступаємо до робіт.',
     },

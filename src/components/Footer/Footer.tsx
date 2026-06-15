@@ -20,7 +20,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_1fr_1fr] lg:gap-12">
           <div>
             <a
-              href="#hero"
+              href="/"
               className="text-logo text-accent-soft hover:text-accent-muted inline-block max-w-64 text-balance transition-colors duration-300"
               aria-label="Мікроцемент Львів — перейти на початок сторінки"
             >
@@ -70,7 +70,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
             <h3 className="text-card-title text-accent-soft mb-4">Контакти</h3>
 
             <ul className="space-y-4">
-              <li className="flex gap-3">
+              <li className="flex items-center gap-3">
                 <span
                   className="bg-accent-soft mt-1.5 size-2 shrink-0 rounded-full"
                   aria-hidden="true"
