@@ -1,3 +1,5 @@
+import iconsSprite from '../../assets/images/svg/icons.svg'
+
 type SuccessPopupProps = {
   onClose: () => void
 }
@@ -7,7 +9,7 @@ const SuccessPopup = ({ onClose }: SuccessPopupProps) => {
     <div className="flex flex-col items-center text-center">
       <div className="bg-accent-soft text-accent mb-7 flex size-20 items-center justify-center rounded-full">
         <svg aria-hidden="true" className="size-9">
-          <use href="/svg/icons.svg#icon-check" />
+          <use href={`${iconsSprite}#coupon-booked`} />
         </svg>
       </div>
 
