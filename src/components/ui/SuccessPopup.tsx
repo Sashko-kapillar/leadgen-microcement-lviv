@@ -1,31 +1,58 @@
 import iconsSprite from '../../assets/images/svg/icons.svg'
+import coupon from '../../assets/images/moreInfo/popup-coupon.webp'
 
 type SuccessPopupProps = {
+  couponNumber: string
   onClose: () => void
 }
 
-const SuccessPopup = ({ onClose }: SuccessPopupProps) => {
+const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
   return (
     <div className="flex flex-col items-center text-center">
-      <div className="bg-accent-soft text-accent mb-7 flex size-20 items-center justify-center rounded-full">
-        <svg aria-hidden="true" className="size-9">
+      <div className="text-accent mb-6 flex size-16 items-center justify-center rounded-full border-4 border-current">
+        <svg aria-hidden="true" className="size-8">
           <use href={`${iconsSprite}#coupon-booked`} />
         </svg>
       </div>
 
       <h2 id="success-popup-title" className="section-title">
-        {' '}
-        Дякуємо!{' '}
+        Дякуємо!
       </h2>
-      <h3>Купон заброньовано</h3>
 
-      <p className="text-body text-text-soft mt-6 max-w-[320px] text-center">
-        Менеджер зв’яжеться з вами протягом години у робочий час.
+      <p className="text-body text-text-main mt-2">Купон на матеріал заброньовано</p>
+
+      <div className="relative mt-8 w-full max-w-[520px]">
+        <img
+          src={coupon}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none w-full select-none"
+        />
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+          <p className="text-accent text-[clamp(18px,3vw,28px)] font-bold tracking-wide uppercase">
+            Купон на матеріал
+          </p>
+
+          <div className="bg-accent/35 my-3 h-px w-[62%]" />
+
+          <p className="text-accent text-[clamp(64px,11vw,112px)] leading-none font-black tracking-tight">
+            -10%
+          </p>
+
+          <div className="bg-accent/35 my-4 h-px w-[62%]" />
+
+          <p className="text-text-main text-[clamp(18px,3vw,28px)] font-bold">№ {couponNumber}</p>
+        </div>
+      </div>
+
+      <p className="text-body text-text-soft mt-8 max-w-[520px] text-center">
+        Менеджер зв’яжеться з вами протягом години у робочий час, щоб підтвердити купон.
       </p>
 
       <button
         type="button"
-        className="text-button bg-accent text-cta-text hover:bg-accent-hover focus-visible:ring-accent mt-9 min-h-12 w-full rounded-xl px-6 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        className="text-button bg-accent text-cta-text hover:bg-accent-hover focus-visible:ring-accent mt-8 min-h-12 w-full rounded-xl px-6 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
         onClick={onClose}
       >
         Гаразд
