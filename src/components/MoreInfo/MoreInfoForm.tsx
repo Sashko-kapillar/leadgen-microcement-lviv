@@ -252,7 +252,7 @@ export default function MoreInfoForm() {
             </div>
 
             <div>
-              <p className="text-accent font-semibold">{couponInfo.title}</p>
+              <p className="text-accent max-w-50 font-semibold md:max-w-none">{couponInfo.title}</p>
               <p className="text-text-soft mt-1 text-sm leading-[1.4]">{couponInfo.text}</p>
             </div>
           </div>

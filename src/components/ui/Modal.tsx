@@ -45,9 +45,9 @@ const Modal = ({ children, onClose, labelledBy }: ModalProps) => {
           className="text-text-main hover:bg-bg-card-muted focus-visible:ring-accent absolute top-5 right-5 flex size-8 items-center justify-center rounded-full transition focus:outline-none focus-visible:ring-2"
           onClick={onClose}
         >
-          <svg aria-hidden="true" className="size-5">
+          {/* <svg aria-hidden="true" className="size-5">
             <use href="/svg/icons.svg#icon-close" />
-          </svg>
+          </svg> */}
         </button>
 
         {children}
