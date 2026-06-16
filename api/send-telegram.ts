@@ -57,7 +57,6 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   const safeCouponNumber = couponNumber || 'Не згенеровано'
-  const safeCouponTitle = coupon?.title || 'Купон -10% на матеріал'
   const safeCouponDiscount = coupon?.discount || '-10%'
   const safeCouponTarget = coupon?.target || 'матеріал'
 
@@ -69,9 +68,6 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     '',
     `<b>Купон:</b> ${escapeHtml(safeCouponNumber)}`,
     `<b>Знижка:</b> ${escapeHtml(safeCouponDiscount)} на ${escapeHtml(safeCouponTarget)}`,
-    `<b>Тип купона:</b> ${escapeHtml(safeCouponTitle)}`,
-    '',
-    '<b>Примітка:</b> клієнт хоче отримати купон для салону-партнера.',
   ].join('\n')
 
   const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
