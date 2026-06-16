@@ -26,7 +26,7 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
           src={coupon}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none min-w-110 select-none"
+          className="pointer-events-none max-w-90 select-none md:min-w-110"
         />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
@@ -36,7 +36,7 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
 
           <div className="bg-accent/35 my-3 h-px w-[62%]" />
 
-          <p className="text-accent text-[clamp(44px,11vw,80px)] leading-none font-black tracking-tight">
+          <p className="text-accent text-[clamp(44px,11vw,72px)] leading-none font-black tracking-tight">
             -10%
           </p>
 
