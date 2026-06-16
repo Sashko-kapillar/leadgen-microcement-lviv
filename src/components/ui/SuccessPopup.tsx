@@ -15,11 +15,11 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
         </svg>
       </div>
 
-      <h2 id="success-popup-title" className="section-title">
+      <h2 id="success-popup-title" className="section-title mb-2">
         Дякуємо!
       </h2>
 
-      <p className="text-body text-text-main mb-6">Купон на матеріал заброньовано</p>
+      <p className="text-body text-text-main mb-1">Купон на матеріал заброньовано</p>
 
       <div className="relative flex w-full justify-center">
         <img
@@ -46,7 +46,7 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
         </div>
       </div>
 
-      <p className="text-body text-text-soft mt-8 max-w-[520px] text-center">
+      <p className="text-body text-text-soft max-w-[520px] text-center">
         Менеджер зв’яжеться з вами протягом години у робочий час, щоб підтвердити купон.
       </p>
 
