@@ -18,6 +18,13 @@ const initialFormState: MoreInfoFormValues = {
   contact: '',
 }
 
+function generateCouponNumber() {
+  const number = Math.floor(Math.random() * 10000)
+  const paddedNumber = String(number).padStart(4, '0')
+
+  return `MC-${paddedNumber}`
+}
+
 function isAbortError(error: unknown) {
   return error instanceof Error && error.name === 'AbortError'
 }
@@ -41,6 +48,7 @@ export default function MoreInfoForm() {
   const [errors, setErrors] = useState<MoreInfoFormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [couponNumber, setCouponNumber] = useState('')
 
   function updateField<Key extends keyof MoreInfoFormValues>(
     field: Key,
@@ -67,6 +75,7 @@ export default function MoreInfoForm() {
 
   function handleCloseSuccessPopup() {
     setSubmitStatus('idle')
+    setCouponNumber('')
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -80,9 +89,12 @@ export default function MoreInfoForm() {
       return
     }
 
+    const newCouponNumber = generateCouponNumber()
+
     const payload = {
       ...result.data,
       coupon: couponInfo,
+      couponNumber: newCouponNumber,
     }
 
     const controller = new AbortController()
@@ -108,10 +120,12 @@ export default function MoreInfoForm() {
       window.dataLayer = window.dataLayer || []
       window.dataLayer.push({
         event: 'coupon_submit',
+        couponNumber: newCouponNumber,
       })
 
       setForm(initialFormState)
       setErrors({})
+      setCouponNumber(newCouponNumber)
       setSubmitStatus('success')
     } catch (error) {
       if (isAbortError(error)) {
@@ -276,7 +290,7 @@ export default function MoreInfoForm() {
 
       {submitStatus === 'success' && (
         <Modal onClose={handleCloseSuccessPopup} labelledBy="success-popup-title">
-          <SuccessPopup onClose={handleCloseSuccessPopup} />
+          <SuccessPopup couponNumber={couponNumber} onClose={handleCloseSuccessPopup} />
         </Modal>
       )}
     </>
