@@ -36,7 +36,7 @@ const Modal = ({ children, onClose, labelledBy }: ModalProps) => {
       onClick={onClose}
     >
       <div
-        className="border-border-soft bg-bg-card relative w-full max-w-[430px] rounded-3xl border px-6 py-9 shadow-2xl sm:px-9 sm:py-10"
+        className="border-border-soft bg-bg-card relative w-full max-w-[430px] rounded-3xl border p-6 shadow-2xl"
         onClick={event => event.stopPropagation()}
       >
         <button
