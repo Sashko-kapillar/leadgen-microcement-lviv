@@ -21,15 +21,15 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
 
       <p className="text-body text-text-main mb-1">Купон на матеріал заброньовано</p>
 
-      <div className="relative flex w-full justify-center">
+      <div className="relative flex aspect-3/2 w-full max-w-90 justify-center md:max-w-110">
         <img
           src={coupon}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none max-w-90 select-none md:min-w-110"
+          className="pointer-events-none absolute inset-0 size-full object-contain select-none"
         />
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+        <div className="relative z-10 flex size-full flex-col items-center justify-center px-8 text-center">
           <p className="text-accent text-[clamp(18px,3vw,28px)] font-bold tracking-wide uppercase">
             Купон на матеріал
           </p>
