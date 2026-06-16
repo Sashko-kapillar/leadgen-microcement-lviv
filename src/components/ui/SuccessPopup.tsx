@@ -34,13 +34,13 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
             Купон на матеріал
           </p>
 
-          <div className="bg-accent/35 my-3 h-px w-[62%]" />
+          <div className="bg-accent/35 my-1 h-px w-[62%]" />
 
-          <p className="text-accent text-[clamp(44px,11vw,72px)] leading-none font-black tracking-tight">
+          <p className="text-accent text-[clamp(28px,11vw,72px)] leading-none font-black tracking-tight">
             -10%
           </p>
 
-          <div className="bg-accent/35 my-4 h-px w-[62%]" />
+          <div className="bg-accent/35 my-2 h-px w-[62%]" />
 
           <p className="text-text-main text-[clamp(18px,3vw,28px)] font-bold">№ {couponNumber}</p>
         </div>
