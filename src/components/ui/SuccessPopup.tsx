@@ -9,8 +9,8 @@ type SuccessPopupProps = {
 const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
   return (
     <div className="flex flex-col items-center text-center">
-      <div className="text-accent mb-6 flex size-16 items-center justify-center rounded-full border-4 border-current">
-        <svg aria-hidden="true" className="size-8">
+      <div className="text-accent mb-6 flex items-center justify-center">
+        <svg aria-hidden="true" className="size-16">
           <use href={`${iconsSprite}#coupon-booked`} />
         </svg>
       </div>
@@ -19,14 +19,14 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
         Дякуємо!
       </h2>
 
-      <p className="text-body text-text-main mt-2">Купон на матеріал заброньовано</p>
+      <p className="text-body text-text-main mb-6">Купон на матеріал заброньовано</p>
 
-      <div className="relative mt-8 w-full max-w-[520px]">
+      <div className="relative flex w-full justify-center">
         <img
           src={coupon}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none w-full select-none"
+          className="pointer-events-none min-w-110 select-none"
         />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
@@ -36,7 +36,7 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
 
           <div className="bg-accent/35 my-3 h-px w-[62%]" />
 
-          <p className="text-accent text-[clamp(64px,11vw,112px)] leading-none font-black tracking-tight">
+          <p className="text-accent text-[clamp(44px,11vw,80px)] leading-none font-black tracking-tight">
             -10%
           </p>
 
