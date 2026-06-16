@@ -40,11 +40,11 @@ const Hero = () => {
               href="#more-info"
               className="lg:hover:bg-accent/90 w-full"
               size="lg"
-              icon={
-                <svg className="size-5" aria-hidden="true">
-                  <use href="/svg/icons.svg#icon-calculator" />
-                </svg>
-              }
+              // icon={
+              //   <svg className="size-5" aria-hidden="true">
+              //     <use href="/svg/icons.svg#icon-calculator" />
+              //   </svg>
+              // }
             />
 
             <SmartButton
@@ -53,11 +53,11 @@ const Hero = () => {
               variant="outline"
               className="w-full"
               size="lg"
-              icon={
-                <svg className="size-5" aria-hidden="true">
-                  <use href="/svg/icons.svg#icon-image" />
-                </svg>
-              }
+              // icon={
+              //   <svg className="size-5" aria-hidden="true">
+              //     <use href="/svg/icons.svg#icon-image" />
+              //   </svg>
+              // }
             />
           </div>
 
