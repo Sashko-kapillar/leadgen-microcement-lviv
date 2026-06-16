@@ -15,18 +15,18 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
         </svg>
       </div>
 
-      <h2 id="success-popup-title" className="section-title">
+      <h2 id="success-popup-title" className="section-title mb-2">
         Дякуємо!
       </h2>
 
-      <p className="text-body text-text-main mb-6">Купон на матеріал заброньовано</p>
+      <p className="text-body text-text-main mb-1">Купон на матеріал заброньовано</p>
 
       <div className="relative flex w-full justify-center">
         <img
           src={coupon}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none min-w-110 select-none"
+          className="pointer-events-none max-w-90 select-none md:min-w-110"
         />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
@@ -34,19 +34,19 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
             Купон на матеріал
           </p>
 
-          <div className="bg-accent/35 my-3 h-px w-[62%]" />
+          <div className="bg-accent/35 my-1 h-px w-[62%]" />
 
-          <p className="text-accent text-[clamp(44px,11vw,80px)] leading-none font-black tracking-tight">
+          <p className="text-accent text-[clamp(28px,11vw,72px)] leading-none font-black tracking-tight">
             -10%
           </p>
 
-          <div className="bg-accent/35 my-4 h-px w-[62%]" />
+          <div className="bg-accent/35 my-2 h-px w-[62%]" />
 
           <p className="text-text-main text-[clamp(18px,3vw,28px)] font-bold">№ {couponNumber}</p>
         </div>
       </div>
 
-      <p className="text-body text-text-soft mt-8 max-w-[520px] text-center">
+      <p className="text-body text-text-soft max-w-[520px] text-center">
         Менеджер зв’яжеться з вами протягом години у робочий час, щоб підтвердити купон.
       </p>
 
