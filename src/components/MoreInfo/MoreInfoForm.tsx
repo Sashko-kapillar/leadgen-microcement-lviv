@@ -105,6 +105,11 @@ export default function MoreInfoForm() {
         throw new Error('Request failed')
       }
 
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({
+        event: 'coupon_submit',
+      })
+
       setForm(initialFormState)
       setErrors({})
       setSubmitStatus('success')
