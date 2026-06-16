@@ -1,3 +1,5 @@
+import iconsSprite from '../../assets/images/svg/icons.svg'
+
 import {
   footerBrand,
   footerContacts,
@@ -71,10 +73,9 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
 
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
-                <span
-                  className="bg-accent-soft mt-1.5 size-2 shrink-0 rounded-full"
-                  aria-hidden="true"
-                />
+                <svg aria-hidden="true" className="size-5">
+                  <use href={`${iconsSprite}#phone`} />
+                </svg>
 
                 <a
                   href={footerContacts.phone.href}
@@ -85,19 +86,17 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
               </li>
 
               <li className="flex gap-3">
-                <span
-                  className="bg-accent-soft mt-1.5 size-2 shrink-0 rounded-full"
-                  aria-hidden="true"
-                />
+                <svg aria-hidden="true" className="size-5">
+                  <use href={`${iconsSprite}#location`} />
+                </svg>
 
                 <span className="text-body text-text-inverse/70">{footerContacts.location}</span>
               </li>
 
               <li className="flex gap-3">
-                <span
-                  className="bg-accent-soft mt-1.5 size-2 shrink-0 rounded-full"
-                  aria-hidden="true"
-                />
+                <svg aria-hidden="true" className="size-5">
+                  <use href={`${iconsSprite}#working-hours`} />
+                </svg>
 
                 <span className="text-body text-text-inverse/70">
                   {footerContacts.schedule.map(item => (
