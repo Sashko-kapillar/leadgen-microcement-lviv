@@ -1,6 +1,7 @@
 type TelegramPayload = {
   name?: string
   contact?: string
+  couponNumber?: string
   coupon?: {
     title?: string
     text?: string
@@ -46,7 +47,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
   }
 
-  const { name, contact, coupon } = req.body ?? {}
+  const { name, contact, couponNumber, coupon } = req.body ?? {}
 
   if (!name || !contact) {
     return res.status(400).json({
@@ -55,14 +56,22 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
   }
 
+  const safeCouponNumber = couponNumber || 'Не згенеровано'
+  const safeCouponTitle = coupon?.title || 'Купон -10% на матеріал'
+  const safeCouponDiscount = coupon?.discount || '-10%'
+  const safeCouponTarget = coupon?.target || 'матеріал'
+
   const message = [
-    '<b>Нова заявка на купон</b>',
+    '<b>Нова заявка з сайту</b>',
     '',
     `<b>Ім'я:</b> ${escapeHtml(name)}`,
     `<b>Телефон або Telegram:</b> ${escapeHtml(contact)}`,
     '',
-    `<b>Купон:</b> ${escapeHtml(coupon?.title ?? 'Персональний купон -10% на матеріал')}`,
-    `<b>Примітка:</b> клієнт хоче отримати купон для салону-партнера.`,
+    `<b>Купон:</b> ${escapeHtml(safeCouponNumber)}`,
+    `<b>Знижка:</b> ${escapeHtml(safeCouponDiscount)} на ${escapeHtml(safeCouponTarget)}`,
+    `<b>Тип купона:</b> ${escapeHtml(safeCouponTitle)}`,
+    '',
+    '<b>Примітка:</b> клієнт хоче отримати купон для салону-партнера.',
   ].join('\n')
 
   const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
