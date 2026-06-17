@@ -68,12 +68,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     `<b>Імʼя:</b> ${escapeHtml(name)}`,
     `<b>Контакт:</b> ${escapeHtml(contact)}`,
     '',
-    `<b>Купон:</b> ${escapeHtml(coupon?.title ?? 'КУПОН НА МАТЕРІАЛ')}`,
+
     `<b>Знижка:</b> ${escapeHtml(coupon?.discount ?? '-10%')}`,
     `<b>Номер:</b> ${escapeHtml(couponNumber)}`,
-    '',
-    coupon?.text ? `<b>Текст:</b> ${escapeHtml(coupon.text)}` : '',
-    coupon?.target ? `<b>Для:</b> ${escapeHtml(coupon.target)}` : '',
   ]
     .filter(Boolean)
     .join('\n')
