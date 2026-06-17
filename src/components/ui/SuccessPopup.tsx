@@ -1,12 +1,75 @@
+import { useEffect, useRef } from 'react'
 import iconsSprite from '../../assets/images/svg/icons.svg'
 import coupon from '../../assets/images/moreInfo/popup-coupon.webp'
+import CouponImageCard from './CouponImageCard'
 
 type SuccessPopupProps = {
   couponNumber: string
   onClose: () => void
 }
 
+async function createCouponImageDataUrl(element: HTMLElement) {
+  const { toPng } = await import('html-to-image')
+
+  return toPng(element, {
+    cacheBust: true,
+    pixelRatio: 2,
+    backgroundColor: '#ffffff',
+  })
+}
+
+async function sendCouponImageToTelegram(couponNumber: string, couponImageDataUrl: string) {
+  const response = await fetch('/api/send-coupon-image', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      couponNumber,
+      couponImageDataUrl,
+    }),
+  })
+
+  if (!response.ok) {
+    throw new Error('Coupon image request failed')
+  }
+}
+
 const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
+  const couponImageRef = useRef<HTMLDivElement | null>(null)
+  const hasSentCouponImageRef = useRef(false)
+
+  useEffect(() => {
+    if (!couponNumber || hasSentCouponImageRef.current) return
+
+    hasSentCouponImageRef.current = true
+
+    let isCancelled = false
+
+    async function sendCouponImage() {
+      try {
+        await new Promise(requestAnimationFrame)
+        await new Promise(requestAnimationFrame)
+
+        if (isCancelled || !couponImageRef.current) return
+
+        const couponImageDataUrl = await createCouponImageDataUrl(couponImageRef.current)
+
+        if (isCancelled) return
+
+        await sendCouponImageToTelegram(couponNumber, couponImageDataUrl)
+      } catch (error) {
+        console.error('Failed to send coupon image:', error)
+      }
+    }
+
+    sendCouponImage()
+
+    return () => {
+      isCancelled = true
+    }
+  }, [couponNumber])
+
   return (
     <div className="flex flex-col items-center text-center">
       <div className="text-accent mb-6 flex items-center justify-center">
@@ -57,6 +120,12 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
       >
         Гаразд
       </button>
+
+      <div className="pointer-events-none fixed top-0 left-0 -z-10 opacity-0" aria-hidden="true">
+        <div ref={couponImageRef}>
+          <CouponImageCard couponNumber={couponNumber} />
+        </div>
+      </div>
     </div>
   )
 }
