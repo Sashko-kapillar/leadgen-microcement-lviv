@@ -21,7 +21,7 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
 
       <p className="text-body text-text-main mb-1">Купон на матеріал заброньовано</p>
 
-      <div className="relative flex aspect-3/2 w-full max-w-90 justify-center md:max-w-110">
+      <div className="relative flex aspect-3/2 w-full max-w-90 justify-center md:min-w-110">
         <img
           src={coupon}
           alt=""

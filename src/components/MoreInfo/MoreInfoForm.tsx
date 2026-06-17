@@ -162,7 +162,7 @@ export default function MoreInfoForm() {
                   className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
                   aria-hidden="true"
                 >
-                  <use href="/svg/icons.svg#icon-user" />
+                  <use href={`${iconsSprite}#user`} />
                 </svg>
 
                 <input
