@@ -1,8 +1,9 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import SmartButton from '../ui/Button/SmartButton'
 import iconsSprite from '../../assets/images/svg/icons.svg'
 import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
+import CouponImageCard from '../ui/CouponImageCard'
 import { cn } from '@/lib/cn'
 import { couponInfo, moreInfoTrustLine } from './data/more-info.data'
 import {
@@ -23,6 +24,22 @@ function generateCouponNumber() {
   const paddedNumber = String(number).padStart(4, '0')
 
   return `MC-${paddedNumber}`
+}
+
+async function createCouponImageDataUrl(element: HTMLElement) {
+  const { toPng } = await import('html-to-image')
+
+  return toPng(element, {
+    cacheBust: true,
+    pixelRatio: 2,
+    backgroundColor: '#ffffff',
+  })
+}
+
+function waitForNextFrame() {
+  return new Promise<void>(resolve => {
+    requestAnimationFrame(() => resolve())
+  })
 }
 
 function isAbortError(error: unknown) {
@@ -49,6 +66,9 @@ export default function MoreInfoForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [couponNumber, setCouponNumber] = useState('')
+  const [pendingCouponNumber, setPendingCouponNumber] = useState('')
+
+  const couponImageRef = useRef<HTMLDivElement | null>(null)
 
   function updateField<Key extends keyof MoreInfoFormValues>(
     field: Key,
@@ -76,6 +96,7 @@ export default function MoreInfoForm() {
   function handleCloseSuccessPopup() {
     setSubmitStatus('idle')
     setCouponNumber('')
+    setPendingCouponNumber('')
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -90,19 +111,29 @@ export default function MoreInfoForm() {
     }
 
     const newCouponNumber = generateCouponNumber()
-
-    const payload = {
-      ...result.data,
-      coupon: couponInfo,
-      couponNumber: newCouponNumber,
-    }
-
     const controller = new AbortController()
     const timeoutId = window.setTimeout(() => controller.abort(), FORM_SUBMIT_TIMEOUT_MS)
 
     try {
       setIsSubmitting(true)
       setSubmitStatus('idle')
+      setPendingCouponNumber(newCouponNumber)
+
+      await waitForNextFrame()
+      await waitForNextFrame()
+
+      let couponImageDataUrl: string | undefined
+
+      if (couponImageRef.current) {
+        couponImageDataUrl = await createCouponImageDataUrl(couponImageRef.current)
+      }
+
+      const payload = {
+        ...result.data,
+        coupon: couponInfo,
+        couponNumber: newCouponNumber,
+        couponImageDataUrl,
+      }
 
       const response = await fetch('/api/send-telegram', {
         method: 'POST',
@@ -287,6 +318,12 @@ export default function MoreInfoForm() {
           </div>
         </div>
       </form>
+
+      <div className="pointer-events-none fixed top-0 left-[-9999px]" aria-hidden="true">
+        <div ref={couponImageRef}>
+          <CouponImageCard couponNumber={pendingCouponNumber} />
+        </div>
+      </div>
 
       {submitStatus === 'success' && (
         <Modal onClose={handleCloseSuccessPopup} labelledBy="success-popup-title">
