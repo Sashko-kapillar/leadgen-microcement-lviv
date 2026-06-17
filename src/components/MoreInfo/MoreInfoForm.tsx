@@ -1,8 +1,9 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import SmartButton from '../ui/Button/SmartButton'
 import iconsSprite from '../../assets/images/svg/icons.svg'
 import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
+import CouponImageCard from '../ui/CouponImageCard'
 import { cn } from '@/lib/cn'
 import { couponInfo, moreInfoTrustLine } from './data/more-info.data'
 import {
@@ -23,6 +24,16 @@ function generateCouponNumber() {
   const paddedNumber = String(number).padStart(4, '0')
 
   return `MC-${paddedNumber}`
+}
+
+async function createCouponImageDataUrl(element: HTMLElement) {
+  const { toPng } = await import('html-to-image')
+
+  return toPng(element, {
+    cacheBust: true,
+    pixelRatio: 2,
+    backgroundColor: '#ffffff',
+  })
 }
 
 function isAbortError(error: unknown) {
@@ -50,6 +61,9 @@ export default function MoreInfoForm() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [couponNumber, setCouponNumber] = useState('')
 
+  const couponImageRef = useRef<HTMLDivElement | null>(null)
+  const pendingCouponNumberRef = useRef('')
+
   function updateField<Key extends keyof MoreInfoFormValues>(
     field: Key,
     value: MoreInfoFormValues[Key]
@@ -76,6 +90,7 @@ export default function MoreInfoForm() {
   function handleCloseSuccessPopup() {
     setSubmitStatus('idle')
     setCouponNumber('')
+    pendingCouponNumberRef.current = ''
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -90,11 +105,23 @@ export default function MoreInfoForm() {
     }
 
     const newCouponNumber = generateCouponNumber()
+    pendingCouponNumberRef.current = newCouponNumber
+
+    let couponImageDataUrl: string | undefined
+
+    try {
+      if (couponImageRef.current) {
+        couponImageDataUrl = await createCouponImageDataUrl(couponImageRef.current)
+      }
+    } catch (error) {
+      console.error('Failed to create coupon image:', error)
+    }
 
     const payload = {
       ...result.data,
       coupon: couponInfo,
       couponNumber: newCouponNumber,
+      couponImageDataUrl,
     }
 
     const controller = new AbortController()
@@ -287,6 +314,12 @@ export default function MoreInfoForm() {
           </div>
         </div>
       </form>
+
+      <div className="pointer-events-none fixed top-0 left-0 -z-10 opacity-0" aria-hidden="true">
+        <div ref={couponImageRef}>
+          <CouponImageCard couponNumber={pendingCouponNumberRef.current} />
+        </div>
+      </div>
 
       {submitStatus === 'success' && (
         <Modal onClose={handleCloseSuccessPopup} labelledBy="success-popup-title">
