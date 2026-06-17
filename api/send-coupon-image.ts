@@ -14,14 +14,6 @@ type ApiResponse = {
   }
 }
 
-function escapeHtml(value: unknown) {
-  return String(value ?? '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-}
-
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({
@@ -60,18 +52,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     const base64Image = couponImageDataUrl.replace('data:image/png;base64,', '')
     const imageBuffer = Buffer.from(base64Image, 'base64')
 
-    const caption = [
-      '<b>PNG купон для менеджера</b>',
-      '',
-      `<b>Купон:</b> ${escapeHtml(couponNumber)}`,
-      '<b>Знижка:</b> -10% на матеріал',
-    ].join('\n')
-
     const telegramFormData = new FormData()
 
     telegramFormData.append('chat_id', chatId)
-    telegramFormData.append('caption', caption)
-    telegramFormData.append('parse_mode', 'HTML')
     telegramFormData.append(
       'document',
       new Blob([imageBuffer], { type: 'image/png' }),
