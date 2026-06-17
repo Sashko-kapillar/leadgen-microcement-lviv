@@ -36,6 +36,12 @@ async function createCouponImageDataUrl(element: HTMLElement) {
   })
 }
 
+function waitForNextFrame() {
+  return new Promise<void>(resolve => {
+    requestAnimationFrame(() => resolve())
+  })
+}
+
 function isAbortError(error: unknown) {
   return error instanceof Error && error.name === 'AbortError'
 }
@@ -60,9 +66,9 @@ export default function MoreInfoForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [couponNumber, setCouponNumber] = useState('')
+  const [pendingCouponNumber, setPendingCouponNumber] = useState('')
 
   const couponImageRef = useRef<HTMLDivElement | null>(null)
-  const pendingCouponNumberRef = useRef('')
 
   function updateField<Key extends keyof MoreInfoFormValues>(
     field: Key,
@@ -90,7 +96,7 @@ export default function MoreInfoForm() {
   function handleCloseSuccessPopup() {
     setSubmitStatus('idle')
     setCouponNumber('')
-    pendingCouponNumberRef.current = ''
+    setPendingCouponNumber('')
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -105,31 +111,29 @@ export default function MoreInfoForm() {
     }
 
     const newCouponNumber = generateCouponNumber()
-    pendingCouponNumberRef.current = newCouponNumber
-
-    let couponImageDataUrl: string | undefined
-
-    try {
-      if (couponImageRef.current) {
-        couponImageDataUrl = await createCouponImageDataUrl(couponImageRef.current)
-      }
-    } catch (error) {
-      console.error('Failed to create coupon image:', error)
-    }
-
-    const payload = {
-      ...result.data,
-      coupon: couponInfo,
-      couponNumber: newCouponNumber,
-      couponImageDataUrl,
-    }
-
     const controller = new AbortController()
     const timeoutId = window.setTimeout(() => controller.abort(), FORM_SUBMIT_TIMEOUT_MS)
 
     try {
       setIsSubmitting(true)
       setSubmitStatus('idle')
+      setPendingCouponNumber(newCouponNumber)
+
+      await waitForNextFrame()
+      await waitForNextFrame()
+
+      let couponImageDataUrl: string | undefined
+
+      if (couponImageRef.current) {
+        couponImageDataUrl = await createCouponImageDataUrl(couponImageRef.current)
+      }
+
+      const payload = {
+        ...result.data,
+        coupon: couponInfo,
+        couponNumber: newCouponNumber,
+        couponImageDataUrl,
+      }
 
       const response = await fetch('/api/send-telegram', {
         method: 'POST',
@@ -315,9 +319,9 @@ export default function MoreInfoForm() {
         </div>
       </form>
 
-      <div className="pointer-events-none fixed top-0 left-0 -z-10 opacity-0" aria-hidden="true">
+      <div className="pointer-events-none fixed top-0 left-[-9999px]" aria-hidden="true">
         <div ref={couponImageRef}>
-          <CouponImageCard couponNumber={pendingCouponNumberRef.current} />
+          <CouponImageCard couponNumber={pendingCouponNumber} />
         </div>
       </div>
 

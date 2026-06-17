@@ -63,12 +63,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   const message = [
-    '<b>Нова заявка на купон</b>',
-    '',
+    '<b>Заявка на купон:</b>',
     `<b>Імʼя:</b> ${escapeHtml(name)}`,
     `<b>Контакт:</b> ${escapeHtml(contact)}`,
-    '',
-
     `<b>Знижка:</b> ${escapeHtml(coupon?.discount ?? '-10%')}`,
     `<b>Номер:</b> ${escapeHtml(couponNumber)}`,
   ]
