@@ -31,14 +31,6 @@
 
 @font-face {
   font-family: 'NunitoSans';
-  src: url('./assets/fonts/NunitoSans-ExtraLight.woff2') format('woff2');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'NunitoSans';
   src: url('./assets/fonts/NunitoSans-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
