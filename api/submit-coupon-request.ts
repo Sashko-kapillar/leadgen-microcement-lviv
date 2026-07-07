@@ -131,81 +131,36 @@ async function fetchWithTimeout(url: string, options: RequestInit) {
   }
 }
 
-function createCouponTextOverlaySvg(couponNumber: string, discount: string, fontBase64: string) {
+function createCouponNumberOverlaySvg(couponNumber: string) {
   const safeCouponNumber = escapeSvg(couponNumber)
-  const safeDiscount = escapeSvg(discount)
 
   return `
-    <svg width="${COUPON_WIDTH}" height="${COUPON_HEIGHT}" viewBox="0 0 ${COUPON_WIDTH} ${COUPON_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-      <style>
-        @font-face {
-          font-family: 'CouponFont';
-          src: url('data:font/woff2;base64,${fontBase64}') format('woff2');
-          font-weight: 700;
-          font-style: normal;
-        }
-
-        .coupon-text {
-          font-family: 'CouponFont', Arial, sans-serif;
-        }
-      </style>
-
+    <svg
+      width="${COUPON_WIDTH}"
+      height="${COUPON_HEIGHT}"
+      viewBox="0 0 ${COUPON_WIDTH} ${COUPON_HEIGHT}"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <text
-        class="coupon-text"
-        x="600"
-        y="250"
+        x="675"
+        y="560"
         text-anchor="middle"
-        font-size="72"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="64"
         font-weight="700"
-        letter-spacing="8"
-        fill="#b96843"
-      >
-        КУПОН НА МАТЕРІАЛ
-      </text>
-
-      <line x1="300" y1="305" x2="900" y2="305" stroke="#b96843" stroke-opacity="0.35" stroke-width="3"/>
-
-      <text
-        class="coupon-text"
-        x="600"
-        y="470"
-        text-anchor="middle"
-        font-size="215"
-        font-weight="700"
-        fill="#b96843"
-      >
-        ${safeDiscount}
-      </text>
-
-      <line x1="300" y1="530" x2="900" y2="530" stroke="#b96843" stroke-opacity="0.35" stroke-width="3"/>
-
-      <text
-        class="coupon-text"
-        x="600"
-        y="620"
-        text-anchor="middle"
-        font-size="74"
-        font-weight="700"
-        letter-spacing="4"
+        letter-spacing="3"
         fill="#161616"
       >
-        № ${safeCouponNumber}
+        ${safeCouponNumber}
       </text>
     </svg>
   `
 }
 
-async function createCouponPng(couponNumber: string, discount: string) {
+async function createCouponPng(couponNumber: string) {
   const templatePath = path.join(process.cwd(), 'public', 'images', 'popup-coupon.webp')
-  const fontPath = path.join(process.cwd(), 'public', 'fonts', 'NunitoSans-Bold.woff2')
-
-  const [templateBuffer, fontBuffer] = await Promise.all([
-    readFile(templatePath),
-    readFile(fontPath),
-  ])
-
-  const fontBase64 = fontBuffer.toString('base64')
-  const overlaySvg = createCouponTextOverlaySvg(couponNumber, discount, fontBase64)
+  const templateBuffer = await readFile(templatePath)
+  const overlaySvg = createCouponNumberOverlaySvg(couponNumber)
 
   return sharp(templateBuffer)
     .resize(COUPON_WIDTH, COUPON_HEIGHT, {
@@ -319,7 +274,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   ].join('\n')
 
   try {
-    const couponImageBuffer = await createCouponPng(couponNumber, couponDiscount)
+    const couponImageBuffer = await createCouponPng(couponNumber)
 
     const telegramMessageResponse = await sendTelegramMessage(botToken, chatId, message)
 
