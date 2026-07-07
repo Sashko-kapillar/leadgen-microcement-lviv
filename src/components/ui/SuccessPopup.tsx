@@ -1,12 +1,12 @@
 import iconsSprite from '../../assets/images/svg/icons.svg'
-import coupon from '../../assets/images/moreInfo/popup-coupon.webp'
 
 type SuccessPopupProps = {
   couponNumber: string
+  couponImageDataUrl: string
   onClose: () => void
 }
 
-const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
+const SuccessPopup = ({ couponNumber, couponImageDataUrl, onClose }: SuccessPopupProps) => {
   return (
     <div className="flex flex-col items-center text-center">
       <div className="text-accent mb-6 flex items-center justify-center">
@@ -21,30 +21,17 @@ const SuccessPopup = ({ couponNumber, onClose }: SuccessPopupProps) => {
 
       <p className="text-body text-text-main mb-1">Купон на матеріал заброньовано</p>
 
-      <div className="relative flex aspect-3/2 w-full justify-center max-md:max-w-90 md:min-w-110">
+      {couponImageDataUrl ? (
         <img
-          src={coupon}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 size-full object-contain select-none"
+          src={couponImageDataUrl}
+          alt={`Купон ${couponNumber}`}
+          className="w-full max-w-90 select-none md:min-w-110"
         />
-
-        <div className="relative z-10 flex size-full flex-col items-center justify-center px-8 text-center">
-          <p className="text-accent text-[clamp(18px,3vw,28px)] font-bold tracking-wide uppercase">
-            Купон на матеріал
-          </p>
-
-          <div className="bg-accent/35 my-1 h-px w-[62%]" />
-
-          <p className="text-accent text-[clamp(28px,11vw,72px)] leading-none font-black tracking-tight">
-            -10%
-          </p>
-
-          <div className="bg-accent/35 my-2 h-px w-[62%]" />
-
-          <p className="text-text-main text-[clamp(18px,3vw,28px)] font-bold">№ {couponNumber}</p>
+      ) : (
+        <div className="border-border-soft bg-bg-card-soft flex aspect-3/2 w-full max-w-90 items-center justify-center rounded-2xl border p-6 md:min-w-110">
+          <p className="text-text-main text-lg font-bold">№ {couponNumber}</p>
         </div>
-      </div>
+      )}
 
       <p className="text-body text-text-soft max-w-[520px] text-center">
         Менеджер зв’яжеться з вами протягом години у робочий час, щоб підтвердити купон.

@@ -1,9 +1,8 @@
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import SmartButton from '../ui/Button/SmartButton'
 import iconsSprite from '../../assets/images/svg/icons.svg'
 import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
-import CouponImageCard from '../ui/CouponImageCard'
 import { cn } from '@/lib/cn'
 import { couponInfo, moreInfoTrustLine } from './data/more-info.data'
 import {
@@ -19,27 +18,11 @@ const initialFormState: MoreInfoFormValues = {
   contact: '',
 }
 
-function generateCouponNumber() {
-  const number = Math.floor(Math.random() * 10000)
-  const paddedNumber = String(number).padStart(4, '0')
-
-  return `MC-${paddedNumber}`
-}
-
-async function createCouponImageDataUrl(element: HTMLElement) {
-  const { toPng } = await import('html-to-image')
-
-  return toPng(element, {
-    cacheBust: true,
-    pixelRatio: 2,
-    backgroundColor: '#ffffff',
-  })
-}
-
-function waitForNextFrame() {
-  return new Promise<void>(resolve => {
-    requestAnimationFrame(() => resolve())
-  })
+type SubmitCouponResponse = {
+  success?: boolean
+  couponNumber?: string
+  couponImageDataUrl?: string
+  message?: string
 }
 
 function isAbortError(error: unknown) {
@@ -66,9 +49,7 @@ export default function MoreInfoForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [couponNumber, setCouponNumber] = useState('')
-  const [pendingCouponNumber, setPendingCouponNumber] = useState('')
-
-  const couponImageRef = useRef<HTMLDivElement | null>(null)
+  const [couponImageDataUrl, setCouponImageDataUrl] = useState('')
 
   function updateField<Key extends keyof MoreInfoFormValues>(
     field: Key,
@@ -96,7 +77,7 @@ export default function MoreInfoForm() {
   function handleCloseSuccessPopup() {
     setSubmitStatus('idle')
     setCouponNumber('')
-    setPendingCouponNumber('')
+    setCouponImageDataUrl('')
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -110,32 +91,20 @@ export default function MoreInfoForm() {
       return
     }
 
-    const newCouponNumber = generateCouponNumber()
+    const payload = {
+      ...result.data,
+      coupon: couponInfo,
+      wantsCoupon: true,
+    }
+
     const controller = new AbortController()
     const timeoutId = window.setTimeout(() => controller.abort(), FORM_SUBMIT_TIMEOUT_MS)
 
     try {
       setIsSubmitting(true)
       setSubmitStatus('idle')
-      setPendingCouponNumber(newCouponNumber)
 
-      await waitForNextFrame()
-      await waitForNextFrame()
-
-      let couponImageDataUrl: string | undefined
-
-      if (couponImageRef.current) {
-        couponImageDataUrl = await createCouponImageDataUrl(couponImageRef.current)
-      }
-
-      const payload = {
-        ...result.data,
-        coupon: couponInfo,
-        couponNumber: newCouponNumber,
-        couponImageDataUrl,
-      }
-
-      const response = await fetch('/api/send-telegram', {
+      const response = await fetch('/api/submit-coupon-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -144,19 +113,25 @@ export default function MoreInfoForm() {
         signal: controller.signal,
       })
 
-      if (!response.ok) {
-        throw new Error('Request failed')
+      const data = (await response.json()) as SubmitCouponResponse
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Request failed')
       }
+
+      const nextCouponNumber = data.couponNumber ?? ''
+      const nextCouponImageDataUrl = data.couponImageDataUrl ?? ''
 
       window.dataLayer = window.dataLayer || []
       window.dataLayer.push({
         event: 'coupon_submit',
-        couponNumber: newCouponNumber,
+        couponNumber: nextCouponNumber,
       })
 
       setForm(initialFormState)
       setErrors({})
-      setCouponNumber(newCouponNumber)
+      setCouponNumber(nextCouponNumber)
+      setCouponImageDataUrl(nextCouponImageDataUrl)
       setSubmitStatus('success')
     } catch (error) {
       if (isAbortError(error)) {
@@ -319,15 +294,13 @@ export default function MoreInfoForm() {
         </div>
       </form>
 
-      <div className="pointer-events-none fixed top-0 left-[-9999px]" aria-hidden="true">
-        <div ref={couponImageRef}>
-          <CouponImageCard couponNumber={pendingCouponNumber} />
-        </div>
-      </div>
-
       {submitStatus === 'success' && (
         <Modal onClose={handleCloseSuccessPopup} labelledBy="success-popup-title">
-          <SuccessPopup couponNumber={couponNumber} onClose={handleCloseSuccessPopup} />
+          <SuccessPopup
+            couponNumber={couponNumber}
+            couponImageDataUrl={couponImageDataUrl}
+            onClose={handleCloseSuccessPopup}
+          />
         </Modal>
       )}
     </>
