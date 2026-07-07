@@ -183,7 +183,7 @@ function createCouponTextOverlaySvg(couponNumber: string, discount: string) {
 }
 
 async function createCouponPng(couponNumber: string, discount: string) {
-  const templatePath = path.join(process.cwd(), 'public', 'images', 'coupon-template.webp')
+  const templatePath = path.join(process.cwd(), 'public', 'images', 'popup-coupon.webp')
   const templateBuffer = await readFile(templatePath)
   const overlaySvg = createCouponTextOverlaySvg(couponNumber, discount)
 
