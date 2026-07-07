@@ -1,3 +1,7 @@
+import path from 'node:path'
+import { readFile } from 'node:fs/promises'
+import sharp from 'sharp'
+
 type CouponRequestPayload = {
   name?: string
   contact?: string
@@ -26,6 +30,9 @@ const TELEGRAM_REQUEST_TIMEOUT_MS = 10000
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX_REQUESTS = 5
 
+const COUPON_WIDTH = 1200
+const COUPON_HEIGHT = 720
+
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
 
 function escapeHtml(value: unknown) {
@@ -34,6 +41,15 @@ function escapeHtml(value: unknown) {
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
+}
+
+function escapeSvg(value: unknown) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;')
 }
 
 function getSafeText(value: unknown, fallback: string, maxLength = 80) {
@@ -115,6 +131,78 @@ async function fetchWithTimeout(url: string, options: RequestInit) {
   }
 }
 
+function createCouponTextOverlaySvg(couponNumber: string, discount: string) {
+  const safeCouponNumber = escapeSvg(couponNumber)
+  const safeDiscount = escapeSvg(discount)
+
+  return `
+    <svg width="${COUPON_WIDTH}" height="${COUPON_HEIGHT}" viewBox="0 0 ${COUPON_WIDTH} ${COUPON_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
+      <text
+        x="600"
+        y="235"
+        text-anchor="middle"
+        font-family="Arial, sans-serif"
+        font-size="50"
+        font-weight="700"
+        letter-spacing="7"
+        fill="#b96843"
+      >
+        КУПОН НА МАТЕРІАЛ
+      </text>
+
+      <line x1="340" y1="280" x2="860" y2="280" stroke="#b96843" stroke-opacity="0.35" stroke-width="2"/>
+
+      <text
+        x="600"
+        y="425"
+        text-anchor="middle"
+        font-family="Georgia, serif"
+        font-size="150"
+        font-weight="700"
+        fill="#b96843"
+      >
+        ${safeDiscount}
+      </text>
+
+      <line x1="340" y1="480" x2="860" y2="480" stroke="#b96843" stroke-opacity="0.35" stroke-width="2"/>
+
+      <text
+        x="600"
+        y="565"
+        text-anchor="middle"
+        font-family="Arial, sans-serif"
+        font-size="54"
+        font-weight="700"
+        letter-spacing="3"
+        fill="#161616"
+      >
+        № ${safeCouponNumber}
+      </text>
+    </svg>
+  `
+}
+
+async function createCouponPng(couponNumber: string, discount: string) {
+  const templatePath = path.join(process.cwd(), 'public', 'images', 'coupon-template.webp')
+  const templateBuffer = await readFile(templatePath)
+  const overlaySvg = createCouponTextOverlaySvg(couponNumber, discount)
+
+  return sharp(templateBuffer)
+    .resize(COUPON_WIDTH, COUPON_HEIGHT, {
+      fit: 'contain',
+      background: '#ffffff',
+    })
+    .composite([
+      {
+        input: Buffer.from(overlaySvg),
+        top: 0,
+        left: 0,
+      },
+    ])
+    .png()
+    .toBuffer()
+}
+
 async function sendTelegramMessage(botToken: string, chatId: string, message: string) {
   return fetchWithTimeout(`https://api.telegram.org/bot${botToken}/sendMessage`, {
     method: 'POST',
@@ -126,6 +214,27 @@ async function sendTelegramMessage(botToken: string, chatId: string, message: st
       parse_mode: 'HTML',
       text: message,
     }),
+  })
+}
+
+async function sendTelegramCouponDocument(
+  botToken: string,
+  chatId: string,
+  couponNumber: string,
+  imageBuffer: Buffer
+) {
+  const telegramFormData = new FormData()
+
+  telegramFormData.append('chat_id', chatId)
+  telegramFormData.append(
+    'document',
+    new Blob([new Uint8Array(imageBuffer)], { type: 'image/png' }),
+    `coupon-${couponNumber}.png`
+  )
+
+  return fetchWithTimeout(`https://api.telegram.org/bot${botToken}/sendDocument`, {
+    method: 'POST',
+    body: telegramFormData,
   })
 }
 
@@ -190,23 +299,40 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   ].join('\n')
 
   try {
-    const telegramResponse = await sendTelegramMessage(botToken, chatId, message)
+    const couponImageBuffer = await createCouponPng(couponNumber, couponDiscount)
 
-    if (!telegramResponse.ok) {
+    const telegramMessageResponse = await sendTelegramMessage(botToken, chatId, message)
+
+    if (!telegramMessageResponse.ok) {
       return res.status(502).json({
         success: false,
         message: 'Telegram message request failed',
       })
     }
 
+    const telegramCouponResponse = await sendTelegramCouponDocument(
+      botToken,
+      chatId,
+      couponNumber,
+      couponImageBuffer
+    )
+
+    if (!telegramCouponResponse.ok) {
+      return res.status(502).json({
+        success: false,
+        message: 'Telegram coupon document request failed',
+      })
+    }
+
     return res.status(200).json({
       success: true,
       couponNumber,
+      couponImageDataUrl: `data:image/png;base64,${couponImageBuffer.toString('base64')}`,
     })
   } catch (error) {
     return res.status(isAbortError(error) ? 504 : 500).json({
       success: false,
-      message: isAbortError(error) ? 'Telegram request timed out' : 'Telegram request failed',
+      message: isAbortError(error) ? 'Telegram request timed out' : 'Coupon request failed',
     })
   }
 }
