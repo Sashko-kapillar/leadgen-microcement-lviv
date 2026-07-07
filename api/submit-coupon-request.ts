@@ -139,41 +139,41 @@ function createCouponTextOverlaySvg(couponNumber: string, discount: string) {
     <svg width="${COUPON_WIDTH}" height="${COUPON_HEIGHT}" viewBox="0 0 ${COUPON_WIDTH} ${COUPON_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
       <text
         x="600"
-        y="235"
+        y="255"
         text-anchor="middle"
         font-family="Arial, sans-serif"
-        font-size="50"
+        font-size="72"
         font-weight="700"
-        letter-spacing="7"
+        letter-spacing="8"
         fill="#b96843"
       >
         КУПОН НА МАТЕРІАЛ
       </text>
 
-      <line x1="340" y1="280" x2="860" y2="280" stroke="#b96843" stroke-opacity="0.35" stroke-width="2"/>
+      <line x1="300" y1="310" x2="900" y2="310" stroke="#b96843" stroke-opacity="0.35" stroke-width="3"/>
 
       <text
         x="600"
-        y="425"
+        y="475"
         text-anchor="middle"
         font-family="Georgia, serif"
-        font-size="150"
+        font-size="220"
         font-weight="700"
         fill="#b96843"
       >
         ${safeDiscount}
       </text>
 
-      <line x1="340" y1="480" x2="860" y2="480" stroke="#b96843" stroke-opacity="0.35" stroke-width="2"/>
+      <line x1="300" y1="535" x2="900" y2="535" stroke="#b96843" stroke-opacity="0.35" stroke-width="3"/>
 
       <text
         x="600"
-        y="565"
+        y="630"
         text-anchor="middle"
         font-family="Arial, sans-serif"
-        font-size="54"
+        font-size="72"
         font-weight="700"
-        letter-spacing="3"
+        letter-spacing="4"
         fill="#161616"
       >
         № ${safeCouponNumber}
