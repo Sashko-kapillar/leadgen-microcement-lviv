@@ -16,8 +16,8 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
 
   return (
     <>
-      <header className="relative top-2 z-100 w-full bg-transparent lg:top-4">
-        <div className="section-container flex h-14 items-center justify-between gap-4 md:h-17 xl:py-0">
+      <header className="bg-page/50 relative top-2 z-100 w-full lg:top-8">
+        <div className="section-container flex h-14 items-center justify-between gap-4 md:min-h-17 lg:min-h-20 xl:py-4">
           <a href="/" className="flex py-2 md:py-4 lg:w-1/3">
             <span className="text- text-logo text-black md:not-sr-only">
               Мікроцемент <span className="text-green-600">✔</span> Львів
@@ -40,7 +40,7 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
               <div className="hidden items-center justify-between gap-5.5 lg:flex lg:w-1/3 lg:justify-end-safe">
                 <SmartButton
                   type="button"
-                  label="Купон на знижку"
+                  label="Залищити заявку"
                   href="#more-info"
                   variant="primary"
                   className="text-cta-text bg-cta hover:bg-accent hidden border-none px-8 py-3.5 text-base/[100%] font-semibold backdrop-blur-[5px] md:flex xl:px-5 xl:py-4.5 xl:text-[18px]/[1]"

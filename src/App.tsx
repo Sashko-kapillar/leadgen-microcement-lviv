@@ -3,7 +3,8 @@ import { useState } from 'react'
 
 import SEO from './components/SEO/SEO'
 import Header from './components/Header/Header'
-import Hero from './components/Hero/Hero'
+// import Hero from './components/Hero/Hero'
+import HeroWords from './components/HeroWords/HeroWords'
 import MoreInfo from './components/MoreInfo/MoreInfo'
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy'
 import Footer from './components/Footer/Footer'
@@ -44,7 +45,8 @@ function App() {
           <PrivacyPolicy />
         ) : (
           <main>
-            <Hero />
+            {/* <Hero /> */}
+            <HeroWords />
             <Benefits />
             <Applications />
             <HowItWorks />
