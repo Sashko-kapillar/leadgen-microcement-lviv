@@ -1,13 +1,18 @@
+import { randomInt } from 'node:crypto'
+
+const REQUEST_TYPES = {
+  material: 'Хочу купити матеріал',
+  master: 'Шукаю майстра',
+  self: 'Хочу нанести самостійно',
+} as const
+
+type RequestType = keyof typeof REQUEST_TYPES
+
 type TelegramPayload = {
-  name?: string
-  contact?: string
-  couponNumber?: string
-  coupon?: {
-    title?: string
-    text?: string
-    discount?: string
-    target?: string
-  }
+  name?: unknown
+  contact?: unknown
+  requestType?: unknown
+  requestNumber?: unknown
 }
 
 type ApiRequest = {
@@ -27,10 +32,29 @@ function escapeHtml(value: unknown) {
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;')
 }
 
-function generateCouponNumber() {
-  return `MC-${Math.floor(1000 + Math.random() * 9000)}`
+function generateRequestNumber() {
+  return `MC-${String(randomInt(0, 10000)).padStart(4, '0')}`
+}
+
+function isRequestType(value: unknown): value is RequestType {
+  return typeof value === 'string' && Object.prototype.hasOwnProperty.call(REQUEST_TYPES, value)
+}
+
+function normalizeRequiredString(value: unknown) {
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+function normalizeRequestNumber(value: unknown) {
+  if (typeof value !== 'string') {
+    return ''
+  }
+
+  const trimmedValue = value.trim()
+
+  return /^MC-\d{4}$/.test(trimmedValue) ? trimmedValue : ''
 }
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
@@ -51,9 +75,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
   }
 
-  const { name, contact, coupon } = req.body ?? {}
-
-  const couponNumber = req.body?.couponNumber ?? generateCouponNumber()
+  const name = normalizeRequiredString(req.body?.name)
+  const contact = normalizeRequiredString(req.body?.contact)
+  const requestType = req.body?.requestType
 
   if (!name || !contact) {
     return res.status(400).json({
@@ -62,15 +86,25 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
   }
 
+  if (!isRequestType(requestType)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Request type is required',
+    })
+  }
+
+  const requestNumber = normalizeRequestNumber(req.body?.requestNumber) || generateRequestNumber()
+
+  const requestTypeLabel = REQUEST_TYPES[requestType]
+
   const message = [
-    '<b>Заявка на купон:</b>',
+    '<b>Нова заявка:</b>',
+    '',
+    `<b>Тип звернення:</b> ${escapeHtml(requestTypeLabel)}`,
+    `<b>Номер звернення:</b> ${escapeHtml(requestNumber)}`,
     `<b>Імʼя:</b> ${escapeHtml(name)}`,
     `<b>Контакт:</b> ${escapeHtml(contact)}`,
-    `<b>Знижка:</b> ${escapeHtml(coupon?.discount ?? '-10%')}`,
-    `<b>Номер:</b> ${escapeHtml(couponNumber)}`,
-  ]
-    .filter(Boolean)
-    .join('\n')
+  ].join('\n')
 
   try {
     const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -86,6 +120,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
 
     if (!telegramResponse.ok) {
+      const telegramError = await telegramResponse.json().catch(() => null)
+
+      console.error('Telegram request failed:', telegramError)
+
       return res.status(502).json({
         success: false,
         message: 'Telegram request failed',
@@ -94,9 +132,13 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
     return res.status(200).json({
       success: true,
-      couponNumber,
+      requestNumber,
+      requestType,
+      requestTypeLabel,
     })
-  } catch {
+  } catch (error) {
+    console.error('Failed to send Telegram message:', error)
+
     return res.status(500).json({
       success: false,
       message: 'Failed to send message',
