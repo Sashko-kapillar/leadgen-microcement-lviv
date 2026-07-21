@@ -6,7 +6,7 @@ export default function MoreInfo() {
   return (
     <section
       id="more-info"
-      className="bg-page-soft relative overflow-hidden py-16 md:py-20 lg:py-24"
+      className="bg-page-sof relative min-h-dvh overflow-hidden py-16 md:py-20 lg:py-24"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100"

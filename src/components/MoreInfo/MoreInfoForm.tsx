@@ -1,58 +1,78 @@
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import SmartButton from '../ui/Button/SmartButton'
 import iconsSprite from '../../assets/images/svg/icons.svg'
 import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
-import CouponImageCard from '../ui/CouponImageCard'
 import { cn } from '@/lib/cn'
-import { couponInfo, moreInfoTrustLine } from './data/more-info.data'
+import { moreInfoTrustLine } from './data/more-info.data'
 import {
   moreInfoSchema,
   type MoreInfoFormErrors,
   type MoreInfoFormValues,
+  type RequestType,
 } from './more-info.schema'
 
 const FORM_SUBMIT_TIMEOUT_MS = 10000
 
+const requestTypeOptions: Array<{
+  value: RequestType
+  label: string
+  description: string
+}> = [
+  {
+    value: 'material',
+    label: 'Хочу купити матеріал',
+    description: 'Допоможемо підібрати матеріал і розрахувати кількість.',
+  },
+  {
+    value: 'master',
+    label: 'Шукаю майстра',
+    description: 'Підберемо майстра для нанесення мікроцементу.',
+  },
+  {
+    value: 'self',
+    label: 'Хочу нанести самостійно',
+    description: 'Підкажемо, що потрібно для самостійного нанесення.',
+  },
+]
+
 const initialFormState: MoreInfoFormValues = {
+  requestType: '',
   name: '',
   contact: '',
 }
+
+type SubmitStatus = 'idle' | 'success' | 'error'
 
 type DataLayerWindow = Window & {
   dataLayer?: Array<Record<string, unknown>>
 }
 
-function generateCouponNumber() {
-  const number = Math.floor(Math.random() * 10000)
-  const paddedNumber = String(number).padStart(4, '0')
+function generateRequestNumber() {
+  const randomValues = new Uint32Array(1)
 
-  return `MC-${paddedNumber}`
+  crypto.getRandomValues(randomValues)
+
+  const number = randomValues[0] % 10000
+
+  return `MC-${String(number).padStart(4, '0')}`
 }
 
-async function createCouponImageDataUrl(element: HTMLElement) {
-  const { toPng } = await import('html-to-image')
-
-  return toPng(element, {
-    cacheBust: true,
-    pixelRatio: 2,
-    backgroundColor: '#ffffff',
-  })
+function getRequestTypeLabel(requestType: RequestType) {
+  return requestTypeOptions.find(option => option.value === requestType)?.label ?? requestType
 }
 
-function waitForNextFrame() {
-  return new Promise<void>(resolve => {
-    requestAnimationFrame(() => resolve())
-  })
-}
-
-function pushCouponSubmitEvent(couponNumber: string) {
+function pushSubmitEvent(requestNumber: string, requestType: RequestType) {
   const dataLayerWindow = window as DataLayerWindow
 
   dataLayerWindow.dataLayer = dataLayerWindow.dataLayer || []
+
   dataLayerWindow.dataLayer.push({
+    // Временно сохраняем старое имя события,
+    // чтобы не сломать существующий триггер GTM.
     event: 'coupon_submit',
-    couponNumber,
+    requestNumber,
+    requestType,
   })
 }
 
@@ -63,27 +83,28 @@ function isAbortError(error: unknown) {
 function getFieldErrors(
   fieldErrors: Partial<Record<keyof MoreInfoFormValues, string[] | undefined>>
 ): MoreInfoFormErrors {
-  return Object.entries(fieldErrors).reduce<MoreInfoFormErrors>((acc, [key, value]) => {
+  return Object.entries(fieldErrors).reduce<MoreInfoFormErrors>((accumulator, [key, value]) => {
     const message = value?.[0]
 
     if (message) {
-      acc[key as keyof MoreInfoFormValues] = message
+      accumulator[key as keyof MoreInfoFormValues] = message
     }
 
-    return acc
+    return accumulator
   }, {})
 }
 
 export default function MoreInfoForm() {
   const [form, setForm] = useState<MoreInfoFormValues>(initialFormState)
-  const [errors, setErrors] = useState<MoreInfoFormErrors>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [couponNumber, setCouponNumber] = useState('')
-  const [pendingCouponNumber, setPendingCouponNumber] = useState('')
-  const [couponImageDataUrl, setCouponImageDataUrl] = useState('')
 
-  const couponImageRef = useRef<HTMLDivElement | null>(null)
+  const [errors, setErrors] = useState<MoreInfoFormErrors>({})
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle')
+
+  const [requestNumber, setRequestNumber] = useState('')
+  const [submittedRequestTypeLabel, setSubmittedRequestTypeLabel] = useState('')
 
   function updateField<Key extends keyof MoreInfoFormValues>(
     field: Key,
@@ -105,14 +126,16 @@ export default function MoreInfoForm() {
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
 
-    updateField(name as keyof MoreInfoFormValues, value)
+    updateField(
+      name as keyof MoreInfoFormValues,
+      value as MoreInfoFormValues[keyof MoreInfoFormValues]
+    )
   }
 
   function handleCloseSuccessPopup() {
     setSubmitStatus('idle')
-    setCouponNumber('')
-    setPendingCouponNumber('')
-    setCouponImageDataUrl('')
+    setRequestNumber('')
+    setSubmittedRequestTypeLabel('')
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -126,66 +149,41 @@ export default function MoreInfoForm() {
       return
     }
 
-    const newCouponNumber = generateCouponNumber()
+    const newRequestNumber = generateRequestNumber()
+
+    const requestTypeLabel = getRequestTypeLabel(result.data.requestType)
 
     const controller = new AbortController()
+
     const timeoutId = window.setTimeout(() => controller.abort(), FORM_SUBMIT_TIMEOUT_MS)
 
     try {
       setIsSubmitting(true)
       setSubmitStatus('idle')
-      setPendingCouponNumber(newCouponNumber)
 
-      await waitForNextFrame()
-      await waitForNextFrame()
-
-      if (!couponImageRef.current) {
-        throw new Error('Coupon image element is missing')
-      }
-
-      const nextCouponImageDataUrl = await createCouponImageDataUrl(couponImageRef.current)
-
-      const textPayload = {
-        ...result.data,
-        coupon: couponInfo,
-        couponNumber: newCouponNumber,
-      }
-
-      const textResponse = await fetch('/api/send-telegram', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(textPayload),
-        signal: controller.signal,
-      })
-
-      if (!textResponse.ok) {
-        throw new Error('Telegram text request failed')
-      }
-
-      const imageResponse = await fetch('/api/send-coupon-image', {
+      const response = await fetch('/api/send-telegram', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          couponNumber: newCouponNumber,
-          couponImageDataUrl: nextCouponImageDataUrl,
+          ...result.data,
+          requestTypeLabel,
+          requestNumber: newRequestNumber,
         }),
         signal: controller.signal,
       })
 
-      if (!imageResponse.ok) {
-        throw new Error('Telegram image request failed')
+      if (!response.ok) {
+        throw new Error('Telegram request failed')
       }
 
-      pushCouponSubmitEvent(newCouponNumber)
+      pushSubmitEvent(newRequestNumber, result.data.requestType)
 
       setForm(initialFormState)
       setErrors({})
-      setCouponNumber(newCouponNumber)
-      setCouponImageDataUrl(nextCouponImageDataUrl)
+      setRequestNumber(newRequestNumber)
+      setSubmittedRequestTypeLabel(requestTypeLabel)
       setSubmitStatus('success')
     } catch (error) {
       if (isAbortError(error)) {
@@ -205,160 +203,223 @@ export default function MoreInfoForm() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="bg-bg-card mx-auto rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] min-[900px]:w-[42%] sm:p-6 md:p-8 lg:p-10"
+        className="bg-bg-card mx-auto rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:w-max md:p-8 lg:p-10"
       >
-        <div className="space-y-7">
-          <div className="space-y-5">
-            <div>
-              <label
-                htmlFor="more-info-name"
-                className="text-text-main mb-2 block text-base font-semibold"
-              >
-                Ваше ім’я
-              </label>
+        <div className="grid justify-center gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-10">
+          {/* Левая часть */}
+          <fieldset className="max-w-150 min-w-0">
+            <legend className="text-text-main mb-4 text-base font-semibold">
+              Що вас цікавить?
+            </legend>
 
-              <div className="relative">
-                <svg
-                  className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
-                  aria-hidden="true"
-                >
-                  <use href={`${iconsSprite}#user`} />
-                </svg>
+            <div
+              className="flex flex-col gap-4"
+              aria-describedby="more-info-request-type-error"
+              aria-invalid={Boolean(errors.requestType)}
+            >
+              {requestTypeOptions.map(option => {
+                const isChecked = form.requestType === option.value
 
-                <input
-                  id="more-info-name"
-                  name="name"
-                  type="text"
-                  value={form.name}
-                  onChange={handleInputChange}
-                  className={cn(
-                    'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
-                    'placeholder:text-text-muted',
-                    'focus:border-accent',
-                    errors.name ? 'border-red-500' : 'border-border-soft'
-                  )}
-                  placeholder="Введіть ваше ім’я"
-                  autoComplete="given-name"
-                  aria-invalid={Boolean(errors.name)}
-                  aria-describedby={errors.name ? 'more-info-name-error' : undefined}
-                />
-              </div>
+                return (
+                  <label
+                    key={option.value}
+                    className={cn(
+                      'group flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors duration-300',
+                      isChecked
+                        ? 'border-accent bg-page-soft)'
+                        : 'border-border-soft hover:border-accent/50 bg-white',
+                      errors.requestType && !form.requestType && 'border-red-500'
+                    )}
+                  >
+                    <input
+                      type="radio"
+                      name="requestType"
+                      value={option.value}
+                      checked={isChecked}
+                      onChange={handleInputChange}
+                      className="peer sr-only"
+                    />
 
-              <p
-                id="more-info-name-error"
-                role={errors.name ? 'alert' : undefined}
-                data-error={errors.name ?? ''}
-                className={cn(
-                  'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
-                  'before:block before:content-[attr(data-error)]',
-                  errors.name ? 'before:opacity-100' : 'before:opacity-0'
-                )}
-              />
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-300',
+                        isChecked
+                          ? 'border-accent'
+                          : 'border-border-soft group-hover:border-accent/60'
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          'bg-accent size-2.5 rounded-full transition-transform duration-300',
+                          isChecked ? 'scale-100' : 'scale-0'
+                        )}
+                      />
+                    </span>
+
+                    <span className="min-w-0">
+                      <span className="text-text-main block text-sm font-semibold sm:text-base">
+                        {option.label}
+                      </span>
+
+                      <span className="text-text-soft mt-1 block text-xs leading-[1.4] sm:text-sm">
+                        {option.description}
+                      </span>
+                    </span>
+                  </label>
+                )
+              })}
             </div>
 
-            <div>
-              <label
-                htmlFor="more-info-contact"
-                className="text-text-main mb-2 block text-base font-semibold"
-              >
-                Ваш телефон
-              </label>
-
-              <div className="relative">
-                <svg
-                  className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
-                  aria-hidden="true"
-                >
-                  <use href={`${iconsSprite}#phone`} />
-                </svg>
-
-                <input
-                  id="more-info-contact"
-                  name="contact"
-                  type="text"
-                  value={form.contact}
-                  onChange={handleInputChange}
-                  className={cn(
-                    'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
-                    'placeholder:text-text-muted',
-                    'focus:border-accent',
-                    errors.contact ? 'border-red-500' : 'border-border-soft'
-                  )}
-                  placeholder="+38 (___) ___ __ __"
-                  autoComplete="tel"
-                  aria-invalid={Boolean(errors.contact)}
-                  aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}
-                />
-              </div>
-
-              <p
-                id="more-info-contact-error"
-                role={errors.contact ? 'alert' : undefined}
-                data-error={errors.contact ?? ''}
-                className={cn(
-                  'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
-                  'before:block before:content-[attr(data-error)]',
-                  errors.contact ? 'before:opacity-100' : 'before:opacity-0'
-                )}
-              />
-            </div>
-          </div>
-
-          <div className="border-border-soft flex items-start gap-4 rounded-xl border bg-(--color-bg-page-soft) p-4">
-            <div className="text-accent flex size-11 shrink-0 items-center justify-center rounded-full bg-white">
-              <svg className="size-16" aria-hidden="true">
-                <use href={`${iconsSprite}#discount`} />
-              </svg>
-            </div>
-
-            <div>
-              <p className="text-accent font-semibold">{couponInfo.title}</p>
-              <p className="text-text-soft mt-1 text-sm leading-[1.4]">{couponInfo.text}</p>
-            </div>
-          </div>
-
-          <div>
-            <SmartButton
-              type="submit"
-              label="Отримати знижку"
-              loadingLabel="Відправляємо..."
-              loading={isSubmitting}
-              disabled={isSubmitting}
-              size="lg"
-              className="bg-accent hover:bg-accent-hover w-full text-white"
+            <p
+              id="more-info-request-type-error"
+              role={errors.requestType ? 'alert' : undefined}
+              data-error={errors.requestType ?? ''}
+              className={cn(
+                'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+                'before:block before:content-[attr(data-error)]',
+                errors.requestType ? 'before:opacity-100' : 'before:opacity-0'
+              )}
             />
+          </fieldset>
 
-            <p className="text-text-muted mt-4 flex items-start justify-center gap-2 text-center text-sm leading-[1.4]">
-              <svg className="text-accent mt-0.5 size-4 shrink-0" aria-hidden="true">
-                <use href={`${iconsSprite}#working-hours`} />
-              </svg>
+          {/* Правая часть */}
+          <div className="max-w-150 min-w-0">
+            <div className="space-y-5">
+              <div>
+                <label
+                  htmlFor="more-info-name"
+                  className="text-text-main mb-2 block text-base font-semibold"
+                >
+                  Ваше ім’я
+                </label>
 
-              <span className="max-w-70 text-start md:max-w-none">{moreInfoTrustLine}</span>
-            </p>
+                <div className="relative">
+                  <svg
+                    className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
+                    aria-hidden="true"
+                  >
+                    <use href={`${iconsSprite}#user`} />
+                  </svg>
 
-            {submitStatus === 'error' && (
-              <p
-                role="alert"
-                className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
-              >
-                Не вдалося відправити заявку. Спробуйте ще раз або напишіть нам у Telegram.
+                  <input
+                    id="more-info-name"
+                    name="name"
+                    type="text"
+                    value={form.name}
+                    onChange={handleInputChange}
+                    className={cn(
+                      'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
+                      'placeholder:text-text-muted',
+                      'focus:border-accent',
+                      errors.name ? 'border-red-500' : 'border-border-soft'
+                    )}
+                    placeholder="Введіть ваше ім’я"
+                    autoComplete="given-name"
+                    aria-invalid={Boolean(errors.name)}
+                    aria-describedby={errors.name ? 'more-info-name-error' : undefined}
+                  />
+                </div>
+
+                <p
+                  id="more-info-name-error"
+                  role={errors.name ? 'alert' : undefined}
+                  data-error={errors.name ?? ''}
+                  className={cn(
+                    'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+                    'before:block before:content-[attr(data-error)]',
+                    errors.name ? 'before:opacity-100' : 'before:opacity-0'
+                  )}
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="more-info-contact"
+                  className="text-text-main mb-2 block text-base font-semibold"
+                >
+                  Ваш номер телефону
+                </label>
+
+                <div className="relative">
+                  <svg
+                    className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
+                    aria-hidden="true"
+                  >
+                    <use href={`${iconsSprite}#phone`} />
+                  </svg>
+
+                  <input
+                    id="more-info-contact"
+                    name="contact"
+                    type="text"
+                    value={form.contact}
+                    onChange={handleInputChange}
+                    className={cn(
+                      'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
+                      'placeholder:text-text-muted',
+                      'focus:border-accent',
+                      errors.contact ? 'border-red-500' : 'border-border-soft'
+                    )}
+                    placeholder="+38 (___) ___ __ __"
+                    autoComplete="tel"
+                    aria-invalid={Boolean(errors.contact)}
+                    aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}
+                  />
+                </div>
+
+                <p
+                  id="more-info-contact-error"
+                  role={errors.contact ? 'alert' : undefined}
+                  data-error={errors.contact ?? ''}
+                  className={cn(
+                    'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+                    'before:block before:content-[attr(data-error)]',
+                    errors.contact ? 'before:opacity-100' : 'before:opacity-0'
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="mt-7">
+              <SmartButton
+                type="submit"
+                label="Надіслати заявку"
+                loadingLabel="Відправляємо..."
+                loading={isSubmitting}
+                disabled={isSubmitting}
+                size="lg"
+                className="bg-accent hover:bg-accent-hover w-full text-white"
+              />
+
+              <p className="text-text-muted mt-4 flex items-start justify-center gap-2 text-center text-sm leading-[1.4]">
+                <svg className="text-accent mt-0.5 size-4 shrink-0" aria-hidden="true">
+                  <use href={`${iconsSprite}#working-hours`} />
+                </svg>
+
+                <span className="max-w-70 text-start md:max-w-none">{moreInfoTrustLine}</span>
               </p>
-            )}
+
+              <div className="mt-4 min-h-[68px]">
+                {submitStatus === 'error' && (
+                  <p
+                    role="alert"
+                    className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+                  >
+                    Не вдалося відправити заявку. Спробуйте ще раз або напишіть нам у Telegram.
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </form>
 
-      <div className="pointer-events-none fixed top-0 left-[-9999px]" aria-hidden="true">
-        <div ref={couponImageRef}>
-          <CouponImageCard couponNumber={pendingCouponNumber} />
-        </div>
-      </div>
-
       {submitStatus === 'success' && (
         <Modal onClose={handleCloseSuccessPopup} labelledBy="success-popup-title">
           <SuccessPopup
-            couponNumber={couponNumber}
-            couponImageDataUrl={couponImageDataUrl}
+            requestNumber={requestNumber}
+            requestTypeLabel={submittedRequestTypeLabel}
             onClose={handleCloseSuccessPopup}
           />
         </Modal>

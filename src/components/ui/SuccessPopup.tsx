@@ -1,12 +1,12 @@
 import iconsSprite from '../../assets/images/svg/icons.svg'
 
 type SuccessPopupProps = {
-  couponNumber: string
-  couponImageDataUrl: string
+  requestNumber: string
+  requestTypeLabel: string
   onClose: () => void
 }
 
-const SuccessPopup = ({ couponNumber, couponImageDataUrl, onClose }: SuccessPopupProps) => {
+const SuccessPopup = ({ requestNumber, requestTypeLabel, onClose }: SuccessPopupProps) => {
   return (
     <div className="flex flex-col items-center text-center">
       <div className="text-accent mb-6 flex items-center justify-center">
@@ -19,22 +19,24 @@ const SuccessPopup = ({ couponNumber, couponImageDataUrl, onClose }: SuccessPopu
         Дякуємо!
       </h2>
 
-      <p className="text-body text-text-main mb-1">Купон на матеріал заброньовано</p>
+      <p className="text-body text-text-main">Вашу заявку отримано</p>
 
-      {couponImageDataUrl ? (
-        <img
-          src={couponImageDataUrl}
-          alt={`Купон ${couponNumber}`}
-          className="w-full max-w-90 select-none md:max-w-100"
-        />
-      ) : (
-        <div className="border-border-soft bg-bg-card-soft flex aspect-3/2 w-full max-w-90 items-center justify-center rounded-2xl border p-6 md:max-w-100">
-          <p className="text-text-main text-lg font-bold">№ {couponNumber}</p>
+      <div className="border-border-soft bg-bg-card-soft mt-6 w-full rounded-2xl border p-5">
+        <div className="border-border-soft border-b pb-4">
+          <p className="text-text-muted text-xs tracking-[0.08em] uppercase">Тип звернення</p>
+
+          <p className="text-text-main mt-1 font-semibold">{requestTypeLabel}</p>
         </div>
-      )}
 
-      <p className="text-body text-text-soft max-w-[520px] text-center">
-        Менеджер зв’яжеться з вами протягом години у робочий час, щоб підтвердити купон.
+        <div className="pt-4">
+          <p className="text-text-muted text-xs tracking-[0.08em] uppercase">Номер звернення</p>
+
+          <p className="text-accent mt-1 text-xl font-bold">№ {requestNumber}</p>
+        </div>
+      </div>
+
+      <p className="text-body text-text-soft mt-6 max-w-[520px] text-center">
+        Менеджер зв’яжеться з вами протягом години у робочий час, щоб уточнити деталі.
       </p>
 
       <button

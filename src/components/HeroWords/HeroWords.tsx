@@ -69,7 +69,7 @@ function HeroWords() {
       </div>
 
       {/* Content */}
-      <div className="section-container relative z-10 flex min-h-[calc(100svh-72px)] w-full flex-col xl:pt-30">
+      <div className="section-container relative z-10 flex min-h-[calc(100svh-72px)] w-full flex-col pt-20">
         <h1 id="hero-words-title" className="sr-only">
           Мікроцемент у Львові
         </h1>
