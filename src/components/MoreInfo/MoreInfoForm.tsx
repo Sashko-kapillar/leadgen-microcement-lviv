@@ -226,7 +226,7 @@ export default function MoreInfoForm() {
                     className={cn(
                       'group flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors duration-300',
                       isChecked
-                        ? 'border-accent bg-(--color-bg-page-soft)'
+                        ? 'border-accent bg-page-soft)'
                         : 'border-border-soft hover:border-accent/50 bg-white',
                       errors.requestType && !form.requestType && 'border-red-500'
                     )}
