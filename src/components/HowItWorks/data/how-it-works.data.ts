@@ -13,7 +13,7 @@ export const howItWorksData = {
       id: 1,
       icon: '#request',
       title: 'Залишаєте заявку',
-      text: 'Через форму, Telegram або телефоном.',
+      text: 'Через форму або телефоном.',
     },
     {
       id: 2,

@@ -40,6 +40,6 @@ export const footerContacts = {
 }
 
 export const footerCta = {
-  label: 'Отримати знижку',
+  label: 'Залишити заявку',
   href: '#more-info',
 }
