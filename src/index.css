@@ -208,7 +208,7 @@
   }
 
   .section-container {
-    @apply mx-auto w-full px-4 md:px-[clamp(1.5rem,calc(21.875vw-9rem),5rem)] lg:px-[clamp(5rem,calc(8.333vw-0.333rem),8rem)];
+    @apply mx-auto w-full px-4 md:px-[clamp(2rem,calc(21.875vw-9rem),5rem)] lg:px-[clamp(5rem,calc(8.333vw-0.333rem),10rem)];
   }
 
   .section-header {
