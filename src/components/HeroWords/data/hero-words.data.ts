@@ -93,7 +93,7 @@ export const heroActions: readonly HeroAction[] = [
     href: '#more-info',
     icon: '#selection',
     title: 'Купити матеріал',
-    text: 'Якісні декоративні матеріали європейських виробників',
+    text: 'Якісні матеріали європейських виробників',
     variant: 'hero-material',
   },
   {

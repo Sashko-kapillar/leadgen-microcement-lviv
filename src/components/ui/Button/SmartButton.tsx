@@ -15,7 +15,7 @@ export type SmartButtonSize = 'sm' | 'md' | 'lg' | 'hero-card'
 
 export type SmartButtonProps = {
   label: string
-  description?: string
+  description?: ReactNode
   loadingLabel?: string
 
   type?: 'button' | 'submit' | 'reset'
@@ -91,7 +91,7 @@ export default function SmartButton({
     md: 'px-6 py-3 text-base',
     lg: 'px-7 py-4 text-base md:text-lg',
 
-    'hero-card': 'min-h-[136px] w-full justify-start gap-4 rounded-2xl px-5 py-5 text-left',
+    'hero-card': 'min-h-20 lg:min-h-30 w-full items-center justify-start gap-2 lg:gap-4 rounded-2xl p-5 md:p-3 lg:p-5 text-left',
   }
 
   const finalClassName = cn(
@@ -137,7 +137,7 @@ export default function SmartButton({
         </span>
 
         {description && (
-          <span className={cn('mt-2 block text-lg leading-snug font-normal text-current/70')}>
+          <span className={cn('lg:mt-2 block text-lg leading-snug font-normal text-current/70')}>
             {description}
           </span>
         )}
