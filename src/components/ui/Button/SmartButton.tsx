@@ -1,12 +1,21 @@
 import type { MouseEvent, ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 
-export type SmartButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'
+export type SmartButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'ghost'
+  | 'danger'
+  | 'hero-material'
+  | 'hero-master'
+  | 'hero-self'
 
-export type SmartButtonSize = 'sm' | 'md' | 'lg'
+export type SmartButtonSize = 'sm' | 'md' | 'lg' | 'hero-card'
 
 export type SmartButtonProps = {
   label: string
+  description?: string
   loadingLabel?: string
 
   type?: 'button' | 'submit' | 'reset'
@@ -19,6 +28,7 @@ export type SmartButtonProps = {
 
   icon?: ReactNode
   iconPosition?: 'left' | 'right'
+  trailingIcon?: ReactNode
 
   className?: string
   disabled?: boolean
@@ -29,6 +39,7 @@ export type SmartButtonProps = {
 
 export default function SmartButton({
   label,
+  description,
   loadingLabel = 'Loading...',
 
   type = 'button',
@@ -41,6 +52,7 @@ export default function SmartButton({
 
   icon,
   iconPosition = 'left',
+  trailingIcon,
 
   className,
   disabled = false,
@@ -60,26 +72,38 @@ export default function SmartButton({
       'border border-neutral-300 bg-transparent text-neutral-950 hover:bg-stone-100 focus-visible:outline-neutral-400',
 
     ghost:
-      'bg-transparent text-neutral-700 hover:text-neutral-950 hover:bg-stone-100 focus-visible:outline-neutral-300',
+      'bg-transparent text-neutral-700 hover:bg-stone-100 hover:text-neutral-950 focus-visible:outline-neutral-300',
 
     danger: 'bg-red-600 text-white hover:bg-red-700 focus-visible:outline-red-600',
+
+    'hero-material':
+      'border border-button-hero-material-border bg-button-hero-material text-button-hero-material-text shadow-[0_14px_32px_rgba(67,50,34,0.16)] hover:bg-button-hero-material-hover focus-visible:outline-button-hero-material-border',
+
+    'hero-master':
+      'border border-button-hero-master-border bg-button-hero-master text-button-hero-material-text shadow-[0_16px_36px_rgba(25,22,19,0.24)] hover:bg-button-hero-master-hover focus-visible:outline-button-hero-master-border',
+
+    'hero-self':
+      'border border-button-hero-self-border bg-button-hero-self text-button-hero-self-text shadow-[0_14px_32px_rgba(57,59,43,0.16)] hover:bg-button-hero-self-hover focus-visible:outline-button-hero-self-border',
   }
 
   const sizeClasses: Record<SmartButtonSize, string> = {
     sm: 'px-4 py-2 text-sm',
     md: 'px-6 py-3 text-base',
     lg: 'px-7 py-4 text-base md:text-lg',
+
+    'hero-card': 'min-h-[136px] w-full justify-start gap-4 rounded-2xl px-5 py-5 text-left',
   }
 
   const finalClassName = cn(
-    'inline-flex w-fit items-center justify-center rounded-[0.5rem] font-semibold leading-none tracking-[-0.02em]',
-    'transition-colors duration-300',
-    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+    'group inline-flex w-fit items-center justify-center rounded-lg font-semibold leading-none tracking-[-0.02em]',
+    'transition-[transform,background-color,box-shadow] duration-300',
+    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4',
     variantClasses[variant],
     sizeClasses[size],
     {
-      'gap-2': hasIcon && !loading,
-      'opacity-50 cursor-not-allowed pointer-events-none': blocked,
+      'gap-2': hasIcon && !loading && size !== 'hero-card',
+      'cursor-not-allowed pointer-events-none opacity-50': blocked,
+      'hover:-translate-y-1': size === 'hero-card' && !blocked,
     },
     className
   )
@@ -89,13 +113,44 @@ export default function SmartButton({
   ) : (
     <>
       {hasIcon && iconPosition === 'left' && (
-        <span className="inline-flex shrink-0 items-center">{icon}</span>
+        <span
+          className={cn('inline-flex shrink-0 items-center', {
+            'flex size-14 justify-center rounded-xl bg-transparent': size === 'hero-card',
+          })}
+        >
+          {icon}
+        </span>
       )}
 
-      <span className="shrink-0">{label}</span>
+      <span
+        className={cn({
+          'min-w-0 flex-1': size === 'hero-card',
+          'shrink-0': size !== 'hero-card',
+        })}
+      >
+        <span
+          className={cn('block', {
+            'text-xl leading-tight font-semibold': size === 'hero-card',
+          })}
+        >
+          {label}
+        </span>
+
+        {description && (
+          <span className={cn('mt-2 block text-lg leading-snug font-normal text-current/70')}>
+            {description}
+          </span>
+        )}
+      </span>
 
       {hasIcon && iconPosition === 'right' && (
         <span className="inline-flex shrink-0 items-center">{icon}</span>
+      )}
+
+      {trailingIcon && (
+        <span className="inline-flex shrink-0 items-center text-xl transition-transform duration-300 group-hover:translate-x-1">
+          {trailingIcon}
+        </span>
       )}
     </>
   )

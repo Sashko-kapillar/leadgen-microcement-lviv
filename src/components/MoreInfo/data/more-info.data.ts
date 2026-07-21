@@ -1,49 +1,28 @@
-export const roomTypes = [
-  {
-    id: 'bathroom',
-    label: 'Ванна',
-    icon: '#icon-bath',
-  },
-  {
-    id: 'kitchen',
-    label: 'Кухня',
-    icon: '#icon-kitchen',
-  },
-  {
-    id: 'floor',
-    label: 'Підлога',
-    icon: '#icon-floor',
-  },
-  {
-    id: 'walls',
-    label: 'Стіни',
-    icon: '#icon-wall',
-  },
-  {
-    id: 'commercial',
-    label: 'Комерція',
-    icon: '#icon-building',
-  },
-] as const
+import type { RequestType } from '../more-info.schema'
 
-export const areaOptions = [
+export type RequestTypeOption = {
+  value: RequestType
+  label: string
+  description: string
+}
+
+export const requestTypeOptions: RequestTypeOption[] = [
   {
-    id: 'up-to-5',
-    label: 'до 5 м²',
+    value: 'material',
+    label: 'Хочу купити матеріал',
+    description: 'Допоможемо підібрати матеріал і розрахувати необхідну кількість.',
   },
   {
-    id: '5-15',
-    label: '5–15 м²',
+    value: 'master',
+    label: 'Шукаю майстра',
+    description: 'Допоможемо знайти майстра для нанесення мікроцементу.',
   },
   {
-    id: '15-30',
-    label: '15–30 м²',
+    value: 'self',
+    label: 'Хочу нанести самостійно',
+    description: 'Підкажемо, які матеріали та інструкції потрібні для роботи.',
   },
-  {
-    id: '30-plus',
-    label: '30+ м²',
-  },
-] as const
+]
 
 export const moreInfoBenefits = [
   {
@@ -58,16 +37,9 @@ export const moreInfoBenefits = [
   },
   {
     icon: '#icon-roller',
-    title: 'Підбір матеріалу під ваш інтер’єр',
-    text: 'Рекомендації по кольору, фактурі та типу мікроцементу.',
+    title: 'Допомога з вибором рішення',
+    text: 'Підберемо матеріал, майстра або пояснимо процес самостійного нанесення.',
   },
 ] as const
 
-export const couponInfo = {
-  title: 'Персональний купон -10% на матеріал',
-  text: 'Надішлемо код купону після заявки.',
-  discount: '-10%',
-  target: 'матеріал',
-} as const
-
-export const moreInfoTrustLine = 'Відповімо протягом години у робочий час Пн - Пт 10:00 - 18:00'
+export const moreInfoTrustLine = 'Відповімо протягом години у робочий час Пн–Пт 10:00–18:00'

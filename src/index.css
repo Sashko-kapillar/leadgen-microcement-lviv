@@ -122,6 +122,25 @@
   /* Basic */
   --color-black: #000000;
   --color-white: #ffffff;
+
+  /* Buttons */
+  /* Hero cards — material */
+  --color-button-hero-material: #eee0cf;
+  --color-button-hero-material-hover: #f5e9da;
+  --color-button-hero-material-border: #fffaf4;
+  --color-button-hero-material-text: #302a24;
+
+  /* Hero cards — master */
+  --color-button-hero-master: #eee9e3;
+  --color-button-hero-master-hover: #f7f3ee;
+  --color-button-hero-master-border: #ffffff;
+  --color-button-hero-master-text: #302c28;
+
+  /* Hero cards — self application */
+  --color-button-hero-self: #eee9e1;
+  --color-button-hero-self-hover: #f7f1ea;
+  --color-button-hero-self-border: #fffdf9;
+  --color-button-hero-self-text: #302c28;
 }
 
 /* =========================
@@ -189,7 +208,7 @@
   }
 
   .section-container {
-    @apply xs:px-6 mx-auto w-full max-w-7xl px-4 lg:px-16;
+    @apply mx-auto w-full px-4 md:px-[clamp(1.5rem,calc(21.875vw-9rem),5rem)] lg:px-[clamp(5rem,calc(8.333vw-0.333rem),8rem)];
   }
 
   .section-header {
@@ -218,10 +237,10 @@
   }
 
   .text-nav {
-    font-size: clamp(14px, 1.5vw, 18px);
+    font-size: clamp(14px, 1.5vw, 22px);
     line-height: 1;
     letter-spacing: -0.02em;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .text-hero {
