@@ -35,10 +35,10 @@ const Applications = () => {
           <div className="max-w-2xl">
             <h3 className="text-text-main text-lg font-semibold">{cta.title}</h3>
 
-            <p className="text-text-muted mt-2 text-sm leading-6">{cta.text}</p>
+            <p className="text-text-muted text-md mt-2 leading-6">{cta.text}</p>
           </div>
 
-          <SmartButton label={cta.buttonLabel} href={cta.href} />
+          <SmartButton label={cta.buttonLabel} href={cta.href} className="mt-auto" />
         </div>
       </div>
 

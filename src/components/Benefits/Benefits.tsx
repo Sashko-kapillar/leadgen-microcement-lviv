@@ -24,10 +24,10 @@ const Benefits = () => {
         <BenefitsMobileWheel items={items} />
 
         <div className="bg-bg-card mt-8 flex flex-col gap-5 rounded-xl p-6 shadow-sm md:flex-row md:items-center md:justify-between">
-          <div className="max-w-90 lg:max-w-none">
+          <div className="w-full lg:max-w-none">
             <h3 className="text-text-main text-lg font-semibold">{cta.title}</h3>
 
-            <p className="text-text-muted mt-2 text-sm leading-6">{cta.text}</p>
+            <p className="text-text-muted mt-2 text-base leading-6 lg:max-w-2/3">{cta.text}</p>
           </div>
 
           <SmartButton className="mt-auto" label={cta.buttonLabel} href={cta.href} />
