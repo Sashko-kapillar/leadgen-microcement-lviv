@@ -69,7 +69,7 @@ function HeroWords() {
       </div>
 
       {/* Content */}
-      <div className="section-container relative z-10 flex min-h-[calc(100svh-72px)] w-full flex-col">
+      <div className="section-container relative z-10 flex min-h-[calc(100svh-72px)] w-full flex-col pt-20">
         <h1 id="hero-words-title" className="sr-only">
           Мікроцемент у Львові
         </h1>
@@ -114,7 +114,7 @@ function HeroWords() {
         </div>
 
         {/* Text and CTA */}
-        <div className="relative -top-30 mx-auto flex w-full flex-col items-center justify-center gap-7">
+        <div className="relative -top-2 mx-auto flex w-full flex-col items-center justify-center gap-7">
           <p className="text-2xl leading-relaxed text-white/90 drop-shadow-sm lg:text-4xl">
             Безшовне декоративне покриття для ванних, підлоги та стін
           </p>
