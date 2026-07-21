@@ -33,7 +33,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
 
             <a
               href={footerCta.href}
-              className="text-button bg-accent-soft text-cta hover:bg-accent-muted focus-visible:outline-accent-soft mt-7 inline-flex min-h-12 items-center justify-center rounded-full px-6 transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4"
+              className="text-button bg-accent-soft text-cta hover:bg-accent-muted focus-visible:outline-accent-soft mt-7 inline-flex min-h-12 items-center justify-center rounded-md px-6 transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4"
             >
               {footerCta.label}
             </a>
