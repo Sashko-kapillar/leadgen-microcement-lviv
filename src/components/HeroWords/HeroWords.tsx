@@ -54,7 +54,7 @@ function HeroWords() {
 
   return (
     <section
-      className="relative isolate -mt-18 min-h-svh overflow-hidden bg-[#d7d0c4]"
+      className="relative isolate -mt-20 min-h-svh overflow-hidden bg-[#d7d0c4]"
       aria-labelledby="hero-words-title"
     >
       {/* Background image */}
@@ -75,10 +75,7 @@ function HeroWords() {
         </h1>
 
         {/* SVG letters */}
-        <div
-          className="flex flex-1 items-center justify-center py-8 sm:py-10 lg:pt-20 lg:pb-10"
-          aria-hidden="true"
-        >
+        <div className="flex flex-1 flex-col items-center justify-center gap-10" aria-hidden="true">
           <div className="flex w-full items-end justify-between gap-[clamp(1px,0.38vw,7px)]">
             {heroLetters.map((letter, index) => (
               <span
@@ -111,21 +108,20 @@ function HeroWords() {
               </span>
             ))}
           </div>
+          <p className="hidden text-center text-2xl leading-relaxed text-white/90 drop-shadow-sm md:block lg:text-4xl">
+            Безшовне декоративне покриття для ванних, підлоги та стін
+          </p>
         </div>
 
         {/* Text and CTA */}
-        <div className="relative -top-2 mx-auto flex w-full flex-col items-center justify-center gap-7">
-          <p className="text-2xl leading-relaxed text-white/90 drop-shadow-sm lg:text-4xl">
-            Безшовне декоративне покриття для ванних, підлоги та стін
-          </p>
-
-          <div className="grid w-full max-w-7xl gap-3 sm:grid-cols-3 lg:mt-9 lg:gap-10">
+        <div className="relative mx-auto flex w-full flex-col items-center justify-center">
+          <div className="grid w-full max-w-7xl gap-3 md:grid-cols-3 lg:mt-9 lg:gap-10">
             {heroActions.map(action => (
               <SmartButton
                 key={action.id}
                 href={action.href}
                 label={action.title}
-                description={action.text}
+                description={<span className="hidden lg:block">{action.text}</span>}
                 variant={action.variant}
                 size="hero-card"
                 icon={

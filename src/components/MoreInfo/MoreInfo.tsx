@@ -25,10 +25,11 @@ export default function MoreInfo() {
         <div className="relative z-20">
           <div className="flex flex-col justify-center">
             <header className="section-header">
-              <h2 className="section-title">Отримайте знижку на матеріал</h2>
+              <h2 className="section-title">Залиште заявку сьогодні</h2>
 
               <p className="section-subtitle">
-                Залиште контакт — надішлемо персональний купон на матеріал.
+                Оберіть потрібний варіант — менеджер зв’яжеться з вами протягом години у робочий
+                час.
               </p>
             </header>
           </div>
