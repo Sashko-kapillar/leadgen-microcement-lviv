@@ -40,6 +40,14 @@ function MobileHeader({ onShowHome }: MobileHeaderProps) {
     })
   }
 
+  const handleMobileBrandClick = () => {
+    closeMenu()
+
+    window.setTimeout(() => {
+      handleBrandClick()
+    }, MENU_TRANSITION_DURATION)
+  }
+
   const scrollToSection = (targetId: string) => {
     const targetElement = document.getElementById(targetId)
 
@@ -271,7 +279,7 @@ function MobileHeader({ onShowHome }: MobileHeaderProps) {
           <div className="flex items-center justify-between">
             <button
               type="button"
-              onClick={handleBrandClick}
+              onClick={handleMobileBrandClick}
               className="font-unbounded text-sm font-medium tracking-[-0.03em] text-[#f5f1e9] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f5f1e9]"
             >
               {mobileHeaderData.brand}
