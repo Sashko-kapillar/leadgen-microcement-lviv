@@ -10,24 +10,22 @@ function MobileHero() {
       return
     }
 
+    if (requestType) {
+      window.dispatchEvent(
+        new CustomEvent<{
+          requestType: MobileHeroActionId
+        }>('select-request-type', {
+          detail: {
+            requestType,
+          },
+        })
+      )
+    }
+
     moreInfoSection.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     })
-
-    if (!requestType) {
-      return
-    }
-
-    window.dispatchEvent(
-      new CustomEvent<{
-        requestType: MobileHeroActionId
-      }>('select-request-type', {
-        detail: {
-          requestType,
-        },
-      })
-    )
   }
 
   return (
@@ -56,8 +54,8 @@ function MobileHero() {
 
       <div className="section-container flex min-h-svh flex-col pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         {/*
-          Основная надпись «МІКРОЦЕМЕНТ» является частью изображения.
-          Пустая зона сохраняет её композицию и не перекрывает HTML-контентом.
+          Основна надпис «МІКРОЦЕМЕНТ» є частиною зображення.
+          Порожня зона зберігає композицію фонового зображення.
         */}
         <div className="min-h-[47svh] flex-1" aria-hidden="true" />
 
@@ -89,39 +87,27 @@ function MobileHero() {
             </span>
           </button>
 
-          <div id="mobile-hero-actions" className="mt-7 border-t border-white/20 pt-5">
-            <p className="text-sm text-white/65">{mobileHeroData.actionsTitle}</p>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            {mobileHeroData.secondaryActions.map(action => (
+              <button
+                key={action.id}
+                type="button"
+                onClick={() => scrollToMoreInfo(action.id)}
+                className="group flex min-h-14 min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/20 bg-[#29251f]/55 px-4 text-left backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-[#d8b77a]/60 hover:bg-[#29251f]/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5f1e9] active:translate-y-px"
+                aria-label={`${action.label}. Перейти до форми`}
+              >
+                <span className="text-[0.8125rem] leading-tight font-semibold text-[#f5f1e9]">
+                  {action.label}
+                </span>
 
-            <div className="mt-3 grid grid-cols-3">
-              {mobileHeroData.actions.map((action, index) => (
-                <button
-                  key={action.id}
-                  type="button"
-                  onClick={() => scrollToMoreInfo(action.id)}
-                  className={[
-                    'group min-w-0 py-2 text-left',
-                    index === 0 ? 'pr-3' : 'px-3',
-                    index === mobileHeroData.actions.length - 1 ? 'pr-0' : '',
-                    index > 0 ? 'border-l border-white/20' : '',
-                    'focus-visible:outline-2',
-                    'focus-visible:outline-offset-2',
-                    'focus-visible:outline-[#f5f1e9]',
-                  ].join(' ')}
-                  aria-label={`${action.label}. Перейти до форми`}
+                <span
+                  className="shrink-0 text-lg leading-none text-[#d8b77a] transition-transform duration-200 group-hover:translate-x-1"
+                  aria-hidden="true"
                 >
-                  <span className="block text-[0.8125rem] leading-[1.3] font-medium text-[#f5f1e9]">
-                    {action.label}
-                  </span>
-
-                  <span
-                    className="mt-2 block text-lg leading-none text-[#d8b77a] transition-transform duration-200 group-hover:translate-x-1"
-                    aria-hidden="true"
-                  >
-                    →
-                  </span>
-                </button>
-              ))}
-            </div>
+                  →
+                </span>
+              </button>
+            ))}
           </div>
         </div>
       </div>

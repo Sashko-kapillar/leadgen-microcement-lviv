@@ -1,17 +1,16 @@
 import heroImage from '@/assets/images/hero/hero-mb.webp'
 
-export type MobileHeroActionId = 'buy' | 'master' | 'self'
+export type MobileHeroActionId = 'master' | 'self'
 
 export type MobileHeroAction = {
   id: MobileHeroActionId
   label: string
-  icon: 'material' | 'master' | 'self'
 }
 
 export const mobileHeroData = {
   image: heroImage,
 
-  title: 'Матеріал, майстри та підтримка для нанесення у Львові',
+  title: 'Матеріал, майстри та підтримка',
 
   location: 'Львів та область',
 
@@ -21,23 +20,14 @@ export const mobileHeroData = {
     label: 'Залишити заявку',
   },
 
-  actionsTitle: 'Оберіть свій шлях',
-
-  actions: [
-    {
-      id: 'buy',
-      label: 'Купити матеріал',
-      icon: 'material',
-    },
+  secondaryActions: [
     {
       id: 'master',
       label: 'Знайти майстра',
-      icon: 'master',
     },
     {
       id: 'self',
       label: 'Нанести самостійно',
-      icon: 'self',
     },
   ],
 } as const satisfies {
@@ -48,6 +38,5 @@ export const mobileHeroData = {
   primaryAction: {
     label: string
   }
-  actionsTitle: string
-  actions: readonly MobileHeroAction[]
+  secondaryActions: readonly MobileHeroAction[]
 }
