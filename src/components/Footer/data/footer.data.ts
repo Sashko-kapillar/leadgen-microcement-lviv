@@ -32,8 +32,8 @@ export const footerServices = [
 
 export const footerContacts = {
   phone: {
-    label: '+38 (099) 129-29-62',
-    href: 'tel:+380991292962',
+    label: '+38 (068) 629-79-00',
+    href: 'tel:+380686297900',
   },
   location: 'Львів та область',
   schedule: ['Пн–Пт: 10:00–18:00', 'Сб–Нд: вихідні'],
