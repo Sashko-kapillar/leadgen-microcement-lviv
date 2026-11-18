@@ -55,7 +55,7 @@ export const applicationsSectionData: ApplicationsSectionData = {
     },
     {
       id: 'kitchen',
-      title: 'Мікроцемент для кухні та комерційних приміщень',
+      title: 'Мікроцемент для комерції',
       text: 'Декоративне покриття для кафе, магазинів, офісів і студій. Безшовні поверхні для сучасних комерційних інтер’єрів.',
       image: kitchenImage,
       imageAlt: 'Рецепшн з мікроцементом',

@@ -64,7 +64,7 @@ export default function SmartButton({
   const hasIcon = Boolean(icon)
 
   const variantClasses: Record<SmartButtonVariant, string> = {
-    primary: 'bg-neutral-950 text-white hover:bg-neutral-800 focus-visible:outline-neutral-950',
+    primary: 'bg-cta text-cta-text hover:bg-accent focus-visible:outline-accent',
 
     secondary: 'bg-stone-100 text-neutral-950 hover:bg-stone-200 focus-visible:outline-stone-400',
 
@@ -91,19 +91,22 @@ export default function SmartButton({
     md: 'px-6 py-3 text-base',
     lg: 'px-7 py-4 text-base md:text-lg',
 
-    'hero-card': 'min-h-20 lg:min-h-30 w-full items-center justify-start gap-2 lg:gap-4 rounded-2xl p-5 md:p-3 lg:p-5 text-left',
+    'hero-card':
+      'min-h-20 lg:min-h-30 w-full items-center justify-start gap-2 lg:gap-4 rounded-2xl p-5 md:p-3 lg:p-5 text-left',
   }
 
   const finalClassName = cn(
     'group inline-flex w-fit items-center justify-center rounded-lg font-semibold leading-none tracking-[-0.02em]',
-    'transition-[transform,background-color,box-shadow] duration-300',
-    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4',
+    'transition-[transform,background-color,box-shadow] duration-300 ease-out',
+    'focus-visible:outline-2 focus-visible:outline-offset-4',
+    'enabled:active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none',
     variantClasses[variant],
     sizeClasses[size],
     {
       'gap-2': hasIcon && !loading && size !== 'hero-card',
       'cursor-not-allowed pointer-events-none opacity-50': blocked,
       'hover:-translate-y-1': size === 'hero-card' && !blocked,
+      'active:scale-[0.98]': Boolean(href) && !blocked,
     },
     className
   )
@@ -137,7 +140,7 @@ export default function SmartButton({
         </span>
 
         {description && (
-          <span className={cn('lg:mt-2 block text-lg leading-snug font-normal text-current/70')}>
+          <span className="block text-lg leading-snug font-normal text-current/70 lg:mt-2">
             {description}
           </span>
         )}
@@ -148,7 +151,7 @@ export default function SmartButton({
       )}
 
       {trailingIcon && (
-        <span className="inline-flex shrink-0 items-center text-xl transition-transform duration-300 group-hover:translate-x-1">
+        <span className="inline-flex shrink-0 items-center text-xl transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none">
           {trailingIcon}
         </span>
       )}
@@ -176,6 +179,7 @@ export default function SmartButton({
         onClick={handleClick}
         aria-disabled={blocked}
         aria-busy={loading}
+        tabIndex={blocked ? -1 : undefined}
       >
         {content}
       </a>
