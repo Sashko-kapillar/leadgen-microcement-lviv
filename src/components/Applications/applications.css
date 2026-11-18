@@ -1,0 +1,171 @@
+/* =========================================
+   APPLICATIONS — CARD ANIMATIONS
+   ========================================= */
+
+.application-card {
+  --app-border-color: var(--color-accent, #b96843);
+  --app-border-width: 1px;
+  --app-border-duration: 700ms;
+
+  position: relative;
+  isolation: isolate;
+}
+
+/* =========================================
+   ANIMATED BORDER
+   ========================================= */
+
+.application-card__border {
+  position: absolute;
+  inset: 0;
+
+  border: var(--app-border-width) solid var(--app-border-color);
+  border-radius: inherit;
+
+  box-sizing: border-box;
+  pointer-events: none;
+
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+/*
+  Two independent masks.
+  Both start at top center and reveal
+  the border in opposite directions.
+*/
+
+/* LEFT: top center → left → bottom center */
+
+.application-card__border--left {
+  clip-path: polygon(50% 0, 50% 0, 50% 0, 50% 0, 50% 0);
+}
+
+/* RIGHT: top center → right → bottom center */
+
+.application-card__border--right {
+  clip-path: polygon(50% 0, 50% 0, 50% 0, 50% 0, 50% 0);
+}
+
+/* =========================================
+   LEFT BORDER ANIMATION
+   ========================================= */
+
+@keyframes application-border-left {
+  0% {
+    clip-path: polygon(50% 0, 50% 0, 50% 0, 50% 0, 50% 0);
+  }
+
+  35% {
+    clip-path: polygon(50% 0, 0 0, 0 0, 0 0, 50% 0);
+  }
+
+  70% {
+    clip-path: polygon(50% 0, 0 0, 0 100%, 0 100%, 50% 0);
+  }
+
+  100% {
+    clip-path: polygon(50% 0, 0 0, 0 100%, 50% 100%, 50% 0);
+  }
+}
+
+/* =========================================
+   RIGHT BORDER ANIMATION
+   ========================================= */
+
+@keyframes application-border-right {
+  0% {
+    clip-path: polygon(50% 0, 50% 0, 50% 0, 50% 0, 50% 0);
+  }
+
+  35% {
+    clip-path: polygon(50% 0, 100% 0, 100% 0, 100% 0, 50% 0);
+  }
+
+  70% {
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 100% 100%, 50% 0);
+  }
+
+  100% {
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%, 50% 0);
+  }
+}
+
+/* =========================================
+   HOVER — DESKTOP
+   ========================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  .application-card:hover .application-card__border {
+    opacity: 1;
+
+    animation-duration: var(--app-border-duration);
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+
+  .application-card:hover .application-card__border--left {
+    animation-name: application-border-left;
+  }
+
+  .application-card:hover .application-card__border--right {
+    animation-name: application-border-right;
+  }
+}
+
+/* =========================================
+   KEYBOARD FOCUS
+   ========================================= */
+
+.application-card:has(:focus-visible) .application-card__border {
+  opacity: 1;
+}
+
+.application-card:has(:focus-visible) .application-card__border--left {
+  animation: application-border-left var(--app-border-duration) linear forwards;
+}
+
+.application-card:has(:focus-visible) .application-card__border--right {
+  animation: application-border-right var(--app-border-duration) linear forwards;
+}
+
+/* =========================================
+   IMAGE ZOOM
+   ========================================= */
+
+.application-card img {
+  transition: transform 700ms ease-out;
+  will-change: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .application-card:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.application-card:has(:focus-visible) img {
+  transform: scale(1.05);
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .application-card img {
+    transition: none;
+    transform: none !important;
+  }
+
+  .application-card__border {
+    animation: none !important;
+    transition: none;
+  }
+
+  .application-card:hover .application-card__border,
+  .application-card:has(:focus-visible) .application-card__border {
+    opacity: 1;
+    clip-path: none;
+  }
+}
