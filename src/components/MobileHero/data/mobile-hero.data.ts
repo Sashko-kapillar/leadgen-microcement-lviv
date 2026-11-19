@@ -12,7 +12,7 @@ export const mobileHeroData = {
 
   title: 'Матеріал, майстри та підтримка',
 
-  location: 'Львів та область',
+  location: 'Львів та Київ',
 
   service: 'Підбір під ваше завдання',
 

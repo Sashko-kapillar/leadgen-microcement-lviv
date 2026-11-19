@@ -1,8 +1,10 @@
 import { z } from 'zod'
 
 export const requestTypeValues = ['material', 'master', 'self'] as const
+export const cityValues = ['lviv', 'kyiv'] as const
 
 export type RequestType = (typeof requestTypeValues)[number]
+export type City = (typeof cityValues)[number]
 
 const nameRegex = /^[A-Za-zА-Яа-яІіЇїЄєҐґ'’ -]{2,40}$/
 const phoneRegex = /^(\+?38)?0\d{9}$/
@@ -21,9 +23,17 @@ const isRequestType = (value: unknown): value is RequestType => {
   return typeof value === 'string' && requestTypeValues.includes(value as RequestType)
 }
 
+const isCity = (value: unknown): value is City => {
+  return typeof value === 'string' && cityValues.includes(value as City)
+}
+
 export const moreInfoSchema = z.object({
   requestType: z.custom<RequestType>(isRequestType, {
     message: 'Оберіть, що вас цікавить',
+  }),
+
+  city: z.custom<City>(isCity, {
+    message: 'Оберіть місто',
   }),
 
   name: z
@@ -47,6 +57,7 @@ export type MoreInfoSubmitValues = z.infer<typeof moreInfoSchema>
 
 export type MoreInfoFormValues = {
   requestType: RequestType | ''
+  city: City | ''
   name: string
   contact: string
 }

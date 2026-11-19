@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './reset.css';
 @import './components/Applications/applications.css';
+@import './components/Benefits/benefits-stack.css';
 
 /* =========================
    Fonts
@@ -92,6 +93,7 @@
   --color-bg-page-soft: #faf8f4; */
   --color-bg-section: #f8f6f4;
   --color-bg-section-muted: #e7dfd4;
+  --color-bg-hero-mb: #3e3933;
 
   /* Cards / surfaces */
   --color-bg-card: #ffffff;
@@ -103,6 +105,7 @@
   --color-text-soft: #3f3a35;
   --color-text-muted: #746c63;
   --color-text-inverse: #fafafa;
+  --color-text-accent: #d8b77a;
 
   /* Borders */
   --color-border-soft: #ddd5ca;
@@ -113,6 +116,13 @@
   --color-cta: #111111;
   --color-cta-hover: #272727;
   --color-cta-text: #ffffff;
+
+  /* CTA Gold */
+  --color-cta-gold: #dfb96f;
+  --color-cta-gold-hover: #e7c580;
+  --color-cta-gold-text: #29251f;
+  --color-cta-gold-border: #f0d8a9;
+  --color-cta-gold-focus: #f5f1e9;
 
   /* Accent */
   --color-accent: #b96843;

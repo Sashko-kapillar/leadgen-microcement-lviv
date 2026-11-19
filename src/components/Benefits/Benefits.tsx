@@ -15,7 +15,7 @@ const Benefits = () => {
           <p className="section-subtitle">{subtitle}</p>
         </header>
 
-        <div className="hidden gap-4 lg:flex lg:flex-nowrap lg:justify-center">
+        <div className="hidden gap-8 lg:flex lg:flex-nowrap lg:justify-center">
           {items.map(item => (
             <BenefitCard key={item.id} benefit={item} />
           ))}

@@ -13,7 +13,7 @@ export type MobileRequestItem = {
 }
 
 export const mobileHeaderData = {
-  brand: 'Мікроцемент Львів',
+  brand: 'Мікроцемент',
 
   navigation: [
     {

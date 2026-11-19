@@ -1,4 +1,5 @@
 import iconsSprite from '../../assets/images/svg/icons.svg'
+import { decodePhone, formatPhone } from '@/lib/decodePhone'
 
 import {
   footerBrand,
@@ -15,6 +16,7 @@ interface FooterProps {
 const Footer = ({ onPolicyClick }: FooterProps) => {
   const currentYear = new Date().getFullYear()
   const copyrightYears = `2024–${currentYear}`
+  const phone = decodePhone(footerContacts.phone.encoded)
 
   return (
     <footer id="contacts" className="bg-cta text-text-inverse">
@@ -78,10 +80,10 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
                 </svg>
 
                 <a
-                  href={footerContacts.phone.href}
+                  href={`tel:${phone}`}
                   className="text-body-medium text-text-inverse hover:text-accent-soft transition-colors duration-300"
                 >
-                  {footerContacts.phone.label}
+                  {formatPhone(phone)}
                 </a>
               </li>
 
