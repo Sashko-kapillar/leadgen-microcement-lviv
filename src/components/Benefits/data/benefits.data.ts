@@ -26,7 +26,7 @@ export const benefitsSectionData: BenefitsSectionData = {
       id: 'water-resistant',
       icon: '#waterproof',
       title: 'Вологостійкий',
-      text: 'Підходить для: ванна, душ та кухня за умови правильного захисного покриття.',
+      text: 'Підходить для: ванних, душових та кухонь за умови правильного захисного покриття.',
     },
     {
       id: 'seamless',

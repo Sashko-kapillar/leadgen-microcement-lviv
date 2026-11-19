@@ -5,6 +5,7 @@ import Modal from '../ui/Modal'
 import SuccessPopup from '../ui/SuccessPopup'
 import { cn } from '@/lib/cn'
 import { moreInfoTrustLine } from './data/more-info.data'
+import CitySelector from './CitySelector'
 import {
   moreInfoSchema,
   type MoreInfoFormErrors,
@@ -13,7 +14,6 @@ import {
 } from './more-info.schema'
 
 const FORM_SUBMIT_TIMEOUT_MS = 10000
-
 const requestTypeOptions: Array<{
   value: RequestType
   label: string
@@ -35,132 +35,101 @@ const requestTypeOptions: Array<{
     description: 'Підкажемо, що потрібно для самостійного нанесення.',
   },
 ]
-
 const initialFormState: MoreInfoFormValues = {
+  city: '',
   requestType: '',
   name: '',
   contact: '',
 }
-
 type SubmitStatus = 'idle' | 'success' | 'error'
-
 type DataLayerWindow = Window & {
   dataLayer?: Array<Record<string, unknown>>
 }
-
 function generateRequestNumber() {
   const randomValues = new Uint32Array(1)
-
   crypto.getRandomValues(randomValues)
-
   const number = randomValues[0] % 10000
-
   return `MC-${String(number).padStart(4, '0')}`
 }
-
 function getRequestTypeLabel(requestType: RequestType) {
   return requestTypeOptions.find(option => option.value === requestType)?.label ?? requestType
 }
-
-function pushSubmitEvent(requestNumber: string, requestType: RequestType) {
+function pushSubmitEvent(requestNumber: string, requestType: RequestType, city: string) {
   const dataLayerWindow = window as DataLayerWindow
-
   dataLayerWindow.dataLayer = dataLayerWindow.dataLayer || []
-
   dataLayerWindow.dataLayer.push({
-    // Временно сохраняем старое имя события,
-    // чтобы не сломать существующий триггер GTM.
+    // Сохраняем имя события для существующего триггера GTM.
+
     event: 'coupon_submit',
     requestNumber,
     requestType,
+    city,
   })
 }
-
 function isAbortError(error: unknown) {
   return error instanceof Error && error.name === 'AbortError'
 }
-
 function getFieldErrors(
   fieldErrors: Partial<Record<keyof MoreInfoFormValues, string[] | undefined>>
 ): MoreInfoFormErrors {
   return Object.entries(fieldErrors).reduce<MoreInfoFormErrors>((accumulator, [key, value]) => {
     const message = value?.[0]
-
     if (message) {
       accumulator[key as keyof MoreInfoFormValues] = message
     }
-
     return accumulator
   }, {})
 }
-
 export default function MoreInfoForm() {
   const [form, setForm] = useState<MoreInfoFormValues>(initialFormState)
-
   const [errors, setErrors] = useState<MoreInfoFormErrors>({})
-
   const [isSubmitting, setIsSubmitting] = useState(false)
-
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle')
-
   const [requestNumber, setRequestNumber] = useState('')
   const [submittedRequestTypeLabel, setSubmittedRequestTypeLabel] = useState('')
-
   function updateField<Key extends keyof MoreInfoFormValues>(
     field: Key,
     value: MoreInfoFormValues[Key]
   ) {
     setForm(currentForm => ({
       ...currentForm,
+
       [field]: value,
     }))
-
     setErrors(currentErrors => ({
       ...currentErrors,
+
       [field]: undefined,
     }))
-
     setSubmitStatus('idle')
   }
-
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
-
     updateField(
       name as keyof MoreInfoFormValues,
       value as MoreInfoFormValues[keyof MoreInfoFormValues]
     )
   }
-
   function handleCloseSuccessPopup() {
     setSubmitStatus('idle')
     setRequestNumber('')
     setSubmittedRequestTypeLabel('')
   }
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-
     const result = moreInfoSchema.safeParse(form)
-
     if (!result.success) {
       setErrors(getFieldErrors(result.error.flatten().fieldErrors))
       setSubmitStatus('idle')
       return
     }
-
     const newRequestNumber = generateRequestNumber()
-
     const requestTypeLabel = getRequestTypeLabel(result.data.requestType)
-
     const controller = new AbortController()
-
     const timeoutId = window.setTimeout(() => controller.abort(), FORM_SUBMIT_TIMEOUT_MS)
-
     try {
       setIsSubmitting(true)
       setSubmitStatus('idle')
-
       const response = await fetch('/api/send-telegram', {
         method: 'POST',
         headers: {
@@ -173,13 +142,10 @@ export default function MoreInfoForm() {
         }),
         signal: controller.signal,
       })
-
       if (!response.ok) {
         throw new Error('Telegram request failed')
       }
-
-      pushSubmitEvent(newRequestNumber, result.data.requestType)
-
+      pushSubmitEvent(newRequestNumber, result.data.requestType, result.data.city)
       setForm(initialFormState)
       setErrors({})
       setRequestNumber(newRequestNumber)
@@ -190,28 +156,25 @@ export default function MoreInfoForm() {
         setSubmitStatus('error')
         return
       }
-
       setSubmitStatus('error')
     } finally {
       window.clearTimeout(timeoutId)
       setIsSubmitting(false)
     }
   }
-
   return (
     <>
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="bg-bg-card mx-auto rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:w-max md:p-8 lg:p-10"
+        className="bg-bg-card mx-auto w-full max-w-[920px] rounded-3xl p-5 shadow-[0_24px_80px_rgba(22,22,22,0.12)] sm:p-6 md:p-8 lg:p-10"
       >
-        <div className="grid justify-center gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-10">
+        <div className="mx-auto grid w-full max-w-[760px] grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
           {/* Левая часть */}
-          <fieldset className="max-w-150 min-w-0">
+          <fieldset className="w-full max-w-150">
             <legend className="text-text-main mb-4 text-base font-semibold">
               Що вас цікавить?
             </legend>
-
             <div
               className="flex flex-col gap-4"
               aria-describedby="more-info-request-type-error"
@@ -219,14 +182,13 @@ export default function MoreInfoForm() {
             >
               {requestTypeOptions.map(option => {
                 const isChecked = form.requestType === option.value
-
                 return (
                   <label
                     key={option.value}
                     className={cn(
                       'group flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors duration-300',
                       isChecked
-                        ? 'border-accent bg-page-soft)'
+                        ? 'border-accent bg-page-soft'
                         : 'border-border-soft hover:border-accent/50 bg-white',
                       errors.requestType && !form.requestType && 'border-red-500'
                     )}
@@ -239,7 +201,6 @@ export default function MoreInfoForm() {
                       onChange={handleInputChange}
                       className="peer sr-only"
                     />
-
                     <span
                       aria-hidden="true"
                       className={cn(
@@ -256,12 +217,10 @@ export default function MoreInfoForm() {
                         )}
                       />
                     </span>
-
                     <span className="min-w-0">
                       <span className="text-text-main block text-sm font-semibold sm:text-base">
                         {option.label}
                       </span>
-
                       <span className="text-text-soft mt-1 block text-xs leading-[1.4] sm:text-sm">
                         {option.description}
                       </span>
@@ -270,30 +229,28 @@ export default function MoreInfoForm() {
                 )
               })}
             </div>
-
             <p
               id="more-info-request-type-error"
               role={errors.requestType ? 'alert' : undefined}
               data-error={errors.requestType ?? ''}
               className={cn(
                 'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+
                 'before:block before:content-[attr(data-error)]',
                 errors.requestType ? 'before:opacity-100' : 'before:opacity-0'
               )}
             />
           </fieldset>
-
           {/* Правая часть */}
-          <div className="max-w-150 min-w-0">
+          <div className="w-full md:w-full lg:max-w-150">
+            <label
+              htmlFor="more-info-name"
+              className="text-text-main mb-4 block text-base font-semibold"
+            >
+              Ваше ім’я
+            </label>
             <div className="space-y-5">
               <div>
-                <label
-                  htmlFor="more-info-name"
-                  className="text-text-main mb-2 block text-base font-semibold"
-                >
-                  Ваше ім’я
-                </label>
-
                 <div className="relative">
                   <svg
                     className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
@@ -301,7 +258,6 @@ export default function MoreInfoForm() {
                   >
                     <use href={`${iconsSprite}#user`} />
                   </svg>
-
                   <input
                     id="more-info-name"
                     name="name"
@@ -310,7 +266,9 @@ export default function MoreInfoForm() {
                     onChange={handleInputChange}
                     className={cn(
                       'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
+
                       'placeholder:text-text-muted',
+
                       'focus:border-accent',
                       errors.name ? 'border-red-500' : 'border-border-soft'
                     )}
@@ -320,19 +278,18 @@ export default function MoreInfoForm() {
                     aria-describedby={errors.name ? 'more-info-name-error' : undefined}
                   />
                 </div>
-
                 <p
                   id="more-info-name-error"
                   role={errors.name ? 'alert' : undefined}
                   data-error={errors.name ?? ''}
                   className={cn(
                     'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+
                     'before:block before:content-[attr(data-error)]',
                     errors.name ? 'before:opacity-100' : 'before:opacity-0'
                   )}
                 />
               </div>
-
               <div>
                 <label
                   htmlFor="more-info-contact"
@@ -340,7 +297,6 @@ export default function MoreInfoForm() {
                 >
                   Ваш номер телефону
                 </label>
-
                 <div className="relative">
                   <svg
                     className="text-text-muted pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2"
@@ -348,7 +304,6 @@ export default function MoreInfoForm() {
                   >
                     <use href={`${iconsSprite}#phone`} />
                   </svg>
-
                   <input
                     id="more-info-contact"
                     name="contact"
@@ -357,7 +312,9 @@ export default function MoreInfoForm() {
                     onChange={handleInputChange}
                     className={cn(
                       'text-text-main w-full rounded-xl border bg-white px-11 py-4 text-base transition-colors duration-300 outline-none',
+
                       'placeholder:text-text-muted',
+
                       'focus:border-accent',
                       errors.contact ? 'border-red-500' : 'border-border-soft'
                     )}
@@ -367,18 +324,19 @@ export default function MoreInfoForm() {
                     aria-describedby={errors.contact ? 'more-info-contact-error' : undefined}
                   />
                 </div>
-
                 <p
                   id="more-info-contact-error"
                   role={errors.contact ? 'alert' : undefined}
                   data-error={errors.contact ?? ''}
                   className={cn(
                     'mt-1 min-h-5 text-[12px] leading-5 text-red-600',
+
                     'before:block before:content-[attr(data-error)]',
                     errors.contact ? 'before:opacity-100' : 'before:opacity-0'
                   )}
                 />
               </div>
+              <CitySelector value={form.city} error={errors.city} onChange={handleInputChange} />
             </div>
 
             <div className="mt-7">
@@ -391,22 +349,19 @@ export default function MoreInfoForm() {
                 size="lg"
                 className="bg-accent hover:bg-accent-hover w-full text-white"
               />
-
               <p className="text-text-muted mt-4 flex items-start justify-center gap-2 text-center text-sm leading-[1.4]">
                 <svg className="text-accent mt-0.5 size-4 shrink-0" aria-hidden="true">
                   <use href={`${iconsSprite}#working-hours`} />
                 </svg>
-
                 <span className="max-w-70 text-start md:max-w-none">{moreInfoTrustLine}</span>
               </p>
-
-              <div className="mt-4 min-h-[68px]">
+              <div className="mt-2 min-h-4">
                 {submitStatus === 'error' && (
                   <p
                     role="alert"
                     className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
                   >
-                    Не вдалося відправити заявку. Спробуйте ще раз або напишіть нам у Telegram.
+                    Не вдалося відправити заявку. Спробуйте ще раз, будь ласка.
                   </p>
                 )}
               </div>
@@ -414,7 +369,6 @@ export default function MoreInfoForm() {
           </div>
         </div>
       </form>
-
       {submitStatus === 'success' && (
         <Modal onClose={handleCloseSuccessPopup} labelledBy="success-popup-title">
           <SuccessPopup

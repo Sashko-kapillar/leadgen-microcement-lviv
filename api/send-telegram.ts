@@ -6,13 +6,20 @@ const REQUEST_TYPES = {
   self: 'Хочу нанести самостійно',
 } as const
 
+const CITIES = {
+  lviv: 'Львів',
+  kyiv: 'Київ',
+} as const
+
 type RequestType = keyof typeof REQUEST_TYPES
+type City = keyof typeof CITIES
 
 type TelegramPayload = {
   name?: unknown
   contact?: unknown
   requestType?: unknown
   requestNumber?: unknown
+  city?: unknown
 }
 
 type ApiRequest = {
@@ -43,6 +50,10 @@ function isRequestType(value: unknown): value is RequestType {
   return typeof value === 'string' && Object.prototype.hasOwnProperty.call(REQUEST_TYPES, value)
 }
 
+function isCity(value: unknown): value is City {
+  return typeof value === 'string' && Object.prototype.hasOwnProperty.call(CITIES, value)
+}
+
 function normalizeRequiredString(value: unknown) {
   return typeof value === 'string' ? value.trim() : ''
 }
@@ -69,16 +80,21 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   const chatId = process.env.TELEGRAM_CHAT_ID
 
   if (!botToken || !chatId) {
+    console.error('Telegram configuration is missing')
+
     return res.status(500).json({
       success: false,
       message: 'Telegram config is missing',
     })
   }
 
+  // Normalize incoming data
   const name = normalizeRequiredString(req.body?.name)
   const contact = normalizeRequiredString(req.body?.contact)
   const requestType = req.body?.requestType
+  const city = req.body?.city
 
+  // Required contact fields
   if (!name || !contact) {
     return res.status(400).json({
       success: false,
@@ -86,6 +102,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
   }
 
+  // Request type validation
   if (!isRequestType(requestType)) {
     return res.status(400).json({
       success: false,
@@ -93,13 +110,25 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     })
   }
 
+  // City validation
+  if (!isCity(city)) {
+    return res.status(400).json({
+      success: false,
+      message: 'City is required or invalid',
+    })
+  }
+
+  // Request identification
   const requestNumber = normalizeRequestNumber(req.body?.requestNumber) || generateRequestNumber()
 
   const requestTypeLabel = REQUEST_TYPES[requestType]
+  const cityLabel = CITIES[city]
 
+  // Telegram message
   const message = [
     '<b>Нова заявка:</b>',
     '',
+    `<b>Місто:</b> ${escapeHtml(cityLabel)}`,
     `<b>Тип звернення:</b> ${escapeHtml(requestTypeLabel)}`,
     `<b>Номер звернення:</b> ${escapeHtml(requestNumber)}`,
     `<b>Імʼя:</b> ${escapeHtml(name)}`,
@@ -135,6 +164,8 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       requestNumber,
       requestType,
       requestTypeLabel,
+      city,
+      cityLabel,
     })
   } catch (error) {
     console.error('Failed to send Telegram message:', error)

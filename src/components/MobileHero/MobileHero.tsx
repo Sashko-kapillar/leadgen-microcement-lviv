@@ -30,7 +30,7 @@ function MobileHero() {
 
   return (
     <section
-      className="relative isolate min-h-svh overflow-hidden bg-[#3e3933] text-[#f5f1e9]"
+      className="bg-bg-hero-mb relative isolate min-h-svh overflow-hidden"
       aria-labelledby="mobile-hero-title"
     >
       <img
@@ -62,12 +62,12 @@ function MobileHero() {
         <div className="relative z-10">
           <h1
             id="mobile-hero-title"
-            className="font-nunito max-w-84 text-[clamp(1.75rem,7.5vw,2.25rem)] leading-[1.16] font-medium tracking-[-0.04em] text-[#f5f1e9]"
+            className="font-nunito text-text-inverse max-w-84 text-[clamp(1.75rem,7.5vw,2.25rem)] leading-[1.16] font-medium tracking-[-0.04em]"
           >
             {mobileHeroData.title}
           </h1>
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-5 text-[#d8b77a]">
+          <div className="text-text-accent mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-5">
             <span>{mobileHeroData.location}</span>
 
             <span aria-hidden="true">•</span>
@@ -78,7 +78,7 @@ function MobileHero() {
           <button
             type="button"
             onClick={() => scrollToMoreInfo()}
-            className="mt-6 flex min-h-16 w-full items-center justify-between rounded-[1.25rem] border border-[#f0d8a9]/70 bg-[#dfb96f] px-6 text-left text-lg font-semibold text-[#29251f] shadow-[0_18px_45px_rgba(0,0,0,0.22)] transition-[background-color,transform] duration-200 hover:bg-[#e7c580] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5f1e9] active:translate-y-px"
+            className="border-cta-gold-border/70 bg-cta-gold text-cta-gold-text hover:bg-cta-gold-hover focus-visible:outline-cta-gold-focus mt-6 flex min-h-16 w-full items-center justify-between rounded-[1.25rem] border px-6 text-left text-lg font-semibold shadow-[0_18px_45px_rgba(0,0,0,0.22)] transition-[background-color,transform] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 active:translate-y-px"
           >
             <span>{mobileHeroData.primaryAction.label}</span>
 
@@ -93,15 +93,15 @@ function MobileHero() {
                 key={action.id}
                 type="button"
                 onClick={() => scrollToMoreInfo(action.id)}
-                className="group flex min-h-14 min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/20 bg-[#29251f]/55 px-4 text-left backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-[#d8b77a]/60 hover:bg-[#29251f]/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5f1e9] active:translate-y-px"
+                className="group hover:border-text-accent/60 bg-cta-gold-text/55 hover:bg-cta-gold-text/75 focus-visible:outline-cta-gold-focus flex min-h-14 min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/20 px-4 text-left backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 active:translate-y-px"
                 aria-label={`${action.label}. Перейти до форми`}
               >
-                <span className="text-[0.8125rem] leading-tight font-semibold text-[#f5f1e9]">
+                <span className="text-cta-gold-focus text-[0.8125rem] leading-tight font-semibold">
                   {action.label}
                 </span>
 
                 <span
-                  className="shrink-0 text-lg leading-none text-[#d8b77a] transition-transform duration-200 group-hover:translate-x-1"
+                  className="text-text-accent shrink-0 text-lg leading-none transition-transform duration-200 group-hover:translate-x-1"
                   aria-hidden="true"
                 >
                   →

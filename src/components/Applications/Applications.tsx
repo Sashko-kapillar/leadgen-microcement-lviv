@@ -25,7 +25,7 @@ const Applications = () => {
           <p className="section-subtitle">{subtitle}</p>
         </header>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {items.map(item => (
             <ApplicationCard key={item.id} item={item} onPreviewOpen={handlePreviewOpen} />
           ))}

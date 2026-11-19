@@ -19,9 +19,7 @@ const Header = ({ isPrivacy = false, onShowHome }: HeaderProps) => {
       <header className="bg-page/50 relative top-2 z-100 w-full lg:top-8">
         <div className="section-container flex h-14 items-center justify-between gap-4 md:min-h-17 lg:min-h-20 xl:py-4">
           <a href="/" className="flex py-2 md:py-4 lg:w-1/3">
-            <span className="text- text-logo text-black md:not-sr-only">
-              Мікроцемент <span className="text-green-600">✔</span> Львів
-            </span>
+            <span className="text- text-logo text-black md:not-sr-only">Мікроцемент</span>
           </a>
 
           {isPrivacy ? (
