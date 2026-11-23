@@ -6,15 +6,17 @@ type SuccessPopupProps = {
   onClose: () => void
 }
 
+const SHOW_PROMO_OFFER = false
+
 const SuccessPopup = ({
   requestNumber,
   requestTypeLabel: _requestTypeLabel,
   onClose,
 }: SuccessPopupProps) => {
   return (
-    <div className="flex w-full flex-col items-center text-center">
+    <div className="flex w-full flex-col items-center gap-3 text-center md:gap-4">
       {/* Success confirmation */}
-      <div className="flex w-full max-w-[560px] flex-col items-center">
+      <div className="flex w-full max-w-[560px] flex-col items-center gap-4">
         {/* Heading */}
         <div className="flex items-center justify-center gap-2 sm:gap-3">
           <div
@@ -42,26 +44,24 @@ const SuccessPopup = ({
         </div>
 
         {/* Request number */}
-        <div className="border-border-soft bg-bg-card-soft mt-5 w-full rounded-2xl border px-5 py-4 sm:mt-6">
+        <div className="border-border-soft bg-bg-card-soft mt-4 w-full rounded-2xl border px-5 py-4">
           <p className="text-text-muted text-xs tracking-[0.08em] uppercase">Номер звернення</p>
 
           <p className="text-accent mt-1 text-xl font-bold sm:text-2xl">№ {requestNumber}</p>
         </div>
 
         {/* Manager message */}
-        <p className="text-body text-text-soft mt-4">Ми скоро з вами зв’яжемося</p>
+        <p className="text-body text-text-soft">Ми скоро з вами зв’яжемося</p>
       </div>
 
       {/* Promotional offer */}
-      <div className="w-full max-w-[560px]">
-        <PromoOffer />
-      </div>
+      <div className="w-full max-w-[560px]">{SHOW_PROMO_OFFER && <PromoOffer />}</div>
 
       {/* Close button */}
       <button
         type="button"
         onClick={onClose}
-        className="text-button bg-accent text-cta-text hover:bg-accent-hover focus-visible:ring-accent mt-5 min-h-12 w-full max-w-[560px] rounded-xl px-6 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        className="text-button bg-accent text-cta-text hover:bg-accent-hover focus-visible:ring-accent mt-4 min-h-12 w-full max-w-[560px] rounded-xl px-6 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
       >
         Гаразд
       </button>
