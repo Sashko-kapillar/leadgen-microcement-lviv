@@ -59,7 +59,7 @@ export default function PromoOffer() {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col items-center gap-2 p-3 text-center md:gap-4 md:p-6">
+      <div className="flex flex-col items-center gap-2 p-3 text-center md:gap-4 md:p-4">
         {/* Badge below image: mobile only */}
         <PromoBadge className="md:hidden" />
 
