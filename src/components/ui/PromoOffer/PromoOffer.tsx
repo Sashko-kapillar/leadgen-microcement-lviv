@@ -18,7 +18,7 @@ export default function PromoOffer() {
   return (
     <aside
       aria-label="Новий матеріал у салоні"
-      className="border-border-soft bg-bg-card-muted mt-6 w-full overflow-hidden rounded-2xl border"
+      className="border-border-soft bg-bg-card-muted w-full overflow-hidden rounded-2xl border"
     >
       {/* Image placeholder */}
       <div
@@ -34,7 +34,7 @@ export default function PromoOffer() {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col items-center p-3 text-center md:p-6">
+      <div className="flex flex-col items-center gap-3 p-3 text-center md:gap-6 md:p-6">
         <div className="flex items-center justify-center gap-2">
           <svg
             className="text-accent size-4 shrink-0"
@@ -55,11 +55,14 @@ export default function PromoOffer() {
           </span>
         </div>
 
-        <h3 className="font-primary text-text-main mt-4 text-xl leading-[1.3] font-extrabold tracking-[-0.035em] lg:text-2xl lg:whitespace-nowrap">
-          {promoOfferData.title}
+        <h3 className="font-primary text-text-main text-xl leading-[1.3] font-extrabold tracking-[-0.035em] lg:text-2xl lg:whitespace-nowrap">
+          {promoOfferData.title.split(' за ціною фарби')[0]}
+          <br className="md:hidden" />
+          <span className="hidden md:inline"> </span>
+          за ціною фарби
         </h3>
 
-        <p className="text-text-soft mt-3 max-w-[440px] text-sm leading-[1.6] sm:text-base">
+        <p className="text-text-soft max-w-[440px] text-sm leading-[1.6] sm:text-base">
           {promoOfferData.description}
         </p>
 
@@ -68,7 +71,7 @@ export default function PromoOffer() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={trackPromoClick}
-          className="text-accent-hover hover:text-accent focus-visible:ring-accent mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-base font-extrabold transition-colors duration-300 focus-visible:ring-2 focus-visible:outline-none"
+          className="text-accent-hover hover:text-accent focus-visible:ring-accent inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-base font-extrabold transition-colors duration-300 focus-visible:ring-2 focus-visible:outline-none"
         >
           {promoOfferData.buttonLabel}
 

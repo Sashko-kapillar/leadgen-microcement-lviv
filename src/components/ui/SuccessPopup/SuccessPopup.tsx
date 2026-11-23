@@ -6,7 +6,7 @@ type SuccessPopupProps = {
   onClose: () => void
 }
 
-const SuccessPopup = ({ requestNumber, requestTypeLabel, onClose }: SuccessPopupProps) => {
+const SuccessPopup = ({ requestNumber, onClose }: SuccessPopupProps) => {
   return (
     <div className="flex w-full flex-col items-center text-center">
       {/* Success heading */}
@@ -34,17 +34,11 @@ const SuccessPopup = ({ requestNumber, requestTypeLabel, onClose }: SuccessPopup
         </h2>
       </div>
 
-      <p className="text-body text-text-main mt-4">Вашу заявку успішно отримано</p>
+      <p className="text-body text-text-main">Вашу заявку успішно отримано</p>
 
       {/* Request information */}
-      <div className="border-border-soft bg-bg-card-soft mt-6 w-full rounded-2xl border p-5 text-left">
-        <div className="border-border-soft border-b pb-4 text-center">
-          <p className="text-text-muted text-xs tracking-[0.08em] uppercase">Тип звернення</p>
-
-          <p className="text-text-main mt-1 font-semibold">{requestTypeLabel}</p>
-        </div>
-
-        <div className="pt-4 text-center">
+      <div className="border-border-soft bg-bg-card-soft w-full rounded-2xl border p-5">
+        <div className="text-center">
           <p className="text-text-muted text-xs tracking-[0.08em] uppercase">Номер звернення</p>
 
           <p className="text-accent mt-1 text-xl font-bold">№ {requestNumber}</p>
@@ -52,9 +46,7 @@ const SuccessPopup = ({ requestNumber, requestTypeLabel, onClose }: SuccessPopup
       </div>
 
       {/* Manager message */}
-      <p className="text-body text-text-soft mt-6 max-w-[520px]">
-        Менеджер зв’яжеться з вами протягом години у робочий час та уточнить усі необхідні деталі.
-      </p>
+      <p className="text-body text-text-soft max-w-[520px]">Ми скоро з вами зв’яжемося</p>
 
       {/* Promotional offer */}
       <PromoOffer />
@@ -63,7 +55,7 @@ const SuccessPopup = ({ requestNumber, requestTypeLabel, onClose }: SuccessPopup
       <button
         type="button"
         onClick={onClose}
-        className="text-button bg-accent text-cta-text hover:bg-accent-hover focus-visible:ring-accent mt-6 min-h-12 w-full rounded-xl px-6 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        className="text-button bg-accent text-cta-text hover:bg-accent-hover focus-visible:ring-accent min-h-12 w-full rounded-xl px-6 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
       >
         Гаразд
       </button>
