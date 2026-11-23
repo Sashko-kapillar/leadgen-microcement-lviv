@@ -5,15 +5,9 @@ export const promoOfferData = {
 
   title: 'Декоративна штукатурка за ціною фарби',
 
-  description: 'Цікавить також новий матеріал для оздоблення?',
+  description: 'Новий матеріал для стильного оздоблення стін.',
 
-  buttonLabel: 'Так, цікаво',
+  buttonLabel: 'Дізнатися більше',
 
-  loadingLabel: 'Відправляємо...',
-
-  successMessage: 'Менеджер розповість вам про новинку',
-
-  errorMessage: 'Не вдалося відправити. Спробуйте ще раз.',
-
-  retryLabel: 'Повторити',
+  href: '/',
 } as const

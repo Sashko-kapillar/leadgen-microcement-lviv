@@ -1,159 +1,115 @@
-import { useRef, useState } from 'react'
 import { promoOfferData } from './data/promo-offer.data'
-
-type PromoOfferProps = {
-  requestNumber: string
-}
-
-type PromoStatus = 'idle' | 'loading' | 'success' | 'error'
-
+import promoImage from '@/assets/images/offer/offer.webp'
 type AnalyticsWindow = Window & {
   dataLayer?: Record<string, unknown>[]
 }
 
-const PROMO_TIMEOUT_MS = 10000
-
-function trackPromoEvent(eventName: string) {
+function trackPromoClick() {
   const analyticsWindow = window as AnalyticsWindow
 
   analyticsWindow.dataLayer?.push({
-    event: eventName,
+    event: 'promo_click',
     offer_id: promoOfferData.id,
     placement: 'success_popup',
   })
 }
 
-export default function PromoOffer({ requestNumber }: PromoOfferProps) {
-  const [status, setStatus] = useState<PromoStatus>('idle')
-  const isSendingRef = useRef(false)
-
-  async function handlePromoClick() {
-    if (isSendingRef.current || status === 'success') return
-
-    isSendingRef.current = true
-
-    trackPromoEvent('promo_click')
-    setStatus('loading')
-
-    const controller = new AbortController()
-
-    const timeoutId = window.setTimeout(() => controller.abort(), PROMO_TIMEOUT_MS)
-
-    try {
-      const response = await fetch('/api/send-telegram', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: 'promo_interest',
-          requestNumber,
-          offerId: promoOfferData.id,
-        }),
-        signal: controller.signal,
-      })
-
-      if (!response.ok) {
-        throw new Error(`Promo request failed: ${response.status}`)
-      }
-
-      setStatus('success')
-      trackPromoEvent('promo_lead')
-    } catch (error) {
-      console.error('Promo submit error:', error)
-      setStatus('error')
-    } finally {
-      window.clearTimeout(timeoutId)
-      isSendingRef.current = false
-    }
-  }
-
+export default function PromoOffer() {
   return (
-    <div className="bg-bg-hero-mb border-border-strong mt-6 flex w-full flex-col items-center rounded-2xl border p-5 text-center sm:p-6">
-      <div className="flex items-center justify-center gap-2">
-        <svg
-          className="text-text-accent size-5 shrink-0"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="m12 3 1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9L12 3Z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-
-        <p className="text-text-accent text-xs font-bold tracking-[0.08em] uppercase">
-          {promoOfferData.badge}
-        </p>
+    <aside
+      aria-label="Новий матеріал у салоні"
+      className="border-border-soft bg-bg-card-muted mt-6 w-full overflow-hidden rounded-2xl border"
+    >
+      {/* Image placeholder */}
+      <div
+        aria-hidden="true"
+        className="bg-bg-section-muted relative aspect-video w-full overflow-hidden sm:aspect-21/9"
+      >
+        Later:
+        <img
+          src={promoImage}
+          alt="Фактура декоративної штукатурки"
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg
+            className="text-text-muted/35 size-10"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="2"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            />
+            <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <path
+              d="m3 17 5-5 4 4 3-3 6 6"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
       </div>
 
-      <h3 className="font-second text-text-inverse mt-4 max-w-[340px] text-lg leading-[1.4] font-medium sm:text-xl">
-        {promoOfferData.title}
-      </h3>
-
-      <p className="text-text-inverse/80 mt-3 max-w-[320px] text-sm leading-[1.6]">
-        {promoOfferData.description}
-      </p>
-
-      {status === 'success' ? (
-        <div
-          role="status"
-          className="border-cta-gold-border bg-cta-gold/10 mt-5 flex w-full items-center justify-center gap-3 rounded-xl border p-4"
-        >
+      {/* Content */}
+      <div className="flex flex-col items-center px-5 py-6 text-center sm:px-8">
+        <div className="flex items-center justify-center gap-2">
           <svg
-            className="text-cta-gold size-5 shrink-0"
+            className="text-accent size-4 shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             aria-hidden="true"
           >
             <path
-              d="M5 12.5 9.25 17 19 7"
+              d="m12 3 1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9L12 3Z"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+          </svg>
+
+          <span className="text-accent text-xs font-bold tracking-[0.08em] uppercase">
+            {promoOfferData.badge}
+          </span>
+        </div>
+
+        <h3 className="font-second text-text-main mt-4 max-w-[540px] text-lg leading-[1.4] font-medium sm:text-xl">
+          {promoOfferData.title}
+        </h3>
+
+        <p className="text-text-muted mt-3 max-w-[440px] text-sm leading-[1.6] sm:text-base">
+          {promoOfferData.description}
+        </p>
+
+        <a
+          href={promoOfferData.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={trackPromoClick}
+          className="text-accent hover:text-accent-hover focus-visible:ring-accent mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-bold transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        >
+          {promoOfferData.buttonLabel}
+
+          <svg className="size-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M7 17 17 7M8 7h9v9"
               stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
-
-          <p className="text-text-inverse text-sm font-semibold">{promoOfferData.successMessage}</p>
-        </div>
-      ) : (
-        <>
-          <button
-            type="button"
-            onClick={handlePromoClick}
-            disabled={status === 'loading'}
-            className="bg-cta-gold text-cta-gold-text hover:bg-cta-gold-hover focus-visible:ring-cta-gold-focus border-cta-gold-border focus-visible:ring-offset-bg-hero-mb mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border px-4 text-sm font-bold transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {status === 'loading'
-              ? promoOfferData.loadingLabel
-              : status === 'error'
-                ? promoOfferData.retryLabel
-                : promoOfferData.buttonLabel}
-
-            {status === 'idle' && (
-              <svg className="size-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M5 12h14m-6-6 6 6-6 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            )}
-          </button>
-
-          {status === 'error' && (
-            <p role="alert" className="mt-3 text-center text-sm text-red-300">
-              {promoOfferData.errorMessage}
-            </p>
-          )}
-        </>
-      )}
-    </div>
+        </a>
+      </div>
+    </aside>
   )
 }
