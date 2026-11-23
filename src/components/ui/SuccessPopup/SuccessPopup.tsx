@@ -8,9 +8,9 @@ type SuccessPopupProps = {
 
 const SuccessPopup = ({ requestNumber, onClose }: SuccessPopupProps) => {
   return (
-    <div className="flex w-full flex-col items-center text-center">
+    <div className="flex w-full flex-col items-center gap-3 text-center md:gap-4">
       {/* Success heading */}
-      <div className="flex items-center justify-center gap-3 sm:gap-4">
+      <div className="flex items-center justify-center gap-3 md:gap-4">
         <div
           className="bg-accent/10 text-accent flex size-12 shrink-0 items-center justify-center rounded-full sm:size-16"
           aria-hidden="true"

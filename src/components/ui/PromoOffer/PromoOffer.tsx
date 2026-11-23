@@ -23,18 +23,18 @@ export default function PromoOffer() {
       {/* Image placeholder */}
       <div
         aria-hidden="true"
-        className="bg-bg-section-muted relative aspect-video w-full overflow-hidden sm:aspect-21/9"
+        className="bg-bg-section-muted relative h-[180px] w-full overflow-hidden sm:h-[220px] lg:h-[260px]"
       >
         <img
           src={promoImage}
-          alt="Фактура декоративної штукатурки"
-          className="h-full w-full object-cover"
+          alt=""
+          className="size-full object-cover object-[center_65%]"
           loading="lazy"
         />
       </div>
 
       {/* Content */}
-      <div className="flex flex-col items-center gap-3 p-3 text-center md:gap-6 md:p-6">
+      <div className="flex flex-col items-center gap-2 p-3 text-center md:gap-4 md:p-6">
         <div className="flex items-center justify-center gap-2">
           <svg
             className="text-accent size-4 shrink-0"
