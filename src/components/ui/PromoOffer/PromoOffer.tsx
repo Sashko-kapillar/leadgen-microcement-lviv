@@ -46,10 +46,10 @@ export default function PromoOffer() {
       className="border-border-soft bg-bg-card-muted w-full overflow-hidden rounded-2xl border"
     >
       {/* Image */}
-      <div className="bg-bg-section-muted relative h-[180px] w-full overflow-hidden sm:h-[220px] lg:h-[260px]">
+      <div className="bg-bg-section-muted relative h-40 w-full overflow-hidden sm:h-45 lg:h-50">
         <img
           src={promoImage}
-          alt=""
+          alt="Новий матеріал у салоні"
           className="size-full object-cover object-[center_65%]"
           loading="lazy"
         />
@@ -79,7 +79,7 @@ export default function PromoOffer() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={trackPromoClick}
-          className="text-accent-hover hover:text-accent focus-visible:ring-accent inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-base font-extrabold transition-colors duration-300 focus-visible:ring-2 focus-visible:outline-none"
+          className="text-accent-hover hover:text-accent focus-visible:ring-accent inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-3 text-base font-extrabold transition-colors duration-300 focus-visible:ring-2 focus-visible:outline-none"
         >
           {promoOfferData.buttonLabel}
 

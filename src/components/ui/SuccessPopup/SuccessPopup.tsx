@@ -10,43 +10,42 @@ const SuccessPopup = ({ requestNumber, onClose }: SuccessPopupProps) => {
   return (
     <div className="flex w-full flex-col items-center gap-3 text-center md:gap-4">
       {/* Success heading */}
-      <div className="flex items-center justify-center gap-3 md:gap-4">
-        <div
-          className="bg-accent/10 text-accent flex size-12 shrink-0 items-center justify-center rounded-full sm:size-16"
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 24 24" fill="none" className="size-6 sm:size-8">
-            <path
-              d="M5 12.5 9.25 17 19 7"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+      <div className="flex w-full flex-col items-center text-center">
+        {/* Heading */}
+        <div className="flex items-center justify-center gap-2">
+          <div
+            className="text-accent flex size-7 shrink-0 items-center justify-center rounded-full"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="size-6">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+              <path
+                d="m8 12 2.5 2.5L16 9"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+          <h2
+            id="success-popup-title"
+            className="font-primary text-text-main text-xl leading-[1.3] font-extrabold tracking-tight sm:text-2xl"
+          >
+            Дякуємо! Заявку прийнято
+          </h2>
         </div>
 
-        <h2
-          id="success-popup-title"
-          className="font-second text-text-main text-2xl font-semibold sm:text-3xl"
-        >
-          Дякуємо!
-        </h2>
-      </div>
-
-      <div className="flex items-center gap-12">
-        <p className="text-body text-text-main">Вашу заявку успішно отримано. </p>
-        {/* Manager message */}
-        <p className="text-body text-accent"> Ми скоро з вами зв’яжемося</p>
-      </div>
-
-      {/* Request information */}
-      <div className="border-border-soft bg-bg-card-soft w-full rounded-2xl border p-5">
-        <div className="text-center">
+        {/* Request number */}
+        <div className="border-border-soft bg-bg-card-soft mt-5 w-full max-w-[370px] rounded-2xl border px-6 py-4">
           <p className="text-text-muted text-xs tracking-[0.08em] uppercase">Номер звернення</p>
 
           <p className="text-accent mt-1 text-xl font-bold">№ {requestNumber}</p>
         </div>
+
+        {/* Manager message */}
+        <p className="text-body text-accent mt-4">Ми скоро з вами зв’яжемося</p>
       </div>
 
       {/* Promotional offer */}
