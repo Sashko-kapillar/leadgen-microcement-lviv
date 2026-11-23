@@ -8,6 +8,7 @@ import {
   footerNavigation,
   footerServices,
 } from './data/footer.data'
+import { useWorkingHours } from '@/hooks/useWorkingHours'
 
 interface FooterProps {
   onPolicyClick?: () => void
@@ -17,6 +18,7 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
   const currentYear = new Date().getFullYear()
   const copyrightYears = `2024–${currentYear}`
   const phone = decodePhone(footerContacts.phone.encoded)
+  const isOpen = useWorkingHours()
 
   return (
     <footer id="contacts" className="bg-cta text-text-inverse">
@@ -79,12 +81,18 @@ const Footer = ({ onPolicyClick }: FooterProps) => {
                   <use href={`${iconsSprite}#phone`} />
                 </svg>
 
-                <a
-                  href={`tel:${phone}`}
-                  className="text-body-medium text-text-inverse hover:text-accent-soft transition-colors duration-300"
-                >
-                  {formatPhone(phone)}
-                </a>
+                {isOpen === true ? (
+                  <a
+                    href={`tel:${phone}`}
+                    className="text-body-medium text-text-inverse hover:text-accent-soft transition-colors duration-300"
+                  >
+                    {formatPhone(phone)}
+                  </a>
+                ) : (
+                  <span className="text-body-medium text-text-muted">
+                    {isOpen === false ? 'Зараз не працюємо' : 'Перевіряємо графік…'}
+                  </span>
+                )}
               </li>
 
               <li className="flex gap-3">
