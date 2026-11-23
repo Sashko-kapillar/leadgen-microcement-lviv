@@ -25,43 +25,16 @@ export default function PromoOffer() {
         aria-hidden="true"
         className="bg-bg-section-muted relative aspect-video w-full overflow-hidden sm:aspect-21/9"
       >
-        Later:
         <img
           src={promoImage}
           alt="Фактура декоративної штукатурки"
           className="h-full w-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <svg
-            className="text-text-muted/35 size-10"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-          >
-            <rect
-              x="3"
-              y="3"
-              width="18"
-              height="18"
-              rx="2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-            <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
-            <path
-              d="m3 17 5-5 4 4 3-3 6 6"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
       </div>
 
       {/* Content */}
-      <div className="flex flex-col items-center px-5 py-6 text-center sm:px-8">
+      <div className="flex flex-col items-center p-3 text-center md:p-6">
         <div className="flex items-center justify-center gap-2">
           <svg
             className="text-accent size-4 shrink-0"
@@ -77,16 +50,16 @@ export default function PromoOffer() {
             />
           </svg>
 
-          <span className="text-accent text-xs font-bold tracking-[0.08em] uppercase">
+          <span className="text-accent-hover text-xs font-extrabold tracking-[0.08em] uppercase">
             {promoOfferData.badge}
           </span>
         </div>
 
-        <h3 className="font-second text-text-main mt-4 max-w-[540px] text-lg leading-[1.4] font-medium sm:text-xl">
+        <h3 className="font-primary text-text-main mt-4 text-xl leading-[1.3] font-extrabold tracking-[-0.035em] lg:text-2xl lg:whitespace-nowrap">
           {promoOfferData.title}
         </h3>
 
-        <p className="text-text-muted mt-3 max-w-[440px] text-sm leading-[1.6] sm:text-base">
+        <p className="text-text-soft mt-3 max-w-[440px] text-sm leading-[1.6] sm:text-base">
           {promoOfferData.description}
         </p>
 
@@ -95,7 +68,7 @@ export default function PromoOffer() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={trackPromoClick}
-          className="text-accent hover:text-accent-hover focus-visible:ring-accent mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-bold transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          className="text-accent-hover hover:text-accent focus-visible:ring-accent mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-base font-extrabold transition-colors duration-300 focus-visible:ring-2 focus-visible:outline-none"
         >
           {promoOfferData.buttonLabel}
 
