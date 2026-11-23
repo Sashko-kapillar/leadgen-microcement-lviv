@@ -1,3 +1,5 @@
+import PromoOffer from '../PromoOffer/PromoOffer'
+
 type SuccessPopupProps = {
   requestNumber: string
   requestTypeLabel: string
@@ -45,6 +47,8 @@ const SuccessPopup = ({ requestNumber, requestTypeLabel, onClose }: SuccessPopup
       <p className="text-body text-text-soft mt-6 max-w-[520px]">
         Менеджер зв’яжеться з вами протягом години у робочий час та уточнить усі необхідні деталі.
       </p>
+
+      <PromoOffer requestNumber={requestNumber} />
 
       <button
         type="button"
