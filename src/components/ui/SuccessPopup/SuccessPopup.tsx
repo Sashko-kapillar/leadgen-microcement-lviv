@@ -34,7 +34,11 @@ const SuccessPopup = ({ requestNumber, onClose }: SuccessPopupProps) => {
         </h2>
       </div>
 
-      <p className="text-body text-text-main">Вашу заявку успішно отримано</p>
+      <div className="flex items-center gap-12">
+        <p className="text-body text-text-main">Вашу заявку успішно отримано. </p>
+        {/* Manager message */}
+        <p className="text-body text-text-soft max-w-[520px]"> Ми скоро з вами зв’яжемося</p>
+      </div>
 
       {/* Request information */}
       <div className="border-border-soft bg-bg-card-soft w-full rounded-2xl border p-5">
@@ -46,8 +50,6 @@ const SuccessPopup = ({ requestNumber, onClose }: SuccessPopupProps) => {
       </div>
 
       <div className="flex w-full items-center justify-between gap-3 md:gap-4">
-        {/* Manager message */}
-        <p className="text-body text-text-soft max-w-[520px]">Ми скоро з вами зв’яжемося</p>
         {/* Close button */}
         <button
           type="button"
