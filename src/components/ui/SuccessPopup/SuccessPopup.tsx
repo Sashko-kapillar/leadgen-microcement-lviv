@@ -35,7 +35,7 @@ const SuccessPopup = ({
 
           <h2
             id="success-popup-title"
-            className="font-primary text-text-main text-[clamp(22px,3vw,32px)] leading-[1.25] font-extrabold tracking-[-0.035em]"
+            className="font-primary text-text-main text-[clamp(22px,3vw,32px)] leading-tight font-extrabold tracking-[-0.035em]"
           >
             Дякуємо! Заявку прийнято
           </h2>
