@@ -57,7 +57,7 @@ const SuccessPopup = ({ requestNumber, requestTypeLabel, onClose }: SuccessPopup
       </p>
 
       {/* Promotional offer */}
-      <PromoOffer requestNumber={requestNumber} />
+      <PromoOffer />
 
       {/* Close button */}
       <button
