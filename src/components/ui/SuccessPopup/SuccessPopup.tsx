@@ -6,7 +6,7 @@ type SuccessPopupProps = {
   onClose: () => void
 }
 
-const SHOW_PROMO_OFFER = true
+const SHOW_PROMO_OFFER = false // Set to true to show the promotional offer in the success popup
 
 const SuccessPopup = ({
   requestNumber,
