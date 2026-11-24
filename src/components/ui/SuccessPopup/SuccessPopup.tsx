@@ -6,7 +6,7 @@ type SuccessPopupProps = {
   onClose: () => void
 }
 
-const SHOW_PROMO_OFFER = false
+const SHOW_PROMO_OFFER = true
 
 const SuccessPopup = ({
   requestNumber,
