@@ -64,6 +64,7 @@ function MobileHero() {
             id="mobile-hero-title"
             className="font-nunito text-text-inverse max-w-84 text-[clamp(1.75rem,7.5vw,2.25rem)] leading-[1.16] font-medium tracking-[-0.04em]"
           >
+            <span className="sr-only">Мікроцемент — </span>
             {mobileHeroData.title}
           </h1>
 
