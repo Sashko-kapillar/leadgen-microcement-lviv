@@ -56,7 +56,7 @@ export default function PromoOffer() {
         />
 
         {/* Badge on image: all screen sizes */}
-        <PromoBadge className="absolute top-3 left-1/2 -translate-x-1/2 rounded-xl bg-white/90 px-3 py-2 shadow-sm backdrop-blur-sm sm:px-4 md:top-5 md:right-5 md:left-auto md:translate-x-0 md:px-5 md:py-3 lg:top-6 lg:right-6" />
+        <PromoBadge className="absolute top-3 right-3 rounded-xl bg-white/90 px-3 py-2 shadow-sm backdrop-blur-sm sm:px-4 md:top-5 md:right-5 md:left-auto md:translate-x-0 md:px-5 md:py-3 lg:top-6 lg:right-6" />
       </div>
 
       {/* Content */}

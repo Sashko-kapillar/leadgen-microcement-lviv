@@ -1,7 +1,7 @@
 import './App.css'
 import { useState } from 'react'
 
-import SEO from './components/SEO/SEO'
+// import SEO from './components/SEO/SEO'
 import Header from './components/Header/Header'
 import HeroWords from './components/HeroWords/HeroWords'
 import MobileHeader from './components/MobileHeader/MobileHeader'
@@ -36,11 +36,11 @@ function App() {
 
   return (
     <>
-      <SEO
+      {/* <SEO
         title="Мікроцемент Львів — декоративне покриття для ванних, підлоги та стін"
         description="Мікроцемент у Львові для ванних кімнат, підлоги, стін, кухонь і комерційних просторів. Допоможемо підібрати матеріал, знайти майстра або розібратися із самостійним нанесенням."
         path="/"
-      />
+      /> */}
 
       <div className="bg-page min-h-screen w-full">
         {showPolicy ? (

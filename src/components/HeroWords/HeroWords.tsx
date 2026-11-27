@@ -71,12 +71,15 @@ function HeroWords() {
       {/* Content */}
       <div className="section-container relative z-10 flex min-h-[calc(100svh-72px)] w-full flex-col pt-20">
         <h1 id="hero-words-title" className="sr-only">
-          Мікроцемент у Львові
+          Мікроцемент у Львові та Києві — декоративне покриття для ванних, підлоги та стін
         </h1>
 
         {/* SVG letters */}
-        <div className="flex flex-1 flex-col items-center justify-center gap-10" aria-hidden="true">
-          <div className="flex w-full items-end justify-between gap-[clamp(1px,0.38vw,7px)]">
+        <div className="flex flex-1 flex-col items-center justify-center gap-10">
+          <div
+            className="flex w-full items-end justify-between gap-[clamp(1px,0.38vw,7px)]"
+            aria-hidden="true"
+          >
             {heroLetters.map((letter, index) => (
               <span
                 key={letter.id}
